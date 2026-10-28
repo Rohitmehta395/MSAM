@@ -5,6 +5,10 @@ const serverEnvSchema = z.object({
   CLOUDINARY_API_KEY: z.string().min(1).optional(),
   CLOUDINARY_API_SECRET: z.string().min(1).optional(),
   SUBMISSION_SINK: z.string().min(1).default('console'),
+  TRUST_PROXY_STRATEGY: z
+    .enum(['none', 'vercel', 'trusted-proxy'])
+    .default(process.env.NODE_ENV === 'production' ? 'vercel' : 'none'),
+  FORM_SECRET: z.string().min(16).optional(),
 });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
@@ -20,6 +24,8 @@ function parseServerEnv(): ServerEnv {
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || undefined,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || undefined,
     SUBMISSION_SINK: process.env.SUBMISSION_SINK || undefined,
+    TRUST_PROXY_STRATEGY: process.env.TRUST_PROXY_STRATEGY || undefined,
+    FORM_SECRET: process.env.FORM_SECRET || undefined,
   });
 
   if (!result.success) {
