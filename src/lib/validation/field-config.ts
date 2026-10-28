@@ -9,6 +9,7 @@ export type FieldType =
   | 'textarea'
   | 'select'
   | 'checkbox'
+  | 'consent'
   | 'checkbox-group'
   | 'radio-group'
   | 'chip-toggle'
