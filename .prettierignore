@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+build
+coverage
+design-reference
+MSAM-Outline
+pnpm-lock.yaml
+next-env.d.ts
+MSAM Website — Architecture, SDLC Plan & Antigravity Prompts.md
+
