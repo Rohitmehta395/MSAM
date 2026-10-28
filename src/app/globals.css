@@ -71,7 +71,6 @@
   font-weight: 400;
   font-size: 1.125rem;
   line-height: 1.6;
-  color: var(--color-muted);
 }
 
 @utility text-label {
