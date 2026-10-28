@@ -9,6 +9,8 @@ export interface NavItem {
   badge?: string;
   /** Whether link is hidden from standard rendering */
   hidden?: boolean;
+  /** Optional nested child navigation links (e.g. for mobile menu expansion) */
+  children?: readonly NavItem[];
 }
 
 export interface UrgentMessageData {
@@ -40,7 +42,15 @@ export const primaryNav: readonly NavItem[] = [
   { label: 'Our mission', href: '/mission' },
   { label: 'How it works', href: '/how-it-works' },
   { label: 'Ways to help', href: '/donate' },
-  { label: 'Community', href: '/community/food-providers' },
+  {
+    label: 'Community',
+    href: '/community/food-providers',
+    children: [
+      { label: 'Food Providers', href: '/community/food-providers' },
+      { label: 'Volunteers', href: '/community/volunteers' },
+      { label: 'Partners', href: '/community/partners' },
+    ],
+  },
 ] as const;
 
 /**

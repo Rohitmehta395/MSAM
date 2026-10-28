@@ -5,6 +5,7 @@ import { Logo } from '@/components/media/Logo';
 import { primaryNav } from '@/content/navigation';
 import { NavLink } from '@/components/layout/NavLink';
 import { HeaderCtas } from '@/components/layout/HeaderCta';
+import { MobileMenu } from '@/components/layout/MobileMenu';
 import { cn } from '@/lib/cn';
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
@@ -46,9 +47,9 @@ export function Header({ className, ...props }: HeaderProps) {
           <HeaderCtas />
         </div>
 
-        {/* Reserved slot for future mobile menu trigger (Part 3.3) */}
-        <div className="flex items-center lg:hidden" aria-hidden="true">
-          {/* MobileMenu trigger placeholder */}
+        {/* Mobile menu trigger & dialog sheet (visible below lg) */}
+        <div className="flex items-center lg:hidden">
+          <MobileMenu />
         </div>
       </Container>
     </header>
