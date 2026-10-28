@@ -11,3 +11,5 @@ export * from './IconBadge';
 export * from './Card';
 export * from './CheckList';
 export * from './StatCard';
+export * from './SegmentedControl';
+export * from './Tabs';
