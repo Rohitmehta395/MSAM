@@ -1,1 +1,123 @@
 @import 'tailwindcss';
+
+@theme {
+  /* Brand color palette */
+  --color-navy: #1c2a46;
+  --color-lavender: #f2edfa;
+  --color-lavender-deep: #cdb5e8;
+  --color-gold: #d9b75f;
+  --color-canvas: #fcfbfd;
+  --color-border: #e6e2ec;
+  --color-muted: #687086;
+  --color-warm: #fbf4df;
+  --color-sage: #eef4f1;
+  --color-cream: #faf7ee;
+  --color-white: #ffffff;
+  --color-success: #3d7a62;
+  --color-danger: #b54747;
+
+  /* Border radius tokens */
+  --radius-field: 14px;
+  --radius-panel: 24px;
+  --radius-card: 32px;
+  --radius-pill: 9999px;
+
+  /* Elevation and shadow tokens */
+  --shadow-card: 0 12px 32px rgb(28 42 70 / 0.08);
+  --shadow-float: 0 20px 48px rgb(28 42 70 / 0.14);
+
+  /* Section vertical spacing tokens */
+  --spacing-72: 72px;
+  --spacing-88: 88px;
+
+  /* Font families */
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
+/* Typography utilities */
+@utility text-display {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.8rem + 2.8vw, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+@utility text-section {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(1.875rem, 1.45rem + 1.8vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+@utility text-statement {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(1.75rem, 1.45rem + 1.2vw, 2.5rem);
+  line-height: 1.2;
+}
+
+@utility text-card-title {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+@utility text-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+@utility text-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* Base styles and accessibility */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+
+  .on-dark :focus-visible,
+  :focus-visible.on-dark {
+    outline-color: var(--color-white);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
