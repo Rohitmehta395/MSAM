@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Noto_Serif } from 'next/font/google';
+import { Header, Footer } from '@/components/layout';
+import { siteConfig } from '@/config/site';
 import './globals.css';
 
 const inter = Inter({
@@ -17,8 +19,11 @@ const notoSerif = Noto_Serif({
 });
 
 export const metadata: Metadata = {
-  title: 'MSAM',
-  description: 'Manna / Share A Meal',
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.shortName}`,
+  },
+  description: `${siteConfig.name} — ${siteConfig.tagline}`,
 };
 
 export default function RootLayout({
@@ -28,7 +33,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${notoSerif.variable}`}>
-      <body>{children}</body>
+      <body className="flex min-h-screen flex-col">
+        <Header />
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }
