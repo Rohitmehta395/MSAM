@@ -133,8 +133,10 @@ export interface TabsTriggerProps extends Omit<
 > {
   /** Value identifying this tab */
   value: string;
-  /** Optional leading icon component */
-  icon?: React.ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' | 'false' }>;
+  /** Optional leading icon component or React element */
+  icon?:
+    | React.ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' | 'false' }>
+    | React.ReactNode;
   /** Whether this tab is disabled */
   disabled?: boolean;
   /** Optional custom class name */
@@ -231,7 +233,9 @@ export function TabsTrigger({
       )}
       {...props}
     >
-      {Icon && (
+      {React.isValidElement(Icon) ? (
+        Icon
+      ) : typeof Icon === 'function' ? (
         <Icon
           className={cn(
             'h-4 w-4 shrink-0 transition-colors',
@@ -239,7 +243,7 @@ export function TabsTrigger({
           )}
           aria-hidden="true"
         />
-      )}
+      ) : null}
       <span>{children}</span>
     </button>
   );
