@@ -81,6 +81,64 @@
   letter-spacing: 0.12em;
 }
 
+/* Accessibility skip link utility */
+@utility skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+
+  &:focus,
+  &:focus-visible {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 50;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    border-radius: var(--radius-field);
+    box-shadow: var(--shadow-float);
+    font-size: 0.875rem;
+    font-weight: 600;
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}
+
+/* Footer layout grid geometry matching design reference */
+@utility footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1.35fr 1fr 1fr 1.22fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: 354px 263px 263px 320px;
+    gap: 2rem;
+  }
+}
+
 /* Base styles and accessibility */
 @layer base {
   html {

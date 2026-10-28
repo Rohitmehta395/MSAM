@@ -167,12 +167,12 @@ export function Logo({
 
   return (
     <svg
-      viewBox="13 257 576 136"
+      viewBox="10 256 580 138"
       fill="currentColor"
       role={isHidden ? undefined : 'img'}
       aria-hidden={isHidden ? 'true' : undefined}
       aria-label={isHidden ? undefined : (ariaLabel ?? 'Manna Share A Meal')}
-      className={cn('aspect-[576/136] h-11 w-auto shrink-0 select-none sm:h-12', className)}
+      className={cn('aspect-[580/138] h-11 w-auto shrink-0 select-none sm:h-12', className)}
       {...props}
     >
       {/* Brand Icon */}

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Noto_Serif } from 'next/font/google';
-import { Header, Footer } from '@/components/layout';
+import { Header, Footer, UrgentMessage, SkipLink } from '@/components/layout';
 import { siteConfig } from '@/config/site';
 import './globals.css';
 
@@ -19,9 +19,12 @@ const notoSerif = Noto_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: process.env.NEXT_PUBLIC_SITE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
+    : undefined,
   title: {
     default: siteConfig.name,
-    template: `%s | ${siteConfig.shortName}`,
+    template: '%s | Manna Share A Meal',
   },
   description: `${siteConfig.name} — ${siteConfig.tagline}`,
 };
@@ -32,10 +35,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${notoSerif.variable}`}>
-      <body className="flex min-h-screen flex-col">
+    <html lang="en" className={`${inter.variable} ${notoSerif.variable}`} suppressHydrationWarning>
+      <body className="flex min-h-screen flex-col" suppressHydrationWarning>
+        <SkipLink />
+        <UrgentMessage />
         <Header />
-        <div className="flex-1">{children}</div>
+        <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

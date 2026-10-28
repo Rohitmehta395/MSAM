@@ -65,13 +65,14 @@ export function Footer({ className, ...props }: FooterProps) {
       className={cn('bg-navy w-full text-white select-none', className)}
       {...props}
     >
-      <Container className="max-w-[1440px] pt-16 sm:pt-20">
+      <Container className="max-w-[1440px] pt-16">
         {/* Main Four-Column Grid:
             - Mobile (< sm): Single column stack with gap-10.
             - Tablet (sm to lg): 2-column grid with gap-8.
-            - Desktop (lg and above): 4 equal columns (300px each at 1440px) with 32px gaps inside the 1296px container.
+            - Desktop (lg to xl): Proportional 4-column grid.
+            - Desktop (xl / 1440px): 354px, 263px, 263px, 320px with 32px gaps matching design reference geometry.
         */}
-        <div className="grid grid-cols-1 gap-8 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="footer-grid pb-12">
           {/* Column 1: Brand Block */}
           <div className="space-y-6">
             <Link
@@ -79,10 +80,10 @@ export function Footer({ className, ...props }: FooterProps) {
               aria-label="Manna Share A Meal Home"
               className="inline-flex rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              <Logo variant="footer" className="h-24 w-auto" />
+              <Logo variant="header" className="h-11 w-auto sm:h-12" />
             </Link>
 
-            <p className="max-w-xs text-sm leading-relaxed text-white/75">
+            <p className="max-w-[290px] text-sm leading-relaxed text-white/75">
               {siteConfig.missionStatement}
             </p>
 
@@ -218,10 +219,13 @@ export function Footer({ className, ...props }: FooterProps) {
         <div className="border-t border-white/10" />
 
         {/* Bottom Legal Row */}
-        <div className="flex flex-col items-center justify-between gap-4 py-8 text-center text-xs text-white/60 sm:flex-row sm:text-left sm:text-sm">
+        <div className="flex flex-col items-center justify-between gap-4 pt-12 pb-8 text-center text-xs text-white/60 sm:flex-row sm:text-left sm:text-sm">
           <p>© {CURRENT_YEAR} Manna / Share A Meal. All rights reserved.</p>
 
-          <ul role="list" className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+          <ul
+            role="list"
+            className="flex flex-wrap items-center justify-center gap-6 sm:justify-end sm:gap-8"
+          >
             {legalLinks.map((item) => (
               <li key={item.href}>
                 <Link

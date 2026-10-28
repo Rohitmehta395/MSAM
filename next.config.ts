@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/community',
+        destination: '/community/food-providers',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
