@@ -20,6 +20,8 @@ export interface MediaImageProps {
   rounded?: MediaImageRounded;
   /** Object-fit scaling strategy. Default: 'cover' */
   fit?: MediaImageFit;
+  /** When true, stretches image to fill container height without aspect constraint */
+  fillContainer?: boolean;
 }
 
 const roundedStyles: Record<MediaImageRounded, string> = {
@@ -39,8 +41,8 @@ const aspectStyles: Record<string, string> = {
 };
 
 /**
- * Server Component rendering Cloudinary-backed images with automated responsive srcset,
- * or an accessible aspect-stable placeholder block when unconfigured.
+ * Server Component rendering Cloudinary-backed or verified direct URL images
+ * with automated responsive sizing, or an accessible aspect-stable placeholder block when unconfigured.
  */
 export function MediaImage({
   assetKey,
@@ -49,17 +51,19 @@ export function MediaImage({
   className,
   rounded = 'none',
   fit = 'cover',
+  fillContainer = false,
 }: MediaImageProps) {
   const asset: ImageAsset | undefined = images[assetKey];
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const isCloudinaryReady = Boolean(cloudName && asset?.publicId);
+  const isCloudinary = Boolean(cloudName && asset?.publicId);
+  const isDirectUrl = Boolean(asset?.src);
 
   if (!asset) {
     console.warn(`[MediaImage] Asset key not found in registry: "${assetKey}"`);
     return null;
   }
 
-  if (!isCloudinaryReady || !asset.publicId) {
+  if (!isCloudinary && !isDirectUrl) {
     return (
       <PlaceholderBlock
         alt={asset.alt}
@@ -70,23 +74,29 @@ export function MediaImage({
     );
   }
 
-  const aspectClass = aspectStyles[asset.aspect];
-  const customAspectStyle = aspectClass ? undefined : { aspectRatio: asset.aspect };
+  const aspectClass = fillContainer ? undefined : aspectStyles[asset.aspect];
+  const customAspectStyle =
+    fillContainer || aspectClass ? undefined : { aspectRatio: asset.aspect };
+
+  const imageSrc = isCloudinary && asset.publicId ? asset.publicId : asset.src!;
+  const unoptimized = !isCloudinary;
 
   return (
     <div
       style={customAspectStyle}
       className={cn(
         'relative w-full overflow-hidden',
+        fillContainer && 'h-full',
         aspectClass,
         roundedStyles[rounded],
         className,
       )}
     >
       <Image
-        src={asset.publicId}
+        src={imageSrc}
         alt={asset.alt}
         fill
+        unoptimized={unoptimized}
         sizes={sizes}
         priority={priority}
         className={cn(

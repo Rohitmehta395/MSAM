@@ -1,7 +1,9 @@
+import { PageHero } from '@/components/sections';
+
 export default function Home() {
   return (
     <>
-      <h1>MSAM</h1>
+      <PageHero />
     </>
   );
 }
