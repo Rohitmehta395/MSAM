@@ -99,6 +99,12 @@ export const images = {
     alt: 'Neighbors and community members enjoying a shared meal and meaningful connection',
     aspect: '4/3',
   },
+  'home.footprint.primary': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?auto=format&fit=crop&w=1200&q=80',
+    alt: 'Volunteers preparing, sorting, and packing nutritious groceries along staging tables at the distribution center',
+    aspect: '4/3',
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;

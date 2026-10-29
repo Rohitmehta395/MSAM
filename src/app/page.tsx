@@ -4,6 +4,7 @@ import {
   ImpactSection,
   FoodJourneySection,
   WaysToHelp,
+  OperationalFootprint,
 } from '@/components/sections';
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <ImpactSection />
       <FoodJourneySection />
       <WaysToHelp />
+      <OperationalFootprint />
     </>
   );
 }

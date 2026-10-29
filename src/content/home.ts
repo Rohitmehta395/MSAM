@@ -9,6 +9,9 @@ import {
   HandHeart,
   Handshake,
   CircleDollarSign,
+  Snowflake,
+  Boxes,
+  Lightbulb,
   type LucideIcon,
 } from 'lucide-react';
 import type { ImageKey } from './images';
@@ -482,4 +485,102 @@ export const homeWaysToHelpContent: HomeWaysToHelpContent = {
       community: 'home.manyHands.community',
     },
   },
+};
+
+export interface SaturdaySupportStep {
+  /** Unique identifier */
+  id: string;
+  /** Label describing the step */
+  label: string;
+  /** Dot tone: past uses lavender, current uses gold */
+  isHighlighted?: boolean;
+}
+
+export interface OperationalFeatureCard {
+  /** Unique identifier */
+  id: string;
+  /** Feature icon */
+  icon: LucideIcon;
+  /** Feature headline */
+  title: string;
+  /** Feature description */
+  description: string;
+}
+
+export interface HomeOperationalFootprintContent {
+  /** Eyebrow label */
+  eyebrow: string;
+  /** Section headline */
+  headline: string;
+  /** Descriptive lead */
+  lead: string;
+  /** Visual callout box */
+  callout: {
+    icon: LucideIcon;
+    text: string;
+  };
+  /** Link action */
+  action: {
+    label: string;
+    href: string;
+  };
+  /** Primary operational photograph asset key */
+  imageKey: ImageKey;
+  /** Floating Saturday support mini-timeline card */
+  miniTimeline: {
+    title: string;
+    steps: SaturdaySupportStep[];
+    note: string;
+  };
+  /** Three feature cards */
+  features: OperationalFeatureCard[];
+}
+
+/**
+ * Operational Footprint content grounded in:
+ * `design-reference/Home Page/5-Operational footprint.png`
+ */
+export const homeOperationalFootprintContent: HomeOperationalFootprintContent = {
+  eyebrow: 'BUILT FOR DEPENDABLE ACCESS',
+  headline: 'Support is provided with dignity and care.',
+  lead: 'Families receive groceries and support by appointment every Saturday.',
+  callout: {
+    icon: Lightbulb,
+    text: 'Support is provided with dignity, care, and no judgment.',
+  },
+  action: {
+    label: 'Learn more about our mission',
+    href: '/mission',
+  },
+  imageKey: 'home.footprint.primary',
+  miniTimeline: {
+    title: 'SATURDAY SUPPORT',
+    steps: [
+      { id: 'pickup', label: 'Provider pickup', isHighlighted: false },
+      { id: 'sort', label: 'Central sort', isHighlighted: false },
+      { id: 'support', label: 'Family support', isHighlighted: true },
+    ],
+    note: 'Support is provided by appointment every Saturday.',
+  },
+  features: [
+    {
+      id: 'cold-safe',
+      icon: Snowflake,
+      title: 'Cold-safe receiving',
+      description: 'Temperature-aware intake, labeling, and short-term storage protect quality.',
+    },
+    {
+      id: 'flexible-staging',
+      icon: Boxes,
+      title: 'Flexible staging',
+      description:
+        'Modular zones adapt to produce, pantry staples, prepared meals, and household needs.',
+    },
+    {
+      id: 'neighborhood-reach',
+      icon: MapPin,
+      title: 'Neighborhood reach',
+      description: 'Centers anchor smaller pop-ups and delivery routes closer to residents.',
+    },
+  ],
 };
