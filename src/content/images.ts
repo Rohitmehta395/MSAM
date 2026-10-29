@@ -57,6 +57,30 @@ export const images = {
     alt: 'Crates of wholesome produce being handed to families during Saturday grocery appointment',
     aspect: '3/4',
   },
+  'home.journey.step1': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?auto=format&fit=crop&w=800&q=80',
+    alt: 'Volunteers organizing fresh produce crates during Saturday distribution appointment',
+    aspect: '4/3',
+  },
+  'home.journey.step2': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1593113616828-6f22bca04804?auto=format&fit=crop&w=800&q=80',
+    alt: 'Volunteers packing and sorting wholesome grocery provisions into bags and boxes',
+    aspect: '4/3',
+  },
+  'home.journey.step3': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80',
+    alt: 'Paper grocery bags loaded with fresh vegetables, greens, and fruits ready for pickup',
+    aspect: '4/3',
+  },
+  'home.journey.step4': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
+    alt: 'Family gathered together preparing and enjoying a nourishing meal in their kitchen',
+    aspect: '4/3',
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;

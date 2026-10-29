@@ -13,3 +13,4 @@ export * from './CheckList';
 export * from './StatCard';
 export * from './SegmentedControl';
 export * from './Tabs';
+export * from './TimelineSteps';

@@ -1,4 +1,14 @@
-import { Calendar, Heart, MapPin, type LucideIcon } from 'lucide-react';
+import {
+  Calendar,
+  Heart,
+  MapPin,
+  Building2,
+  Share2,
+  Truck,
+  Users,
+  type LucideIcon,
+} from 'lucide-react';
+import type { ImageKey } from './images';
 
 export interface HeroAction {
   /** Button label */
@@ -85,6 +95,61 @@ export interface HomeImpactContent {
   description: string;
   /** Four metric cards */
   stats: HomeImpactStat[];
+}
+
+export interface FoodJourneyStep {
+  /** Unique identifier */
+  id: string;
+  /** Step number formatted with leading zero, e.g. '01' */
+  stepNumber: string;
+  /** Category badge text in uppercase */
+  category: string;
+  /** Lucide icon for category badge */
+  categoryIcon: LucideIcon;
+  /** Step main headline */
+  heading: string;
+  /** Step body description */
+  description: string;
+  /** Assurance check line text */
+  checkText: string;
+  /** Image registry asset key */
+  imageKey: ImageKey;
+}
+
+export interface FoodJourneySummaryChip {
+  /** Unique identifier */
+  id: string;
+  /** Large metric number or range */
+  value: string;
+  /** Descriptive label */
+  label: string;
+  /** Whether the chip is given a highlighted warm background */
+  isHighlighted?: boolean;
+}
+
+export interface HomeFoodJourneyContent {
+  /** Section eyebrow */
+  eyebrow: string;
+  /** Main section headline */
+  headline: string;
+  /** Descriptive lead paragraph */
+  lead: string;
+  /** Continuation cue in top right */
+  pathCue: {
+    label: string;
+  };
+  /** The 4 timeline steps */
+  steps: FoodJourneyStep[];
+  /** White summary card at bottom */
+  summaryCard: {
+    headline: string;
+    lead: string;
+    action: {
+      label: string;
+      href: string;
+    };
+    chips: FoodJourneySummaryChip[];
+  };
 }
 
 /**
@@ -192,4 +257,90 @@ export const homeImpactContent: HomeImpactContent = {
       caption: 'Future weekly service goal',
     },
   ],
+};
+
+/**
+ * Food Journey section content grounded in:
+ * `design-reference/Home Page/3-Food journey.png`
+ */
+export const homeFoodJourneyContent: HomeFoodJourneyContent = {
+  eyebrow: 'HOW WE SERVE',
+  headline: 'Support by appointment every Saturday.',
+  lead: 'Families receive groceries and support with dignity, care, and no judgment.',
+  pathCue: {
+    label: 'THE PATH CONTINUES',
+  },
+  steps: [
+    {
+      id: 'step-01',
+      stepNumber: '01',
+      category: 'FAMILIES RECEIVE GROCERIES',
+      categoryIcon: Building2,
+      heading: 'Support is provided by appointment.',
+      description: 'Families receive groceries and support with dignity, care, and no judgment.',
+      checkText: 'No income verification, paperwork, or judgment.',
+      imageKey: 'home.journey.step1',
+    },
+    {
+      id: 'step-02',
+      stepNumber: '02',
+      category: 'SUPPORT IS SHARED',
+      categoryIcon: Share2,
+      heading: 'Families receive groceries and care.',
+      description: 'Support is provided with dignity, care, and no judgment.',
+      checkText: 'Support is provided every Saturday.',
+      imageKey: 'home.journey.step2',
+    },
+    {
+      id: 'step-03',
+      stepNumber: '03',
+      category: 'FAMILIES ARE SERVED',
+      categoryIcon: Truck,
+      heading: 'Families receive groceries and support.',
+      description: 'Support is provided with dignity, care, and no judgment.',
+      checkText: 'Support is provided every Saturday.',
+      imageKey: 'home.journey.step3',
+    },
+    {
+      id: 'step-04',
+      stepNumber: '04',
+      category: 'FAMILIES ARE SERVED',
+      categoryIcon: Users,
+      heading: 'Families receive groceries and support.',
+      description: 'Support is provided with dignity, care, and no judgment.',
+      checkText: 'Support is provided every Saturday.',
+      imageKey: 'home.journey.step4',
+    },
+  ],
+  summaryCard: {
+    headline: 'Support by appointment every Saturday.',
+    lead: 'Families receive groceries and support with dignity, care, and no judgment.',
+    action: {
+      label: 'See how we measure impact',
+      href: '/mission',
+    },
+    chips: [
+      {
+        id: 'families-weekly',
+        value: '40-60',
+        label: 'families served every Saturday',
+      },
+      {
+        id: 'annual-groceries',
+        value: '$390,000+',
+        label: 'in groceries distributed annually',
+      },
+      {
+        id: 'per-visit',
+        value: '$150',
+        label: 'in groceries per family visit',
+      },
+      {
+        id: 'weekly-goal',
+        value: '100',
+        label: 'families weekly goal',
+        isHighlighted: true,
+      },
+    ],
+  },
 };
