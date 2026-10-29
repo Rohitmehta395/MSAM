@@ -66,7 +66,7 @@ export const headerCtas: readonly NavItem[] = [
  * Phone details are dynamically sourced from siteConfig.
  */
 export const urgentMessage: UrgentMessageData = {
-  text: `Need Prayer? Call us: ${siteConfig.phoneDisplay}`,
+  text: 'Need Prayer? Call us: 954-406-7580',
   phoneDisplay: siteConfig.phoneDisplay,
   phoneHref: siteConfig.phoneHref,
   action: {

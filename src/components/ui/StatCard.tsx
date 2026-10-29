@@ -66,7 +66,7 @@ export function StatCard({
       >
         <span
           className={cn(
-            'block text-2xl font-bold tracking-tight sm:text-3xl',
+            'block text-2xl font-bold tracking-tight sm:text-3xl xl:text-4xl',
             valueStyles[variant],
           )}
         >

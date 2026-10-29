@@ -1,6 +1,4 @@
 import {
-  Calendar,
-  Heart,
   MapPin,
   Building2,
   Share2,
@@ -12,6 +10,7 @@ import {
   Snowflake,
   Boxes,
   Lightbulb,
+  Utensils,
   type LucideIcon,
 } from 'lucide-react';
 import type { ImageKey } from './images';
@@ -62,6 +61,15 @@ export interface TrustStripItem {
   icon: LucideIcon;
 }
 
+export interface HomeMissionLegacyCard {
+  /** Uppercase eyebrow label */
+  eyebrow: string;
+  /** Bold legacy headline */
+  headline: string;
+  /** Supporting statement */
+  supportingText: string;
+}
+
 export interface HomeMissionContent {
   /** Section eyebrow label */
   eyebrow: string;
@@ -74,8 +82,10 @@ export interface HomeMissionContent {
     label: string;
     href: string;
   };
-  /** Lavender origin tile embedded in the collage */
-  originTile: {
+  /** Pale lavender legacy card embedded in the collage */
+  legacyCard: HomeMissionLegacyCard;
+  /** Backwards compatibility for originTile */
+  originTile?: {
     eyebrow: string;
     statement: string;
   };
@@ -164,19 +174,21 @@ export interface HomeFoodJourneyContent {
  */
 export const homeHeroContent: HomeHeroContent = {
   eyebrow: 'Fed by Faith. Driven by Love.',
-  headline: '35 Years Feeding Our Neighbors.',
-  lead: 'We provide groceries and support by appointment every Saturday, with no income verification, paperwork, or judgment.',
+  headline: 'Serving hope. Feeding neighbors. Reflecting Christ’s love.',
+  lead: 'For more than 35 years, Manna Share A Meal has served neighbors facing food insecurity with compassion, dignity, and the love of Christ.',
   primaryAction: {
-    label: 'Help deliver meals',
-    href: '/community/volunteers',
+    label: 'Register for support',
+    href: '/get-help',
     variant: 'primary',
+    icon: 'arrow',
   },
   secondaryAction: {
-    label: 'Become a food partner',
-    href: '/community/food-providers',
+    label: 'Learn more',
+    href: '/how-it-works',
     variant: 'secondary',
+    icon: 'none',
   },
-  reassurance: 'No income verification, paperwork, or judgment.',
+  reassurance: '100% donor-funded and volunteer-powered, with no government funding.',
   floatingCard: {
     title: 'Support by appointment',
     subtitle: 'Families receive groceries with dignity and care.',
@@ -185,58 +197,65 @@ export const homeHeroContent: HomeHeroContent = {
 
 /**
  * Trust strip items positioned directly below the hero mosaic,
- * emphasizing accessibility, dignity, and longevity in Broward County.
+ * emphasizing compassionate support, community, and faith-rooted mission.
+ * Grounded in: `design-reference/Home Page/Hero-updated.png`
  */
 export const homeTrustStripItems: TrustStripItem[] = [
   {
-    id: 'appointment',
-    title: 'Support by appointment',
-    description: 'No income verification, paperwork, or judgment.',
-    icon: Calendar,
+    id: 'compassionate-support',
+    title: 'Compassionate support',
+    description: 'Every person is respected, valued, and served with dignity.',
+    icon: Utensils,
   },
   {
-    id: 'community',
-    title: 'Community support',
-    description: 'Groceries and care for families in need.',
-    icon: Heart,
+    id: 'community-built',
+    title: 'Community built',
+    description: 'Meals connect volunteers, donors, and clients in meaningful ways.',
+    icon: Share2,
   },
   {
-    id: 'roots',
-    title: 'Broward County roots',
-    description: 'Serving Broward County for over 35 years.',
-    icon: MapPin,
+    id: 'faith-rooted',
+    title: 'Faith-rooted mission',
+    description: 'Feeding body and nourishing soul with every shared meal.',
+    icon: Users,
   },
 ];
 
 /**
- * Mission & Origin section content grounded in:
- * `design-reference/Home Page/2-Mission and origin.png`
+ * Mission section content grounded in revised design:
+ * `design-reference/Home Page/Mission and origin - updated.png`
  */
 export const homeMissionContent: HomeMissionContent = {
   eyebrow: 'OUR MISSION',
-  headline: 'Our mission is spiritual and nutritional nourishment for those who need it most.',
+  headline: 'Feeding the body. Nourishing the soul.',
   paragraphs: [
-    'We provide groceries and support by appointment every Saturday, with no income verification, paperwork, or judgment.',
-    'We serve Broward County and are supported entirely by private giving, with no government funding.',
+    'Rooted in our Christian faith, our mission is simple: no neighbor should go hungry, and every meal shared should reflect God’s grace and care.',
+    'For more than 35 years, volunteers, donors, and church partners have helped our ministry grow. Our heart remains the same: Christ-centered service with compassion and dignity.',
   ],
   action: {
     label: 'Learn more about our mission',
     href: '/mission',
   },
+  legacyCard: {
+    eyebrow: 'OUR LEGACY',
+    headline: 'More than 35 years',
+    supportingText: 'of Christ-centered service to our neighbors.',
+  },
   originTile: {
-    eyebrow: 'OUR ORIGIN',
-    statement: 'How a shared meal became a wider promise to the neighborhood.',
+    eyebrow: 'OUR LEGACY',
+    statement: 'More than 35 years of Christ-centered service to our neighbors.',
   },
 };
 
 /**
- * Navy Impact Panel content grounded in:
- * `design-reference/Home Page/2-Mission and origin.png`
+ * Navy Impact Panel content grounded in revised design:
+ * `design-reference/Home Page/Mission and origin - updated.png`
  */
 export const homeImpactContent: HomeImpactContent = {
   eyebrow: 'OUR IMPACT',
-  headline: 'Serving Broward County for over 35 years.',
-  description: 'We currently serve 40–60 families every Saturday.',
+  headline: 'Local generosity. Lasting impact.',
+  description:
+    'Serving Broward County for over 35 years. Current impact and our next goal, at a glance.',
   stats: [
     {
       id: 'families-weekly',

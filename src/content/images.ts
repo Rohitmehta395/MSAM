@@ -41,20 +41,20 @@ export const images = {
   },
   'home.hero.bottom': {
     publicId: undefined,
-    src: 'https://images.unsplash.com/photo-1584727638096-042c45049ebe?auto=format&fit=crop&w=800&q=80',
+    src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80',
     alt: 'Brown paper grocery bags filled with nutritious pantry staples and essentials',
     aspect: '4/3',
   },
   'home.mission.primary': {
     publicId: undefined,
-    src: 'https://images.unsplash.com/photo-1593113630400-ea4288922497?auto=format&fit=crop&w=800&q=80',
-    alt: 'Volunteers preparing fresh grocery packages and food provisions at community distribution center',
-    aspect: '3/4',
+    src: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80',
+    alt: 'Hands of community members and volunteers joined together in unity and faith',
+    aspect: '4/5',
   },
   'home.mission.secondary': {
     publicId: undefined,
-    src: 'https://images.unsplash.com/photo-1578357078586-491adf1aa5ba?auto=format&fit=crop&w=600&q=80',
-    alt: 'Crates of wholesome produce being handed to families during Saturday grocery appointment',
+    src: '/images/home/mission-community.png',
+    alt: 'Community members embraced together in support, prayer, and fellowship',
     aspect: '3/4',
   },
   'home.journey.step1': {

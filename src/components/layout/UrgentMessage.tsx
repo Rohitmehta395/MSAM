@@ -42,7 +42,7 @@ export function UrgentMessage({ className, ...props }: UrgentMessageProps) {
         >
           <span>{urgentMessage.action.label}</span>
           <ArrowRight
-            className="hidden h-3.5 w-3.5 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5 sm:inline-block"
+            className="inline-block h-3.5 w-3.5 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5"
             aria-hidden="true"
           />
         </Link>

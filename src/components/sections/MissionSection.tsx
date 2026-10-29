@@ -3,7 +3,6 @@ import { cn } from '@/lib/cn';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { Heading } from '@/components/ui/Heading';
 import { TextLink } from '@/components/ui/TextLink';
 import { MediaImage } from '@/components/media/MediaImage';
 import { homeMissionContent, type HomeMissionContent } from '@/content/home';
@@ -16,23 +15,35 @@ export interface MissionSectionProps {
 }
 
 /**
- * Home page Mission & Origin section.
+ * Home page Mission & Legacy section.
  *
- * Grounded in Figma frame: `design-reference/Home Page/2-Mission and origin.png`
+ * Grounded in revised design reference:
+ * `design-reference/Home Page/Mission and origin - updated.png`
+ *
  * Layout:
- * - Left column: Photographic collage pairing a tall primary pantry image,
- *   a secondary produce image, and a lavender "Our origin" statement tile.
- * - Right column: "OUR MISSION" eyebrow, section heading, mission statement copy,
- *   and link leading to `/mission`.
+ * - Left column: Asymmetrical photographic collage:
+ *   - Large portrait image on left (hands joined in unity, `home.mission.primary`).
+ *   - Stacked secondary column on right:
+ *     - Top: Supporting community embrace image (`home.mission.secondary`).
+ *     - Bottom: Pale lavender legacy card (`bg-[#f2edfa]`) celebrating over 35 years of service.
+ * - Right column: "OUR MISSION" eyebrow with gold dash, bold navy serif headline
+ *   ("Feeding the body. Nourishing the soul."), two contextual paragraphs,
+ *   and "Learn more about our mission →" pathway link leading to `/mission`.
  *
  * Architecture note:
- * - Uses `<Section bleed tone="canvas">` with a single `<Container className="max-w-[1440px]">`
- *   to align horizontally with the site Header, Hero, and Footer without nested padding.
+ * - Uses `<Section bleed tone="canvas">` with `<Container className="max-w-[1440px]">`
+ *   to match horizontal alignment across the homepage.
  */
 export function MissionSection({ content, className }: MissionSectionProps) {
-  const { eyebrow, headline, paragraphs, action, originTile } = {
+  const { eyebrow, headline, paragraphs, action, legacyCard, originTile } = {
     ...homeMissionContent,
     ...content,
+  };
+
+  const card = legacyCard || {
+    eyebrow: originTile?.eyebrow || 'OUR LEGACY',
+    headline: 'More than 35 years',
+    supportingText: originTile?.statement || 'of Christ-centered service to our neighbors.',
   };
 
   return (
@@ -44,74 +55,78 @@ export function MissionSection({ content, className }: MissionSectionProps) {
     >
       <Container className="max-w-[1440px]">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">
-          {/* Left Column: Photographic Collage + Lavender Origin Card */}
+          {/* Left Column: Asymmetrical Photographic Collage + Pale Lavender Legacy Card */}
           <div className="w-full lg:col-span-6">
-            <div className="grid grid-cols-1 gap-4 sm:h-[480px] sm:grid-cols-[1.4fr_1fr] sm:items-stretch lg:h-[520px] xl:grid-cols-[400px_220px]">
+            <div className="grid grid-cols-1 gap-4 sm:h-[490px] sm:grid-cols-[1.6fr_1fr] sm:items-stretch lg:h-[530px] xl:grid-cols-[380px_200px]">
               {/* Primary Tall Feature Image */}
-              <div className="rounded-panel shadow-card relative aspect-[4/5] w-full overflow-hidden sm:aspect-auto sm:h-full">
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px] shadow-sm sm:aspect-auto sm:h-full sm:rounded-[28px]">
                 <MediaImage
                   assetKey="home.mission.primary"
-                  sizes="(min-width: 1280px) 400px, (min-width: 1024px) 30vw, 100vw"
+                  sizes="(min-width: 1280px) 380px, (min-width: 1024px) 32vw, 100vw"
                   fillContainer
-                  rounded="panel"
+                  rounded="none"
+                  className="h-full w-full object-cover"
                 />
               </div>
 
-              {/* Secondary Column: Upper Produce Image + Lower Lavender Origin Card */}
+              {/* Secondary Column: Upper Support Image + Lower Pale Lavender Legacy Card */}
               <div className="flex flex-col gap-4 sm:h-full">
                 {/* Secondary Image */}
-                <div className="rounded-panel relative aspect-[4/3] w-full overflow-hidden shadow-sm sm:aspect-auto sm:min-h-[200px] sm:flex-1">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] shadow-sm sm:aspect-auto sm:flex-1 sm:rounded-[28px]">
                   <MediaImage
                     assetKey="home.mission.secondary"
-                    sizes="(min-width: 1280px) 220px, (min-width: 1024px) 18vw, 50vw"
+                    sizes="(min-width: 1280px) 200px, (min-width: 1024px) 18vw, 50vw"
                     fillContainer
-                    rounded="panel"
+                    rounded="none"
+                    className="h-full w-full object-cover"
                   />
                 </div>
 
-                {/* Lavender Origin Tile */}
-                <div className="rounded-panel border-border/60 bg-lavender flex shrink-0 flex-col justify-between border p-5 shadow-sm sm:p-6">
-                  <div className="flex items-center gap-2 select-none">
-                    <span
-                      className="bg-gold h-1.5 w-1.5 shrink-0 rounded-full"
-                      aria-hidden="true"
-                    />
-                    <span className="text-label text-navy tracking-wider">
-                      {originTile.eyebrow}
-                    </span>
+                {/* Pale Lavender Legacy Card */}
+                <div className="flex shrink-0 flex-col justify-between rounded-[24px] border border-[#e2d9f3]/70 bg-[#f2edfa] p-5.5 shadow-sm sm:rounded-[28px] sm:p-6">
+                  <span className="text-navy text-[11px] font-bold tracking-wider uppercase sm:text-xs">
+                    {card.eyebrow}
+                  </span>
+                  <div className="mt-3 sm:mt-4">
+                    <p className="text-navy font-serif text-2xl leading-[1.08] font-bold sm:text-3xl lg:text-[32px]">
+                      {card.headline}
+                    </p>
+                    <p className="text-navy/70 mt-2 text-xs leading-snug sm:text-sm">
+                      {card.supportingText}
+                    </p>
                   </div>
-                  <p className="text-navy mt-3 font-serif text-lg leading-snug font-bold lg:text-xl">
-                    {originTile.statement}
-                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right Column: Mission Copy & Pathway Link */}
-          <div className="flex flex-col items-start justify-center lg:col-span-6 lg:pl-2 xl:pl-6">
+          <div className="flex flex-col items-start justify-center lg:col-span-6 lg:pl-4 xl:pl-8">
             {/* Eyebrow */}
             <Eyebrow className="mb-3 sm:mb-4">{eyebrow}</Eyebrow>
 
             {/* Section Headline */}
-            <Heading
-              as="h2"
-              variant="section"
-              className="text-navy max-w-xl tracking-tight text-balance"
-            >
+            <h2 className="text-navy max-w-xl font-serif text-3xl leading-[1.15] font-bold tracking-tight text-balance sm:text-4xl lg:text-[46px] xl:text-[50px]">
               {headline}
-            </Heading>
+            </h2>
 
             {/* Mission Statement Paragraphs */}
-            <div className="text-muted mt-6 max-w-xl space-y-4 text-base leading-relaxed sm:text-lg">
+            <div className="mt-6 max-w-xl space-y-4 text-base leading-relaxed sm:text-lg">
               {paragraphs.map((para, index) => (
-                <p key={index}>{para}</p>
+                <p key={index} className={cn(index === 0 ? 'text-slate-800' : 'text-slate-600')}>
+                  {para}
+                </p>
               ))}
             </div>
 
             {/* Action Pathway Link */}
             <div className="mt-8">
-              <TextLink href={action.href}>{action.label}</TextLink>
+              <TextLink
+                href={action.href}
+                className="text-navy hover:text-navy/80 text-base font-semibold sm:text-lg"
+              >
+                {action.label}
+              </TextLink>
             </div>
           </div>
         </div>
