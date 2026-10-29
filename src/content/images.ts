@@ -81,6 +81,24 @@ export const images = {
     alt: 'Family gathered together preparing and enjoying a nourishing meal in their kitchen',
     aspect: '4/3',
   },
+  'home.manyHands.main': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1200&q=80',
+    alt: 'Community members gathering around an abundant table of fresh produce and groceries',
+    aspect: '16/9',
+  },
+  'home.manyHands.hands': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80',
+    alt: 'Diverse hands of community volunteers and partners joined together in solidarity',
+    aspect: '4/3',
+  },
+  'home.manyHands.community': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80',
+    alt: 'Neighbors and community members enjoying a shared meal and meaningful connection',
+    aspect: '4/3',
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;

@@ -1,4 +1,10 @@
-import { PageHero, MissionSection, ImpactSection, FoodJourneySection } from '@/components/sections';
+import {
+  PageHero,
+  MissionSection,
+  ImpactSection,
+  FoodJourneySection,
+  WaysToHelp,
+} from '@/components/sections';
 
 export default function Home() {
   return (
@@ -7,6 +13,7 @@ export default function Home() {
       <MissionSection />
       <ImpactSection />
       <FoodJourneySection />
+      <WaysToHelp />
     </>
   );
 }

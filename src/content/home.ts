@@ -6,6 +6,9 @@ import {
   Share2,
   Truck,
   Users,
+  HandHeart,
+  Handshake,
+  CircleDollarSign,
   type LucideIcon,
 } from 'lucide-react';
 import type { ImageKey } from './images';
@@ -342,5 +345,141 @@ export const homeFoodJourneyContent: HomeFoodJourneyContent = {
         isHighlighted: true,
       },
     ],
+  },
+};
+
+export interface PathwayCard {
+  /** Unique identifier */
+  id: string;
+  /** Uppercase audience label */
+  audience: string;
+  /** Lucide icon for card badge */
+  icon: LucideIcon;
+  /** Background tone for the card */
+  tone: 'lavender' | 'warm' | 'sage';
+  /** Main card title */
+  title: string;
+  /** Supporting descriptive copy */
+  description: string;
+  /** Checklist items with green checkmarks */
+  features: string[];
+  /** Primary button action */
+  action: {
+    label: string;
+    href: string;
+  };
+}
+
+export interface ManyHandsMosaic {
+  /** Section eyebrow label */
+  eyebrow: string;
+  /** Main statement headline */
+  headline: string;
+  /** Contextual description */
+  description: string;
+  /** List of tag chips */
+  tags: string[];
+  /** Pathway button action */
+  action: {
+    label: string;
+    href: string;
+  };
+  /** Three mosaic images */
+  images: {
+    main: ImageKey;
+    hands: ImageKey;
+    community: ImageKey;
+  };
+}
+
+export interface HomeWaysToHelpContent {
+  /** Eyebrow label */
+  eyebrow: string;
+  /** Main section headline */
+  headline: string;
+  /** Contextual lead description */
+  lead: string;
+  /** The 3 pathway cards */
+  pathways: PathwayCard[];
+  /** The Many Hands mosaic banner */
+  manyHands: ManyHandsMosaic;
+}
+
+/**
+ * Ways to Help section content grounded in:
+ * `design-reference/Home Page/4-Ways to take part.png`
+ */
+export const homeWaysToHelpContent: HomeWaysToHelpContent = {
+  eyebrow: 'WAYS TO HELP',
+  headline: 'Three ways to help.',
+  lead: 'Whether you need food support, can share resources, or want to fund the mission, there is a clear next step.',
+  pathways: [
+    {
+      id: 'neighbors',
+      audience: 'FOR NEIGHBORS',
+      icon: HandHeart,
+      tone: 'lavender',
+      title: 'Request Food Support',
+      description: 'Request groceries and support by appointment every Saturday.',
+      features: [
+        'Locate the nearest distribution',
+        'Share dietary or access needs',
+        'Receive a private follow-up',
+      ],
+      action: {
+        label: 'Request Food Assistance',
+        href: '/get-help',
+      },
+    },
+    {
+      id: 'partners',
+      audience: 'FOR FOOD AND SITE PARTNERS',
+      icon: Handshake,
+      tone: 'warm',
+      title: 'Partner with Us',
+      description: 'Partner with us to help collect, recover, and distribute groceries.',
+      features: [
+        'Offer food or logistics capacity',
+        'Host a distribution point',
+        'Plan safe, reliable handoffs',
+      ],
+      action: {
+        label: 'Become A Partner',
+        href: '/community/partners',
+      },
+    },
+    {
+      id: 'funders',
+      audience: 'FOR FUNDERS AND SPONSORS',
+      icon: CircleDollarSign,
+      tone: 'sage',
+      title: 'Fund the Mission',
+      description: 'Help provide groceries and support for families in need.',
+      features: [
+        'Sponsor a route or center',
+        'Support capacity-building grants',
+        'Build an employee giving plan',
+      ],
+      action: {
+        label: 'Learn More About Giving',
+        href: '/donate',
+      },
+    },
+  ],
+  manyHands: {
+    eyebrow: 'MADE OF MANY HANDS',
+    headline:
+      'Together, we collect, recover, and distribute food that might otherwise go to waste straight into the homes of families who need it most.',
+    description: 'We are grateful for the community partners who help make this work possible.',
+    tags: ['Neighbors', 'Food donors', 'Site hosts', 'Drivers', 'Volunteers', 'Funders'],
+    action: {
+      label: 'Learn more about partnership',
+      href: '/community/partners',
+    },
+    images: {
+      main: 'home.manyHands.main',
+      hands: 'home.manyHands.hands',
+      community: 'home.manyHands.community',
+    },
   },
 };
