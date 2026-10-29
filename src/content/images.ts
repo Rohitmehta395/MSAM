@@ -8,6 +8,8 @@
  *   - msam/home/hero-main
  *   - msam/home/hero-top
  *   - msam/home/hero-bottom
+ *   - msam/home/mission-primary
+ *   - msam/home/mission-secondary
  *   - msam/mission/origin-team
  */
 
@@ -42,6 +44,18 @@ export const images = {
     src: 'https://images.unsplash.com/photo-1584727638096-042c45049ebe?auto=format&fit=crop&w=800&q=80',
     alt: 'Brown paper grocery bags filled with nutritious pantry staples and essentials',
     aspect: '4/3',
+  },
+  'home.mission.primary': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1593113630400-ea4288922497?auto=format&fit=crop&w=800&q=80',
+    alt: 'Volunteers preparing fresh grocery packages and food provisions at community distribution center',
+    aspect: '3/4',
+  },
+  'home.mission.secondary': {
+    publicId: undefined,
+    src: 'https://images.unsplash.com/photo-1578357078586-491adf1aa5ba?auto=format&fit=crop&w=600&q=80',
+    alt: 'Crates of wholesome produce being handed to families during Saturday grocery appointment',
+    aspect: '3/4',
   },
 } as const satisfies Record<string, ImageAsset>;
 

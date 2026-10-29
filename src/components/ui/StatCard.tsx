@@ -36,6 +36,8 @@ export interface StatCardProps extends React.HTMLAttributes<HTMLDivElement> {
   caption?: React.ReactNode;
   /** Visual color theme variant. Default: 'light' */
   variant?: StatCardVariant;
+  /** When true, renders a compact restrained metric card matching the home impact panel */
+  compact?: boolean;
   /** Optional custom class name */
   className?: string;
 }
@@ -48,9 +50,38 @@ export function StatCard({
   label,
   caption,
   variant = 'light',
+  compact = false,
   className,
   ...props
 }: StatCardProps) {
+  if (compact) {
+    return (
+      <div
+        className={cn(
+          'rounded-panel flex min-h-[175px] flex-col justify-between border p-5 sm:p-6',
+          cardStyles[variant],
+          className,
+        )}
+        {...props}
+      >
+        <span
+          className={cn(
+            'block text-2xl font-bold tracking-tight sm:text-3xl',
+            valueStyles[variant],
+          )}
+        >
+          {value}
+        </span>
+        <div className="mt-4 sm:mt-5">
+          <p className={cn('text-sm leading-snug font-semibold', labelStyles[variant])}>{label}</p>
+          {caption && (
+            <p className={cn('mt-1 text-xs leading-normal', captionStyles[variant])}>{caption}</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(

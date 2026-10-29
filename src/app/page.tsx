@@ -1,9 +1,11 @@
-import { PageHero } from '@/components/sections';
+import { PageHero, MissionSection, ImpactSection } from '@/components/sections';
 
 export default function Home() {
   return (
     <>
       <PageHero />
+      <MissionSection />
+      <ImpactSection />
     </>
   );
 }

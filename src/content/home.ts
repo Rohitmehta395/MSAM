@@ -46,6 +46,47 @@ export interface TrustStripItem {
   icon: LucideIcon;
 }
 
+export interface HomeMissionContent {
+  /** Section eyebrow label */
+  eyebrow: string;
+  /** Main section headline */
+  headline: string;
+  /** Body paragraphs describing the mission */
+  paragraphs: string[];
+  /** Pathway action link */
+  action: {
+    label: string;
+    href: string;
+  };
+  /** Lavender origin tile embedded in the collage */
+  originTile: {
+    eyebrow: string;
+    statement: string;
+  };
+}
+
+export interface HomeImpactStat {
+  /** Unique identifier for rendering key */
+  id: string;
+  /** Large metric value */
+  value: string;
+  /** Primary bold description */
+  label: string;
+  /** Secondary contextual explanation */
+  caption: string;
+}
+
+export interface HomeImpactContent {
+  /** Section eyebrow label */
+  eyebrow: string;
+  /** Main section headline */
+  headline: string;
+  /** Contextual lead description */
+  description: string;
+  /** Four metric cards */
+  stats: HomeImpactStat[];
+}
+
 /**
  * Hero content grounded in the approved design reference:
  * `design-reference/Home Page/1-Hero.png`
@@ -95,3 +136,60 @@ export const homeTrustStripItems: TrustStripItem[] = [
     icon: MapPin,
   },
 ];
+
+/**
+ * Mission & Origin section content grounded in:
+ * `design-reference/Home Page/2-Mission and origin.png`
+ */
+export const homeMissionContent: HomeMissionContent = {
+  eyebrow: 'OUR MISSION',
+  headline: 'Our mission is spiritual and nutritional nourishment for those who need it most.',
+  paragraphs: [
+    'We provide groceries and support by appointment every Saturday, with no income verification, paperwork, or judgment.',
+    'We serve Broward County and are supported entirely by private giving, with no government funding.',
+  ],
+  action: {
+    label: 'Learn more about our mission',
+    href: '/mission',
+  },
+  originTile: {
+    eyebrow: 'OUR ORIGIN',
+    statement: 'How a shared meal became a wider promise to the neighborhood.',
+  },
+};
+
+/**
+ * Navy Impact Panel content grounded in:
+ * `design-reference/Home Page/2-Mission and origin.png`
+ */
+export const homeImpactContent: HomeImpactContent = {
+  eyebrow: 'OUR IMPACT',
+  headline: 'Serving Broward County for over 35 years.',
+  description: 'We currently serve 40–60 families every Saturday.',
+  stats: [
+    {
+      id: 'families-weekly',
+      value: '40–60',
+      label: 'families served every Saturday',
+      caption: 'Current weekly support',
+    },
+    {
+      id: 'annual-groceries',
+      value: '$390,000+',
+      label: 'in groceries distributed annually',
+      caption: 'Current annual distribution',
+    },
+    {
+      id: 'family-visit-value',
+      value: '$150',
+      label: 'in groceries per family visit',
+      caption: 'Current average support',
+    },
+    {
+      id: 'weekly-goal',
+      value: '100',
+      label: 'families weekly goal',
+      caption: 'Future weekly service goal',
+    },
+  ],
+};
