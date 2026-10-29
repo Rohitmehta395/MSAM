@@ -42,14 +42,9 @@ export async function POST(req: Request) {
       let redirectUrl: string | null = null;
       try {
         const url = new URL(baseUrl);
-        url.searchParams.set('amount', String(donation.amount));
-        url.searchParams.set('frequency', donation.frequency);
-        if (donation.designation) {
-          url.searchParams.set('designation', donation.designation);
-        }
-        if (donation.donorEmail) {
-          url.searchParams.set('email', donation.donorEmail);
-        }
+        // Retain the hosted checkout redirect as a basic hand-off.
+        // External hosted forms (e.g. Zeffy) do not guarantee pre-selection via
+        // arbitrary query parameters, and donor PII (email) is omitted for privacy.
         redirectUrl = url.toString();
       } catch {
         // Safe fallback if configured URL is unparseable

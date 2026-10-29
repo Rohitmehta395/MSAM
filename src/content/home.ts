@@ -584,3 +584,122 @@ export const homeOperationalFootprintContent: HomeOperationalFootprintContent = 
     },
   ],
 };
+
+export interface DonationFrequencyOption {
+  value: 'once' | 'monthly';
+  label: string;
+  badge?: string;
+}
+
+export interface HomeDonationContent {
+  /** Eyebrow text on dark navy */
+  eyebrow: string;
+  /** Primary section headline */
+  headline: string;
+  /** Supporting lead description */
+  lead: string;
+  /** Three checklist bullet items */
+  checklist: string[];
+  /** Bottom mission tagline quote and link */
+  quote: {
+    text: string;
+    action: {
+      label: string;
+      href: string;
+    };
+  };
+  /** Donation selector card configuration */
+  selector: {
+    frequencyLabel: string;
+    frequencies: DonationFrequencyOption[];
+    defaultFrequency: 'once' | 'monthly';
+    amountsLabel: string;
+    amountsSubtitle?: string;
+    presetAmounts: number[];
+    defaultAmount: number;
+    impactNotes: Record<
+      number,
+      {
+        headline: string;
+        description: string;
+      }
+    >;
+    defaultImpactNote: {
+      headline: string;
+      description: string;
+    };
+    customAmountLabel: string;
+    customAmountPlaceholder: string;
+    ctaBaseText: string;
+    taxExemptNotice: string;
+  };
+}
+
+/**
+ * Donation Section content grounded in:
+ * `design-reference/Home Page/6-Donation.png`
+ */
+export const homeDonationContent: HomeDonationContent = {
+  eyebrow: 'GIVE WITH STAYING POWER',
+  headline: 'Help provide groceries and support for families in need.',
+  lead: 'Your gift helps provide groceries and support for families in need.',
+  checklist: [
+    'Help provide groceries and support for families in need',
+    'Support our mission with a gift that makes a difference',
+    'Your gift helps provide groceries and support with dignity and care',
+  ],
+  quote: {
+    text: 'Fed by Faith. Driven by Love.',
+    action: {
+      label: 'Our mission',
+      href: '/mission',
+    },
+  },
+  selector: {
+    frequencyLabel: 'Donation Frequency',
+    frequencies: [
+      { value: 'once', label: 'Give once' },
+      { value: 'monthly', label: 'Give monthly', badge: 'MOST IMPACT' },
+    ],
+    defaultFrequency: 'monthly',
+    amountsLabel: 'Choose a gift amount',
+    amountsSubtitle: 'Published donation choices',
+    presetAmounts: [5, 10, 15, 20, 150, 300],
+    defaultAmount: 150,
+    impactNotes: {
+      5: {
+        headline: '$5 supplies wholesome staple items.',
+        description:
+          'Every gift provides essential nutrition for families attending our Saturday distribution.',
+      },
+      10: {
+        headline: '$10 provides fresh fruits and vegetables.',
+        description: 'Nutritious produce sourced and staged with care for neighborhood families.',
+      },
+      15: {
+        headline: '$15 covers pantry staples and canned goods.',
+        description: 'Protein, grains, and canned staples ready for dependable distribution.',
+      },
+      20: {
+        headline: '$20 provides grocery essentials for a local family.',
+        description: 'Nutritious groceries distributed by appointment every Saturday morning.',
+      },
+      150: {
+        headline: '$150 feeds one family.',
+        description: 'Comprehensive grocery provisions and dignified care for a full household.',
+      },
+      300: {
+        headline: '$300 supports multiple local households.',
+        description: 'Expands our weekend distribution reach across Broward County communities.',
+      },
+    },
+    defaultImpactNote: {
+      headline: 'Your gift makes a direct difference.',
+      description: 'Support is provided with dignity, care, and no judgment every Saturday.',
+    },
+    customAmountLabel: 'Or enter custom amount ($ USD)',
+    customAmountPlaceholder: '$ Other amount',
+    ctaBaseText: 'Donate',
+    taxExemptNotice: 'Registered 501(c)(3) nonprofit organization',
+  },
+};
