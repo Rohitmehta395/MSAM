@@ -46,7 +46,7 @@ export function MissionSection({ content, className }: MissionSectionProps) {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">
           {/* Left Column: Photographic Collage + Lavender Origin Card */}
           <div className="w-full lg:col-span-6">
-            <div className="grid grid-cols-1 gap-4 sm:h-[480px] sm:grid-cols-[1.4fr_1fr] sm:items-stretch lg:h-[520px] lg:grid-cols-[380px_200px] xl:grid-cols-[400px_220px]">
+            <div className="grid grid-cols-1 gap-4 sm:h-[480px] sm:grid-cols-[1.4fr_1fr] sm:items-stretch lg:h-[520px] xl:grid-cols-[400px_220px]">
               {/* Primary Tall Feature Image */}
               <div className="rounded-panel shadow-card relative aspect-[4/5] w-full overflow-hidden sm:aspect-auto sm:h-full">
                 <MediaImage

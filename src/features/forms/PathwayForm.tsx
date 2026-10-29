@@ -115,6 +115,7 @@ export function PathwayForm<TFieldValues extends FieldValues = FieldValues>({
           type="text"
           tabIndex={-1}
           autoComplete="off"
+          className="pointer-events-none absolute top-0 left-0 h-0 w-0 opacity-0"
           {...register('_hp' as Path<TFieldValues>)}
         />
       </div>

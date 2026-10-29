@@ -36,11 +36,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${notoSerif.variable}`} suppressHydrationWarning>
-      <body className="flex min-h-screen flex-col" suppressHydrationWarning>
+      <body
+        className="flex min-h-screen w-full max-w-full flex-col overflow-x-clip"
+        suppressHydrationWarning
+      >
         <SkipLink />
         <UrgentMessage />
         <Header />
-        <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
+        <main id="main" tabIndex={-1} className="w-full max-w-full flex-1 focus:outline-none">
           {children}
         </main>
         <Footer />

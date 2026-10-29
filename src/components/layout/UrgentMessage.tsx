@@ -26,13 +26,13 @@ export function UrgentMessage({ className, ...props }: UrgentMessageProps) {
       )}
       {...props}
     >
-      <Container className="flex items-center justify-between gap-2 whitespace-nowrap sm:gap-4">
+      <Container className="flex items-center justify-between gap-2 text-xs font-semibold sm:gap-4 sm:text-[13px] md:text-sm">
         {/* Direct-dial telephone link */}
         <a
           href={urgentMessage.phoneHref}
-          className="inline-flex items-center gap-1.5 rounded-sm py-1 text-white/95 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          className="inline-flex min-w-0 items-center gap-1.5 truncate rounded-sm py-1 text-white/95 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
-          <span>{urgentMessage.text}</span>
+          <span className="truncate">{urgentMessage.text}</span>
         </a>
 
         {/* Recurring contribution pathway */}

@@ -53,7 +53,7 @@ export function NewsletterForm({ className, source = 'footer' }: NewsletterFormP
       onSubmit={submit}
       noValidate
       aria-busy={isSubmitting}
-      className={cn('relative w-full', className)}
+      className={cn('relative w-full min-w-0', className)}
     >
       {/* Anti-spam honeypot - hidden from sighted users and assistive tech */}
       <div className="sr-only" aria-hidden="true">
@@ -63,6 +63,7 @@ export function NewsletterForm({ className, source = 'footer' }: NewsletterFormP
           type="text"
           tabIndex={-1}
           autoComplete="off"
+          className="pointer-events-none absolute top-0 left-0 h-0 w-0 opacity-0"
           {...register('_hp')}
         />
       </div>
@@ -76,7 +77,7 @@ export function NewsletterForm({ className, source = 'footer' }: NewsletterFormP
 
       <div
         className={cn(
-          'relative flex h-12 w-full items-center rounded-full border bg-white/5 pr-1.5 pl-4 transition-colors duration-150',
+          'relative flex h-12 w-full min-w-0 items-center rounded-full border bg-white/5 pr-1.5 pl-4 transition-colors duration-150',
           hasError
             ? 'border-amber-400 focus-within:border-amber-400 focus-within:ring-1 focus-within:ring-amber-400'
             : 'focus-within:border-gold focus-within:ring-gold border-white/20 focus-within:ring-1 hover:border-white/30',
@@ -94,7 +95,7 @@ export function NewsletterForm({ className, source = 'footer' }: NewsletterFormP
             [hasError ? errorId : null, message ? statusId : null].filter(Boolean).join(' ') ||
             undefined
           }
-          className="w-full bg-transparent text-sm text-white placeholder:text-white/50 focus:outline-none disabled:opacity-50"
+          className="w-full min-w-0 bg-transparent text-sm text-white placeholder:text-white/50 focus:outline-none disabled:opacity-50"
           {...register('email')}
         />
 

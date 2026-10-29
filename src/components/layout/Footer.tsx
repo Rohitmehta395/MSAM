@@ -60,21 +60,17 @@ export function Footer({ className, ...props }: FooterProps) {
   const aboutColumn = footerColumns[1];
 
   return (
-    <footer
-      role="contentinfo"
-      className={cn('bg-navy w-full text-white select-none', className)}
-      {...props}
-    >
-      <Container className="max-w-[1440px] pt-16">
+    <footer role="contentinfo" className={cn('bg-navy w-full text-white', className)} {...props}>
+      <Container className="max-w-[1440px] pt-12 sm:pt-16">
         {/* Main Four-Column Grid:
-            - Mobile (< sm): Single column stack with gap-10.
-            - Tablet (sm to lg): 2-column grid with gap-8.
-            - Desktop (lg to xl): Proportional 4-column grid.
-            - Desktop (xl / 1440px): 354px, 263px, 263px, 320px with 32px gaps matching design reference geometry.
+            - Mobile (< sm): Brand full width, 2 link columns side-by-side (2-up), Newsletter full width.
+            - Tablet (sm to lg): 2-column grid.
+            - Desktop (lg to xl): Proportional 4-column grid matching design reference geometry.
+            - Desktop (1440px): 354px, 263px, 263px, 320px with 32px gaps.
         */}
         <div className="footer-grid pb-12">
-          {/* Column 1: Brand Block */}
-          <div className="space-y-6">
+          {/* Column 1: Brand Block (spans full width on mobile, 1 col on desktop) */}
+          <div className="col-span-2 min-w-0 space-y-6 lg:col-span-1">
             <Link
               href="/"
               aria-label="Manna Share A Meal Home"
@@ -87,7 +83,7 @@ export function Footer({ className, ...props }: FooterProps) {
               {siteConfig.missionStatement}
             </p>
 
-            {/* Social links: Instagram, Facebook, and LinkedIn */}
+            {/* Social links: Instagram, Facebook, and LinkedIn (touch target >= 44px on mobile) */}
             <div className="flex items-center gap-3">
               {[
                 {
@@ -121,7 +117,7 @@ export function Footer({ className, ...props }: FooterProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={ariaLabel}
-                      className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition-colors duration-150 hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition-colors duration-150 hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:h-[38px] sm:w-[38px]"
                     >
                       <Icon className="h-4.5 w-4.5" />
                     </a>
@@ -132,7 +128,7 @@ export function Footer({ className, ...props }: FooterProps) {
                   <span
                     key={name}
                     aria-label={`${name} profile not yet configured`}
-                    className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/50"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/50 sm:h-[38px] sm:w-[38px]"
                   >
                     <Icon className="h-4.5 w-4.5" />
                   </span>
@@ -141,18 +137,18 @@ export function Footer({ className, ...props }: FooterProps) {
             </div>
           </div>
 
-          {/* Column 2: Ways to Help */}
+          {/* Column 2: Ways to Help (1 column on mobile, sits 2-up next to About) */}
           {waysToHelpColumn && (
-            <div className="col-span-1 space-y-4">
+            <div className="col-span-1 min-w-0 space-y-4">
               <h3 className="text-label text-gold font-bold">{waysToHelpColumn.title}</h3>
-              <ul role="list" className="space-y-3">
+              <ul role="list" className="space-y-1 sm:space-y-3">
                 {waysToHelpColumn.links
                   .filter((link) => !link.hidden)
                   .map((link) => (
-                    <li key={link.href}>
+                    <li key={link.href} className="min-w-0">
                       <Link
                         href={link.href}
-                        className="inline-flex min-h-[32px] items-center rounded-sm text-sm text-white/80 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                        className="inline-flex min-h-[44px] w-full min-w-0 items-center rounded-sm text-sm leading-snug text-white/80 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-[36px] lg:min-h-[32px]"
                       >
                         {link.label}
                       </Link>
@@ -162,18 +158,18 @@ export function Footer({ className, ...props }: FooterProps) {
             </div>
           )}
 
-          {/* Column 3: About */}
+          {/* Column 3: About (1 column on mobile, sits 2-up next to Ways to Help) */}
           {aboutColumn && (
-            <div className="col-span-1 space-y-4">
+            <div className="col-span-1 min-w-0 space-y-4">
               <h3 className="text-label text-gold font-bold">{aboutColumn.title}</h3>
-              <ul role="list" className="space-y-3">
+              <ul role="list" className="space-y-1 sm:space-y-3">
                 {aboutColumn.links
                   .filter((link) => !link.hidden)
                   .map((link) => (
-                    <li key={link.href}>
+                    <li key={link.href} className="min-w-0">
                       <Link
                         href={link.href}
-                        className="inline-flex min-h-[32px] items-center rounded-sm text-sm text-white/80 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                        className="inline-flex min-h-[44px] w-full min-w-0 items-center rounded-sm text-sm leading-snug text-white/80 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-[36px] lg:min-h-[32px]"
                       >
                         {link.label}
                       </Link>
@@ -183,8 +179,8 @@ export function Footer({ className, ...props }: FooterProps) {
             </div>
           )}
 
-          {/* Column 4: Newsletter */}
-          <div className="space-y-4">
+          {/* Column 4: Newsletter (spans full width on mobile, 1 col on desktop) */}
+          <div className="col-span-2 min-w-0 space-y-4 sm:col-span-2 lg:col-span-1">
             <h3 className="text-label text-gold font-bold">Newsletter</h3>
 
             <p className="text-sm text-white/75">
@@ -197,16 +193,16 @@ export function Footer({ className, ...props }: FooterProps) {
               <p>
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="rounded-sm transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex min-h-[44px] items-center rounded-sm transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-[32px]"
                 >
                   {siteConfig.email}
                 </a>
               </p>
-              <p>
-                Community line:{' '}
+              <p className="flex flex-wrap items-center gap-x-1">
+                <span>Community line:</span>{' '}
                 <a
                   href={siteConfig.phoneHref}
-                  className="rounded-sm transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex min-h-[44px] items-center rounded-sm font-medium text-white/90 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-[32px]"
                 >
                   {siteConfig.phoneDisplay}
                 </a>
@@ -218,19 +214,19 @@ export function Footer({ className, ...props }: FooterProps) {
         {/* Horizontal Divider */}
         <div className="border-t border-white/10" />
 
-        {/* Bottom Legal Row */}
-        <div className="flex flex-col items-center justify-between gap-4 pt-12 pb-8 text-center text-xs text-white/60 sm:flex-row sm:text-left sm:text-sm">
+        {/* Bottom Legal Row: Stacks and centres on mobile, side-by-side on tablet/desktop */}
+        <div className="flex flex-col items-center justify-between gap-4 pt-8 pb-8 text-center text-xs text-white/60 sm:flex-row sm:pt-12 sm:text-left sm:text-sm">
           <p>© {CURRENT_YEAR} Manna / Share A Meal. All rights reserved.</p>
 
           <ul
             role="list"
-            className="flex flex-wrap items-center justify-center gap-6 sm:justify-end sm:gap-8"
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-end sm:gap-8"
           >
             {legalLinks.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-sm transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex min-h-[44px] items-center rounded-sm py-1 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-0 sm:py-0"
                 >
                   {item.label}
                 </Link>

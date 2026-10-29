@@ -134,7 +134,7 @@ export function PageHero({
 
           {/* Right Column: 3-Image Mosaic with Floating Appointment Card */}
           <div className="w-full shrink-0 lg:w-auto">
-            <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-[1fr_200px] lg:grid-cols-[440px_212px]">
+            <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-[1fr_200px] xl:grid-cols-[440px_212px]">
               {/* Main Feature Image (4/5 aspect ratio at mobile, filling 585px height on desktop) */}
               <div className="rounded-panel shadow-card relative aspect-[4/5] w-full overflow-hidden sm:aspect-auto sm:h-[480px] lg:h-[585px]">
                 <MediaImage
