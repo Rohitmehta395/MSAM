@@ -7,3 +7,4 @@ export * from './CheckboxGroup';
 export * from './ChipToggle';
 export * from './ConsentCheckbox';
 export * from './FormStatus';
+export * from './FileAttach';

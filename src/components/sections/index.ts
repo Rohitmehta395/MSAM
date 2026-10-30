@@ -8,4 +8,5 @@ export { DonationSection, type DonationSectionProps } from './DonationSection';
 export { HowItWorksHero, type HowItWorksHeroProps } from './HowItWorksHero';
 export { HowItWorksTimeline, type HowItWorksTimelineProps } from './HowItWorksTimeline';
 export { WhoWeServe, type WhoWeServeProps } from './WhoWeServe';
+export { IntakeFormSection, type IntakeFormSectionProps } from './IntakeFormSection';
 export { PrayerCallout, type PrayerCalloutProps } from './PrayerCallout';

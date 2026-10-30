@@ -1,4 +1,5 @@
 import type { ImageKey } from './images';
+import { siteConfig } from '@/config/site';
 
 export interface HowItWorksHeroAction {
   label: string;
@@ -50,6 +51,38 @@ export interface HowItWorksPrayerContent {
   phoneLabel: string;
   phoneNumber: string;
   phoneHref: string;
+}
+
+export interface HowItWorksIntakeFieldConfig {
+  label: string;
+  placeholder: string;
+}
+
+export interface HowItWorksIntakeContent {
+  sectionEyebrow: string;
+  sectionHeadline: string;
+  sectionAction: {
+    label: string;
+    href: string;
+  };
+  cardTitle: string;
+  cardSubtitle: string;
+  cardDescription: string;
+  fields: {
+    householdName: HowItWorksIntakeFieldConfig;
+    peopleCount: HowItWorksIntakeFieldConfig;
+    firstName: HowItWorksIntakeFieldConfig;
+    lastName: HowItWorksIntakeFieldConfig;
+    phone: HowItWorksIntakeFieldConfig;
+    email: HowItWorksIntakeFieldConfig;
+  };
+  dietaryPreferences: {
+    title: string;
+    description: string;
+    fieldLabel: string;
+    options: Array<{ id: string; label: string }>;
+  };
+  submitLabel: string;
 }
 
 export const howItWorksHeroContent: HowItWorksHeroContent = {
@@ -123,4 +156,57 @@ export const howItWorksPrayerContent: HowItWorksPrayerContent = {
   phoneLabel: 'Call for Prayer',
   phoneNumber: '(954) 406-7580',
   phoneHref: 'tel:9544067580',
+};
+
+export const howItWorksIntakeContent: HowItWorksIntakeContent = {
+  sectionEyebrow: 'REGISTRATION & SUPPORT',
+  sectionHeadline: 'Request Support',
+  sectionAction: {
+    label: 'Call for an Appointment',
+    href: siteConfig.phoneHref,
+  },
+  cardTitle: 'Household Registration Request',
+  cardSubtitle: 'Tell us about your household.',
+  cardDescription:
+    'This brief intake helps us prepare support for your household. We’ll use the information to coordinate your visit and connect you with the right resources.',
+  fields: {
+    householdName: {
+      label: 'Household Name',
+      placeholder: 'Household name',
+    },
+    peopleCount: {
+      label: 'Number of people in household',
+      placeholder: '1',
+    },
+    firstName: {
+      label: 'First Name',
+      placeholder: 'First Name',
+    },
+    lastName: {
+      label: 'Last Name',
+      placeholder: 'Last Name',
+    },
+    phone: {
+      label: 'Phone Number',
+      placeholder: 'Phone Number',
+    },
+    email: {
+      label: 'Email',
+      placeholder: 'Email',
+    },
+  },
+  dietaryPreferences: {
+    title: 'Household Dietary Preferences',
+    description:
+      'Choose any preferences that apply. Availability varies; share allergies or access needs during registration.',
+    fieldLabel: 'Dietary preferences (optional)',
+    options: [
+      { id: 'Dairy-free', label: 'Dairy-free' },
+      { id: 'Gluten-free', label: 'Gluten-free' },
+      { id: 'No preference', label: 'No preference' },
+      { id: 'Vegetarian', label: 'Vegetarian' },
+      { id: 'Vegan', label: 'Vegan' },
+    ],
+  },
+  submitLabel: 'Continue registration',
 };

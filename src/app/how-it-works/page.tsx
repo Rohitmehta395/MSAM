@@ -3,6 +3,7 @@ import {
   HowItWorksHero,
   HowItWorksTimeline,
   WhoWeServe,
+  IntakeFormSection,
   PrayerCallout,
 } from '@/components/sections';
 
@@ -23,6 +24,9 @@ export default function HowItWorksPage() {
 
       {/* 6.2: Who We Serve */}
       <WhoWeServe />
+
+      {/* 6.3: Family Intake Form */}
+      <IntakeFormSection />
 
       {/* 6.2: Prayer Callout Band */}
       <PrayerCallout />
