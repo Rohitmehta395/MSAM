@@ -105,6 +105,42 @@ export const images = {
     alt: 'Volunteers preparing, sorting, and packing nutritious groceries along staging tables at the distribution center',
     aspect: '4/3',
   },
+  'howItWorks.hero.main': {
+    publicId: undefined,
+    src: '/images/how-it-works/hero-main.png',
+    alt: 'Community food pantry distribution with volunteers and families selecting fresh produce outdoors',
+    aspect: '4/5',
+  },
+  'howItWorks.hero.top': {
+    publicId: undefined,
+    src: '/images/how-it-works/hero-top.png',
+    alt: 'Volunteers carefully organizing fresh carrots, apples, and produce crates',
+    aspect: '4/3',
+  },
+  'howItWorks.hero.bottom': {
+    publicId: undefined,
+    src: '/images/how-it-works/hero-bottom.png',
+    alt: 'Family happily cooking and preparing a nourishing meal together in their kitchen',
+    aspect: '4/3',
+  },
+  'howItWorks.steps.step1': {
+    publicId: undefined,
+    src: '/images/how-it-works/step-1.png',
+    alt: 'Food pantry coordinator reviewing distribution appointment checklist with a volunteer',
+    aspect: '3/2',
+  },
+  'howItWorks.steps.step2': {
+    publicId: undefined,
+    src: '/images/how-it-works/step-2.png',
+    alt: 'Friendly volunteers unloading crates of wholesome groceries from the distribution van',
+    aspect: '3/2',
+  },
+  'howItWorks.steps.step3': {
+    publicId: undefined,
+    src: '/images/how-it-works/step-3.png',
+    alt: 'Community food distribution center staging tables filled with fresh produce and bread',
+    aspect: '3/2',
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;

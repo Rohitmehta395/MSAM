@@ -1,20 +1,20 @@
 import type { Metadata } from 'next';
-import { Container, Section, Heading, Lead } from '@/components/ui';
+import { HowItWorksHero, HowItWorksTimeline } from '@/components/sections';
 
 export const metadata: Metadata = {
-  title: 'How It Works',
+  title: 'How It Works | Manna Share A Meal',
+  description:
+    'Getting food support from Manna is simple, dignified, andChrist-centered. Learn how to schedule your Saturday appointment in Broward County.',
 };
 
 export default function HowItWorksPage() {
   return (
-    <Section className="py-16 md:py-24">
-      <Container className="space-y-4">
-        <Heading as="h1">How It Works</Heading>
-        <Lead>
-          Page under construction. Information about our food recovery and logistics model will be
-          available soon.
-        </Lead>
-      </Container>
-    </Section>
+    <>
+      {/* 6.1: How It Works Hero */}
+      <HowItWorksHero />
+
+      {/* 6.1: Three-Step Process Timeline */}
+      <HowItWorksTimeline />
+    </>
   );
 }
