@@ -34,10 +34,28 @@ export interface HowItWorksTimelineContent {
   steps: HowItWorksStep[];
 }
 
+export interface HowItWorksWhoWeServeContent {
+  eyebrow: string;
+  headline: string;
+  paragraphs: string[];
+  callout: {
+    text: string;
+  };
+  imageKey: ImageKey;
+}
+
+export interface HowItWorksPrayerContent {
+  eyebrow: string;
+  headline: string;
+  phoneLabel: string;
+  phoneNumber: string;
+  phoneHref: string;
+}
+
 export const howItWorksHeroContent: HowItWorksHeroContent = {
   eyebrow: 'GET HELP',
-  headline: 'A helping hand starts here.',
-  lead: 'Job loss, illness, or rising costs can make food hard to afford. You are not alone. Call (954) 406-7580 for a Saturday appointment, or start a brief registration below.',
+  headline: 'Getting Food Is Simple',
+  lead: 'Reach us at (954) 406-7580 to schedule your visit. We serve by appointment every Saturday to make sure every family gets the time and attention they deserve.',
   primaryAction: {
     label: 'Call for an Appointment',
     href: 'tel:9544067580',
@@ -45,7 +63,7 @@ export const howItWorksHeroContent: HowItWorksHeroContent = {
   },
   secondaryAction: {
     label: 'Need Prayer',
-    href: 'tel:9544067580',
+    href: '#prayer',
     variant: 'secondary',
   },
   reassurance: 'No income verification. No paperwork. No judgment.',
@@ -58,31 +76,51 @@ export const howItWorksHeroContent: HowItWorksHeroContent = {
 
 export const howItWorksTimelineContent: HowItWorksTimelineContent = {
   eyebrow: 'WHAT WE OFFER',
-  headline: 'How to Register',
+  headline: 'Getting Food Is Simple',
   steps: [
     {
       id: 'step-01',
       stepNumber: '01',
-      title: 'Complete a Brief Registration',
+      title: 'Call for an Appointment',
       description:
-        'Complete a brief registration online or in person. We’ll use the information to prepare support for your household and make your visit as smooth as possible.',
+        'Reach us at (954) 406-7580 to schedule your visit. We serve by appointment every Saturday to make sure every family gets the time and attention they deserve.',
       imageKey: 'howItWorks.steps.step1',
     },
     {
       id: 'step-02',
       stepNumber: '02',
-      title: 'Plan Your Saturday Visit',
+      title: 'Come As You Are',
       description:
-        'Call (954) 406-7580 to arrange your appointment. We serve every Saturday and treat each guest with the same respect we ask of our volunteers.',
+        'No income verification. No paperwork. No judgment. Bring yourself and your family.',
       imageKey: 'howItWorks.steps.step2',
     },
     {
       id: 'step-03',
       stepNumber: '03',
-      title: 'What You’ll Receive',
+      title: 'Leave with More Than Food',
       description:
-        'Receive nutritious groceries for your household—about $150 in fresh and non-perishable food per family visit—along with a warm welcome, prayer, and encouragement if you wish.',
+        'We distribute approximately $150 worth of fresh and non-perishable groceries per family. We also offer prayer, encouragement, and connection. You are not alone.',
       imageKey: 'howItWorks.steps.step3',
     },
   ],
+};
+
+export const howItWorksWhoWeServeContent: HowItWorksWhoWeServeContent = {
+  eyebrow: 'WHO WE SERVE',
+  headline: 'Who We Serve',
+  paragraphs: [
+    'We serve anyone experiencing food insecurity in our community, including working families facing financial hardship, seniors on fixed incomes, individuals in transition or crisis, and families with children. There are no income requirements. We trust you. If you need help, we are here every Saturday.',
+  ],
+  callout: {
+    text: 'No income verification. No paperwork. No judgment. Bring yourself and your family.',
+  },
+  imageKey: 'howItWorks.whoWeServe.primary',
+};
+
+export const howItWorksPrayerContent: HowItWorksPrayerContent = {
+  eyebrow: 'NEED PRAYER',
+  headline: 'Need Prayer',
+  phoneLabel: 'Call for Prayer',
+  phoneNumber: '(954) 406-7580',
+  phoneHref: 'tel:9544067580',
 };

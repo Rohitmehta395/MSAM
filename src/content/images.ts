@@ -141,6 +141,12 @@ export const images = {
     alt: 'Community food distribution center staging tables filled with fresh produce and bread',
     aspect: '3/2',
   },
+  'howItWorks.whoWeServe.primary': {
+    publicId: undefined,
+    src: '/images/how-it-works/who-we-serve.png',
+    alt: 'Families, seniors, and neighbors gathered happily around a warm table sharing a wholesome meal',
+    aspect: '4/3',
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;

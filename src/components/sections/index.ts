@@ -7,3 +7,5 @@ export { OperationalFootprint, type OperationalFootprintProps } from './Operatio
 export { DonationSection, type DonationSectionProps } from './DonationSection';
 export { HowItWorksHero, type HowItWorksHeroProps } from './HowItWorksHero';
 export { HowItWorksTimeline, type HowItWorksTimelineProps } from './HowItWorksTimeline';
+export { WhoWeServe, type WhoWeServeProps } from './WhoWeServe';
+export { PrayerCallout, type PrayerCalloutProps } from './PrayerCallout';
