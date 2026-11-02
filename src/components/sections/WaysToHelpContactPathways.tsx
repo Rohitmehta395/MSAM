@@ -16,9 +16,6 @@ export interface WaysToHelpContactPathwaysProps {
   className?: string;
 }
 
-// Backwards-compatible alias
-export type MissionContactPathwaysProps = WaysToHelpContactPathwaysProps;
-
 /**
  * Ways to Help / Donate Page — Contact Pathways Section: Tabs and Inquiry Form.
  * Grounded in Figma frame: `design-reference/Donations Page/3-Contact pathways.png` (1440x1116).
@@ -82,6 +79,3 @@ export function WaysToHelpContactPathways({
     </Section>
   );
 }
-
-// Backwards-compatible export
-export const MissionContactPathways = WaysToHelpContactPathways;

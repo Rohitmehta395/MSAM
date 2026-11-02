@@ -13,9 +13,6 @@ export interface WaysToHelpHeroProps {
   className?: string;
 }
 
-// Backwards-compatible alias
-export type MissionHeroProps = WaysToHelpHeroProps;
-
 /**
  * Ways to Help / Donate Page Hero section: "Give, Serve, Share".
  *
@@ -75,6 +72,3 @@ export function WaysToHelpHero({ content: contentOverride, className }: WaysToHe
     </Section>
   );
 }
-
-// Backwards-compatible export
-export const MissionHero = WaysToHelpHero;

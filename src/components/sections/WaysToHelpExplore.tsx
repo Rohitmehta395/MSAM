@@ -21,9 +21,6 @@ export interface WaysToHelpExploreProps {
   className?: string;
 }
 
-// Backwards-compatible alias
-export type MissionWaysToHelpProps = WaysToHelpExploreProps;
-
 const toneCardStyles: Record<string, string> = {
   lavender: 'bg-lavender border-border/60',
   warm: 'bg-warm border-border/60',
@@ -152,6 +149,3 @@ export function WaysToHelpExplore({ content: contentOverride, className }: WaysT
     </Section>
   );
 }
-
-// Backwards-compatible export
-export const MissionWaysToHelp = WaysToHelpExplore;

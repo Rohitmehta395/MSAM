@@ -23,9 +23,6 @@ export interface WaysToHelpInquiryFormProps {
   className?: string;
 }
 
-// Backwards-compatible alias
-export type MissionInquiryFormProps = WaysToHelpInquiryFormProps;
-
 /**
  * Interactive Contact Pathways Inquiry Form for the Ways to Help / Donate page.
  * Grounded in Figma frame: `design-reference/Donations Page/3-Contact pathways.png` (1440x1116).
@@ -238,6 +235,3 @@ export function WaysToHelpInquiryForm({
     </div>
   );
 }
-
-// Backwards-compatible export
-export const MissionInquiryForm = WaysToHelpInquiryForm;

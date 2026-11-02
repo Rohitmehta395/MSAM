@@ -196,14 +196,3 @@ export const waysToHelpContactPathwaysContent: WaysToHelpContactPathwaysContent 
   submitLabel: 'Send inquiry',
   reassuranceText: 'We’ll follow up with the best next step for your interest.',
 };
-
-// Backwards-compatible aliases
-export type MissionHeroContent = WaysToHelpHeroContent;
-export const missionHeroContent = waysToHelpHeroContent;
-
-export type MissionParticipationCard = WaysToHelpParticipationCard;
-export type MissionWaysToHelpContent = WaysToHelpExploreContent;
-export const missionWaysToHelpContent = waysToHelpExploreContent;
-
-export type MissionContactPathwaysContent = WaysToHelpContactPathwaysContent;
-export const missionContactPathwaysContent = waysToHelpContactPathwaysContent;
