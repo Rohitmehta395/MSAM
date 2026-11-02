@@ -26,7 +26,7 @@ export default function HowItWorksPage() {
       <WhoWeServe />
 
       {/* 6.3: Family Intake Form */}
-      <IntakeFormSection />
+      {/* <IntakeFormSection /> */}
 
       {/* 6.2: Prayer Callout Band */}
       {/* <PrayerCallout /> */}

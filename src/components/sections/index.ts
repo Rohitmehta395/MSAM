@@ -16,3 +16,4 @@ export {
   WaysToHelpContactPathways,
   type WaysToHelpContactPathwaysProps,
 } from './WaysToHelpContactPathways';
+export { MissionHero, type MissionHeroProps } from './MissionHero';

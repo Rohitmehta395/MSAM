@@ -87,10 +87,10 @@ export interface HowItWorksIntakeContent {
 
 export const howItWorksHeroContent: HowItWorksHeroContent = {
   eyebrow: 'GET HELP',
-  headline: 'Getting Food Is Simple',
-  lead: 'Reach us at (954) 406-7580 to schedule your visit. We serve by appointment every Saturday to make sure every family gets the time and attention they deserve.',
+  headline: 'Come and receive food every Saturday.',
+  lead: 'Call (954) 406-7580 for a Saturday appointment, or start a brief registration below. Food is handed out between 9:00 AM and 10:30 AM, as service is first-come, first-served.',
   primaryAction: {
-    label: 'Call for an Appointment',
+    label: 'Register for Food Service',
     href: 'tel:9544067580',
     variant: 'primary',
   },
@@ -109,30 +109,30 @@ export const howItWorksHeroContent: HowItWorksHeroContent = {
 
 export const howItWorksTimelineContent: HowItWorksTimelineContent = {
   eyebrow: 'WHAT WE OFFER',
-  headline: 'Getting Food Is Simple',
+  headline: 'How to Register',
   steps: [
     {
       id: 'step-01',
       stepNumber: '01',
-      title: 'Call for an Appointment',
+      title: 'Complete a Brief Registration',
       description:
-        'Reach us at (954) 406-7580 to schedule your visit. We serve by appointment every Saturday to make sure every family gets the time and attention they deserve.',
+        'Complete a brief registration online or in person. We’ll use the information to prepare support for your household and make your visit as smooth as possible.',
       imageKey: 'howItWorks.steps.step1',
     },
     {
       id: 'step-02',
       stepNumber: '02',
-      title: 'Come As You Are',
+      title: 'Plan Your Saturday Visit',
       description:
-        'No income verification. No paperwork. No judgment. Bring yourself and your family.',
+        'Call (954) 406-7580 to arrange your appointment. We serve every Saturday and treat each guest with the same respect we ask of our volunteers.',
       imageKey: 'howItWorks.steps.step2',
     },
     {
       id: 'step-03',
       stepNumber: '03',
-      title: 'Leave with More Than Food',
+      title: 'What You’ll Receive',
       description:
-        'We distribute approximately $150 worth of fresh and non-perishable groceries per family. We also offer prayer, encouragement, and connection. You are not alone.',
+        'Receive nutritious groceries for your household—about $150 in fresh and non-perishable food per family visit—along with a warm welcome, prayer, and encouragement if you wish.',
       imageKey: 'howItWorks.steps.step3',
     },
   ],
@@ -140,12 +140,12 @@ export const howItWorksTimelineContent: HowItWorksTimelineContent = {
 
 export const howItWorksWhoWeServeContent: HowItWorksWhoWeServeContent = {
   eyebrow: 'WHO WE SERVE',
-  headline: 'Who We Serve',
+  headline: 'We Are Here For You',
   paragraphs: [
-    'We serve anyone experiencing food insecurity in our community, including working families facing financial hardship, seniors on fixed incomes, individuals in transition or crisis, and families with children. There are no income requirements. We trust you. If you need help, we are here every Saturday.',
+    'If you have questions or need additional support, our team does its best to guide you and connect you with community partners. We’re here to help.',
   ],
   callout: {
-    text: 'No income verification. No paperwork. No judgment. Bring yourself and your family.',
+    text: 'You are welcome here. No income verification is required.',
   },
   imageKey: 'howItWorks.whoWeServe.primary',
 };
