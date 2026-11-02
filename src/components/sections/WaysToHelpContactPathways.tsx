@@ -4,21 +4,24 @@ import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import {
-  missionContactPathwaysContent,
-  type MissionContactPathwaysContent,
-} from '@/content/mission';
-import { MissionInquiryForm } from '@/features/forms/MissionInquiryForm';
+  waysToHelpContactPathwaysContent,
+  type WaysToHelpContactPathwaysContent,
+} from '@/content/ways-to-help';
+import { WaysToHelpInquiryForm } from '@/features/forms/WaysToHelpInquiryForm';
 
-export interface MissionContactPathwaysProps {
+export interface WaysToHelpContactPathwaysProps {
   /** Optional content override */
-  content?: Partial<MissionContactPathwaysContent>;
+  content?: Partial<WaysToHelpContactPathwaysContent>;
   /** Optional custom class name */
   className?: string;
 }
 
+// Backwards-compatible alias
+export type MissionContactPathwaysProps = WaysToHelpContactPathwaysProps;
+
 /**
- * Mission Page — Part 6.4C: Contact Pathways Section.
- * Grounded in Figma frame: `design-reference/Mission Page/Contact pathways-updated.png` (1440x1116).
+ * Ways to Help / Donate Page — Contact Pathways Section: Tabs and Inquiry Form.
+ * Grounded in Figma frame: `design-reference/Donations Page/3-Contact pathways.png` (1440x1116).
  *
  * Layout:
  * - Canvas background (`tone="canvas"` / `#fcfbfd`).
@@ -29,14 +32,14 @@ export interface MissionContactPathwaysProps {
  *   - Right-aligned contact helper linking to telephone line: "Questions about giving or serving? Call (954) 406-7580."
  * - Central Elevated Card:
  *   - White surface, `rounded-card` (32px), border `border-border/60`, `shadow-card`.
- *   - Houses interactive `MissionInquiryForm` with 3 accessible tabs, complete form controls, and anti-spam protection.
+ *   - Houses interactive `WaysToHelpInquiryForm` with 3 accessible tabs, complete form controls, and anti-spam protection.
  */
-export function MissionContactPathways({
+export function WaysToHelpContactPathways({
   content: contentOverride,
   className,
-}: MissionContactPathwaysProps) {
+}: WaysToHelpContactPathwaysProps) {
   const content = {
-    ...missionContactPathwaysContent,
+    ...waysToHelpContactPathwaysContent,
     ...contentOverride,
   };
 
@@ -73,9 +76,12 @@ export function MissionContactPathways({
 
         {/* Central Elevated White Card */}
         <div className="rounded-card border-border/60 shadow-card mt-8 border bg-white p-6 sm:mt-10 sm:p-10 lg:mt-12 lg:p-12">
-          <MissionInquiryForm content={content} />
+          <WaysToHelpInquiryForm content={content} />
         </div>
       </Container>
     </Section>
   );
 }
+
+// Backwards-compatible export
+export const MissionContactPathways = WaysToHelpContactPathways;

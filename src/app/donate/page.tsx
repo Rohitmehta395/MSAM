@@ -1,19 +1,22 @@
 import type { Metadata } from 'next';
-import { Container, Section, Heading, Lead } from '@/components/ui';
+import {
+  WaysToHelpHero,
+  WaysToHelpExplore,
+  WaysToHelpContactPathways,
+} from '@/components/sections';
 
 export const metadata: Metadata = {
-  title: 'Donate',
+  title: 'Ways to Help',
+  description:
+    'Manna Share A Meal is sustained by individuals, businesses, and churches. Join us with fresh healthy food, volunteer time, and steady support.',
 };
 
 export default function DonatePage() {
   return (
-    <Section className="py-16 md:py-24">
-      <Container className="space-y-4">
-        <Heading as="h1">Donate Now</Heading>
-        <Lead>
-          Page under construction. Secure online giving options will be launched here shortly.
-        </Lead>
-      </Container>
-    </Section>
+    <>
+      <WaysToHelpHero />
+      <WaysToHelpExplore />
+      <WaysToHelpContactPathways />
+    </>
   );
 }

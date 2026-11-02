@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         destination: '/community/food-providers',
         permanent: true,
       },
+      {
+        source: '/ways-to-help',
+        destination: '/donate',
+        permanent: false,
+      },
     ];
   },
 };

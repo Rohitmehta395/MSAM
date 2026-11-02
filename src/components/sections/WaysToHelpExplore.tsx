@@ -9,17 +9,20 @@ import { Heading } from '@/components/ui/Heading';
 import { CheckList } from '@/components/ui/CheckList';
 import { siteConfig } from '@/config/site';
 import {
-  missionWaysToHelpContent,
-  type MissionWaysToHelpContent,
+  waysToHelpExploreContent,
+  type WaysToHelpExploreContent,
   type ParticipationCardIcon,
-} from '@/content/mission';
+} from '@/content/ways-to-help';
 
-export interface MissionWaysToHelpProps {
+export interface WaysToHelpExploreProps {
   /** Optional content override */
-  content?: Partial<MissionWaysToHelpContent>;
+  content?: Partial<WaysToHelpExploreContent>;
   /** Optional custom class name */
   className?: string;
 }
+
+// Backwards-compatible alias
+export type MissionWaysToHelpProps = WaysToHelpExploreProps;
 
 const toneCardStyles: Record<string, string> = {
   lavender: 'bg-lavender border-border/60',
@@ -34,9 +37,9 @@ const iconMap: Record<ParticipationCardIcon, React.ElementType> = {
 };
 
 /**
- * Mission Page — Ways to Take Part section.
+ * Ways to Help / Donate Page — Ways to Take Part / Explore section: "Explore ways to give, serve, and share."
  *
- * Grounded in Figma frame: `design-reference/Mission Page/Ways to take part- updated.png` (1440 × 631 px).
+ * Grounded in Figma frame: `design-reference/Donations Page/2-Ways to take part.png` (1440 × 631 px).
  *
  * Structure:
  * 1. Two-column responsive section header:
@@ -49,9 +52,9 @@ const iconMap: Record<ParticipationCardIcon, React.ElementType> = {
  *    Each card includes a white icon container, uppercase category tag, title, description,
  *    3-item green-check checklist, subtle top divider, and bold navy text-link CTA.
  */
-export function MissionWaysToHelp({ content: contentOverride, className }: MissionWaysToHelpProps) {
+export function WaysToHelpExplore({ content: contentOverride, className }: WaysToHelpExploreProps) {
   const content = {
-    ...missionWaysToHelpContent,
+    ...waysToHelpExploreContent,
     ...contentOverride,
   };
 
@@ -99,21 +102,18 @@ export function MissionWaysToHelp({ content: contentOverride, className }: Missi
               <div
                 key={card.id}
                 className={cn(
-                  'rounded-card shadow-card flex flex-col justify-between border p-7 transition-all duration-200 sm:p-8 lg:p-9',
-                  toneCardStyles[card.tone] ?? 'border-border/60 bg-white',
-                  isLastOnTablet &&
-                    'w-full md:col-span-2 md:mx-auto md:max-w-md lg:col-span-1 lg:max-w-none',
+                  'rounded-card relative flex flex-col justify-between border p-8 shadow-xs transition-shadow duration-200 hover:shadow-md sm:p-10',
+                  toneCardStyles[card.tone],
+                  // When on 2-col tablet layout, stretch the 3rd card full-width for balanced visual hierarchy
+                  isLastOnTablet && 'md:col-span-2 lg:col-span-1',
                 )}
               >
                 <div>
-                  {/* Card Header: Icon Badge on left + Category on right */}
-                  <div className="flex items-center justify-between">
-                    <span
-                      aria-hidden="true"
-                      className="text-navy flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-2xl bg-white shadow-2xs"
-                    >
-                      <Icon className="h-6 w-6 stroke-[1.75]" />
-                    </span>
+                  {/* Card Header: Icon in White Box + Audience Tag */}
+                  <div className="flex items-center gap-4">
+                    <div className="text-navy flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white shadow-2xs">
+                      <Icon className="h-7 w-7" aria-hidden="true" />
+                    </div>
                     <span className="text-navy/70 text-xs font-bold tracking-widest uppercase">
                       {card.audience}
                     </span>
@@ -152,3 +152,6 @@ export function MissionWaysToHelp({ content: contentOverride, className }: Missi
     </Section>
   );
 }
+
+// Backwards-compatible export
+export const MissionWaysToHelp = WaysToHelpExplore;

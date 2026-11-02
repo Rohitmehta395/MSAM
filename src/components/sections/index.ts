@@ -10,6 +10,21 @@ export { HowItWorksTimeline, type HowItWorksTimelineProps } from './HowItWorksTi
 export { WhoWeServe, type WhoWeServeProps } from './WhoWeServe';
 export { IntakeFormSection, type IntakeFormSectionProps } from './IntakeFormSection';
 export { PrayerCallout, type PrayerCalloutProps } from './PrayerCallout';
-export { MissionHero, type MissionHeroProps } from './MissionHero';
-export { MissionWaysToHelp, type MissionWaysToHelpProps } from './MissionWaysToHelp';
-export { MissionContactPathways, type MissionContactPathwaysProps } from './MissionContactPathways';
+export {
+  WaysToHelpHero,
+  type WaysToHelpHeroProps,
+  MissionHero,
+  type MissionHeroProps,
+} from './WaysToHelpHero';
+export {
+  WaysToHelpExplore,
+  type WaysToHelpExploreProps,
+  MissionWaysToHelp,
+  type MissionWaysToHelpProps,
+} from './WaysToHelpExplore';
+export {
+  WaysToHelpContactPathways,
+  type WaysToHelpContactPathwaysProps,
+  MissionContactPathways,
+  type MissionContactPathwaysProps,
+} from './WaysToHelpContactPathways';

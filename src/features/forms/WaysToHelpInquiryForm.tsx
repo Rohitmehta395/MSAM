@@ -7,25 +7,28 @@ import { Field, Input, Textarea, ConsentCheckbox, FormStatus } from '@/component
 import { Button } from '@/components/ui/Button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {
-  missionContactPathwaysContent,
-  type MissionContactPathwaysContent,
+  waysToHelpContactPathwaysContent,
+  type WaysToHelpContactPathwaysContent,
   type PathwayTabId,
-} from '@/content/mission';
+} from '@/content/ways-to-help';
 import { pathwayInquirySchema, type PathwayInquiry } from '@/lib/validation';
 import { useFormSubmission } from './useFormSubmission';
 
-export interface MissionInquiryFormProps {
+export interface WaysToHelpInquiryFormProps {
   /** Optional content override */
-  content?: Partial<MissionContactPathwaysContent>;
+  content?: Partial<WaysToHelpContactPathwaysContent>;
   /** Optional callback fired upon verified successful submission */
   onSuccess?: (values: PathwayInquiry) => void;
   /** Optional custom class name */
   className?: string;
 }
 
+// Backwards-compatible alias
+export type MissionInquiryFormProps = WaysToHelpInquiryFormProps;
+
 /**
- * Interactive Contact Pathways Inquiry Form for the Mission page.
- * Grounded in Figma frame: `design-reference/Mission Page/Contact pathways-updated.png` (1440x1116).
+ * Interactive Contact Pathways Inquiry Form for the Ways to Help / Donate page.
+ * Grounded in Figma frame: `design-reference/Donations Page/3-Contact pathways.png` (1440x1116).
  *
  * Features:
  * - 3 Accessible pathway tabs: Give Food, Serve, Give Funds with gold underline indicator.
@@ -35,13 +38,13 @@ export interface MissionInquiryFormProps {
  * - Submission pipeline via Phase 4 `useFormSubmission` targeting POST /api/contact.
  * - Anti-spam honeypot, minimum fill-time, rate limiting, and zero PII logging.
  */
-export function MissionInquiryForm({
+export function WaysToHelpInquiryForm({
   content: contentOverride,
   onSuccess,
   className,
-}: MissionInquiryFormProps) {
+}: WaysToHelpInquiryFormProps) {
   const content = {
-    ...missionContactPathwaysContent,
+    ...waysToHelpContactPathwaysContent,
     ...contentOverride,
   };
 
@@ -235,3 +238,6 @@ export function MissionInquiryForm({
     </div>
   );
 }
+
+// Backwards-compatible export
+export const MissionInquiryForm = WaysToHelpInquiryForm;

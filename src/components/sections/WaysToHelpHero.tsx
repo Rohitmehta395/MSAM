@@ -4,19 +4,22 @@ import { cn } from '@/lib/cn';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Heading } from '@/components/ui/Heading';
-import { missionHeroContent, type MissionHeroContent } from '@/content/mission';
+import { waysToHelpHeroContent, type WaysToHelpHeroContent } from '@/content/ways-to-help';
 
-export interface MissionHeroProps {
+export interface WaysToHelpHeroProps {
   /** Optional content override */
-  content?: Partial<MissionHeroContent>;
+  content?: Partial<WaysToHelpHeroContent>;
   /** Optional custom class name */
   className?: string;
 }
 
+// Backwards-compatible alias
+export type MissionHeroProps = WaysToHelpHeroProps;
+
 /**
- * Mission Page Hero section.
+ * Ways to Help / Donate Page Hero section: "Give, Serve, Share".
  *
- * Grounded in Figma frame: `design-reference/Mission Page/Hero.png` (1440 × 589 px).
+ * Grounded in Figma frame: `design-reference/Donations Page/1-Hero.png` (1440 × 627 px).
  *
  * Visual hierarchy:
  * - Full-bleed canvas background (`tone="canvas"` / `#fcfbfd`).
@@ -25,9 +28,9 @@ export interface MissionHeroProps {
  * - Bold serif H1 headline wrapping across two lines at desktop: "Give, Serve," / "Share".
  * - Centered muted slate-blue paragraph text.
  */
-export function MissionHero({ content: contentOverride, className }: MissionHeroProps) {
+export function WaysToHelpHero({ content: contentOverride, className }: WaysToHelpHeroProps) {
   const content = {
-    ...missionHeroContent,
+    ...waysToHelpHeroContent,
     ...contentOverride,
   };
 
@@ -72,3 +75,6 @@ export function MissionHero({ content: contentOverride, className }: MissionHero
     </Section>
   );
 }
+
+// Backwards-compatible export
+export const MissionHero = WaysToHelpHero;
