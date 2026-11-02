@@ -29,7 +29,7 @@ export default function HowItWorksPage() {
       <IntakeFormSection />
 
       {/* 6.2: Prayer Callout Band */}
-      <PrayerCallout />
+      {/* <PrayerCallout /> */}
     </>
   );
 }
