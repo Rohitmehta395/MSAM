@@ -59,7 +59,8 @@ export class ConsoleSink implements SubmissionSink {
       }
       case 'contact': {
         const kind = data.kind || 'unknown';
-        return `kind: ${kind}`;
+        const pathway = data.pathway ? `, pathway: ${data.pathway}` : '';
+        return `kind: ${kind}${pathway}`;
       }
       case 'intake': {
         const peopleCount =

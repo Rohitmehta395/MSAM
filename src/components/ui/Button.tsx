@@ -34,6 +34,8 @@ interface BaseButtonProps {
   size?: ButtonSize;
   /** Trailing icon type. Default: 'none' */
   icon?: ButtonIcon;
+  /** Optional class name to customize the trailing icon (e.g. override color) */
+  iconClassName?: string;
   /** When true, disables interactions and displays spinner while preserving layout dimensions. Default: false */
   loading?: boolean;
   /** When true, stretches button to occupy 100% of parent width. Default: false */
@@ -67,6 +69,7 @@ export function Button({
   variant = 'primary',
   size = 'md',
   icon = 'none',
+  iconClassName,
   loading = false,
   fullWidth = false,
   className,
@@ -93,6 +96,7 @@ export function Button({
     'shrink-0',
     iconSizes[size],
     variant === 'dark' && icon === 'arrow' ? 'text-gold' : undefined,
+    iconClassName,
   );
 
   const renderIcon = () => {
@@ -103,6 +107,7 @@ export function Button({
             'shrink-0 animate-spin',
             iconSizes[size],
             variant === 'dark' ? 'text-gold' : undefined,
+            iconClassName,
           )}
           aria-hidden="true"
         />
@@ -129,11 +134,11 @@ export function Button({
     <>
       <span
         className={cn(
-          'inline-flex items-center gap-[inherit]',
+          'inline-flex items-center gap-[inherit] whitespace-nowrap',
           loading && icon === 'none' && 'invisible',
         )}
       >
-        <span>{children}</span>
+        <span className="whitespace-nowrap">{children}</span>
         {icon !== 'none' && renderIcon()}
       </span>
       {loading && icon === 'none' && (

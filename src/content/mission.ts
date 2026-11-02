@@ -105,3 +105,94 @@ export const missionWaysToHelpContent: MissionWaysToHelpContent = {
     },
   ],
 };
+
+export type PathwayTabId = 'give-food' | 'serve' | 'give-funds';
+
+export interface PathwayTabItem {
+  id: PathwayTabId;
+  label: string;
+  defaultAreaOfInterest: string;
+}
+
+export interface MissionContactPathwaysContent {
+  eyebrow: string;
+  headline: string;
+  contactPrompt: {
+    prefix: string;
+    phoneText: string;
+    phoneHref: string;
+  };
+  subheading: string;
+  tabs: PathwayTabItem[];
+  fields: {
+    nameAndOrg: {
+      label: string;
+      placeholder: string;
+    };
+    areaOfInterest: {
+      label: string;
+      placeholder: string;
+    };
+    tellUsMore: {
+      label: string;
+      placeholder: string;
+    };
+    contactDetails: {
+      label: string;
+      placeholder: string;
+    };
+  };
+  consentText: string;
+  submitLabel: string;
+  reassuranceText: string;
+}
+
+export const missionContactPathwaysContent: MissionContactPathwaysContent = {
+  eyebrow: 'EXPLORE WAYS TO HELP',
+  headline: 'Explore ways to give, serve, and share.',
+  contactPrompt: {
+    prefix: 'Questions about giving or serving? Call',
+    phoneText: '(954) 406-7580.',
+    phoneHref: 'tel:+19544067580',
+  },
+  subheading: 'Tell us how you’d like to help and we’ll follow up with the best next step.',
+  tabs: [
+    {
+      id: 'give-food',
+      label: 'Give Food',
+      defaultAreaOfInterest: 'Food, serving, funds, or another way to help',
+    },
+    {
+      id: 'serve',
+      label: 'Serve',
+      defaultAreaOfInterest: 'Volunteering, meal packing, or Saturday distribution',
+    },
+    {
+      id: 'give-funds',
+      label: 'Give Funds',
+      defaultAreaOfInterest: 'Monthly giving, sponsor support, or general fund',
+    },
+  ],
+  fields: {
+    nameAndOrg: {
+      label: 'Name and organization',
+      placeholder: 'Your name, title, and organization',
+    },
+    areaOfInterest: {
+      label: 'Area of interest',
+      placeholder: 'Food, serving, funds, or another way to help',
+    },
+    tellUsMore: {
+      label: 'Tell us more',
+      placeholder: 'Share your idea, capacity, or questions',
+    },
+    contactDetails: {
+      label: 'Contact details',
+      placeholder: 'Email and phone',
+    },
+  },
+  consentText:
+    'I agree to be contacted about this request. My information will be handled respectfully.',
+  submitLabel: 'Send inquiry',
+  reassuranceText: 'We’ll follow up with the best next step for your interest.',
+};

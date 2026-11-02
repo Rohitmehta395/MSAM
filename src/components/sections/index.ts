@@ -12,3 +12,4 @@ export { IntakeFormSection, type IntakeFormSectionProps } from './IntakeFormSect
 export { PrayerCallout, type PrayerCalloutProps } from './PrayerCallout';
 export { MissionHero, type MissionHeroProps } from './MissionHero';
 export { MissionWaysToHelp, type MissionWaysToHelpProps } from './MissionWaysToHelp';
+export { MissionContactPathways, type MissionContactPathwaysProps } from './MissionContactPathways';

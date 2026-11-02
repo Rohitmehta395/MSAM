@@ -10,6 +10,7 @@ export const inquiryKindSchema = z.enum([
   'partner',
   'funding',
   'general',
+  'pathway',
 ]);
 
 export type InquiryKind = z.infer<typeof inquiryKindSchema>;
@@ -143,6 +144,26 @@ export const generalInquirySchema = z.object({
 });
 
 /**
+ * 6. Mission pathway contact inquiry schema (Give Food, Serve, Give Funds).
+ * Grounded in design-reference/Mission Page/Contact pathways-updated.png.
+ */
+export const pathwayInquirySchema = z.object({
+  kind: z.literal('pathway').default('pathway'),
+  pathway: z.enum(['give-food', 'serve', 'give-funds']),
+  nameAndOrg: z.string().trim().min(2, 'Please enter your name and organization').max(150),
+  areaOfInterest: z.string().trim().min(2, 'Please enter your area of interest').max(150),
+  tellUsMore: z
+    .string()
+    .trim()
+    .min(5, 'Please share a few details (at least 5 characters)')
+    .max(2000),
+  contactDetails: z.string().trim().min(5, 'Please enter your email or phone number').max(200),
+  consent: z.literal(true, {
+    message: 'You must agree to be contacted about this request',
+  }),
+});
+
+/**
  * Combined discriminated union of all inquiry kinds.
  */
 export const inquirySchema = z.discriminatedUnion('kind', [
@@ -151,6 +172,7 @@ export const inquirySchema = z.discriminatedUnion('kind', [
   partnerInquirySchema,
   fundingInquirySchema,
   generalInquirySchema,
+  pathwayInquirySchema,
 ]);
 
 export type FoodProviderInquiry = z.infer<typeof foodProviderInquirySchema>;
@@ -158,4 +180,5 @@ export type VolunteerInquiry = z.infer<typeof volunteerInquirySchema>;
 export type PartnerInquiry = z.infer<typeof partnerInquirySchema>;
 export type FundingInquiry = z.infer<typeof fundingInquirySchema>;
 export type GeneralInquiry = z.infer<typeof generalInquirySchema>;
+export type PathwayInquiry = z.infer<typeof pathwayInquirySchema>;
 export type InquiryInput = z.infer<typeof inquirySchema>;

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { Field, Input, Checkbox, CheckboxGroup, FormStatus } from '@/components/form';
 import { Button } from '@/components/ui/Button';
@@ -201,15 +201,14 @@ export function IntakeForm({ content: contentOverride, onSuccess, className }: I
               type="submit"
               variant="dark"
               size="lg"
+              icon="arrow"
+              iconClassName="text-white"
               loading={isSubmitting}
               disabled={isSubmitting}
               fullWidth
-              className="justify-center rounded-full py-4 text-base font-semibold shadow-sm"
+              className="justify-center rounded-full text-base font-semibold shadow-sm"
             >
-              <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap">
-                <span>{submitLabel}</span>
-                <ArrowRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-              </span>
+              {submitLabel}
             </Button>
           </div>
         </form>

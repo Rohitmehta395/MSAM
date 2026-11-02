@@ -233,17 +233,23 @@ export function TabsTrigger({
       )}
       {...props}
     >
-      {React.isValidElement(Icon) ? (
-        Icon
-      ) : typeof Icon === 'function' ? (
-        <Icon
-          className={cn(
-            'h-4 w-4 shrink-0 transition-colors',
-            isSelected ? 'text-navy' : 'text-navy/70 group-hover:text-navy',
-          )}
-          aria-hidden="true"
-        />
-      ) : null}
+      {React.isValidElement(Icon)
+        ? Icon
+        : typeof Icon === 'function' || (typeof Icon === 'object' && Icon !== null)
+          ? React.createElement(
+              Icon as React.ComponentType<{
+                className?: string;
+                'aria-hidden'?: boolean | 'true' | 'false';
+              }>,
+              {
+                className: cn(
+                  'h-4 w-4 shrink-0 transition-colors',
+                  isSelected ? 'text-navy' : 'text-navy/70 group-hover:text-navy',
+                ),
+                'aria-hidden': true,
+              },
+            )
+          : null}
       <span>{children}</span>
     </button>
   );
