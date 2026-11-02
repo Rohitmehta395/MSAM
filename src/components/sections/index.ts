@@ -11,3 +11,4 @@ export { WhoWeServe, type WhoWeServeProps } from './WhoWeServe';
 export { IntakeFormSection, type IntakeFormSectionProps } from './IntakeFormSection';
 export { PrayerCallout, type PrayerCalloutProps } from './PrayerCallout';
 export { MissionHero, type MissionHeroProps } from './MissionHero';
+export { MissionWaysToHelp, type MissionWaysToHelpProps } from './MissionWaysToHelp';
