@@ -177,6 +177,24 @@ export const images = {
     alt: 'Volunteers packing and organizing grocery boxes along staging tables in food warehouse',
     aspect: '4/3',
   },
+  'community.partners.hero': {
+    publicId: undefined,
+    src: '/images/temporary/community/partners-hero.webp',
+    alt: 'Volunteers and community partners serving wholesome meals together',
+    aspect: '4/3',
+  },
+  'community.partners.appreciation': {
+    publicId: undefined,
+    src: '/images/temporary/community/partners-appreciation.webp',
+    alt: 'Community members, supporters, and partners gathered together around a shared table',
+    aspect: '1/1',
+  },
+  'community.partners.form': {
+    publicId: undefined,
+    src: '/images/temporary/community/partners-form.webp',
+    alt: 'Distribution staging area with food supplies and logistics pallets in community center warehouse',
+    aspect: '4/3',
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;

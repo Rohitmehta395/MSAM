@@ -5,3 +5,4 @@ export * from './IntakeForm';
 export * from './WaysToHelpInquiryForm';
 export * from './FoodProviderInquiryForm';
 export * from './VolunteerInterestForm';
+export * from './PartnerInquiryForm';

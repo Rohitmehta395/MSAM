@@ -84,39 +84,37 @@ export const volunteerInquirySchema = z.object({
 });
 
 /**
- * 3. Distribution Partner inquiry schema (churches, agencies, community centers).
+ * 3. Community Partner inquiry schema (churches, businesses, community organizations).
+ * Grounded in Figma frame: `design-reference/Community Page/3-Partners/4-Partner form section - updated.png`.
  */
 export const partnerInquirySchema = z.object({
-  kind: z.literal('partner'),
-  name: z.string().trim().min(1, 'Contact name is required').max(100),
-  organizationName: z.string().trim().min(1, 'Organization name is required').max(150),
-  email: z
+  kind: z.literal('partner').default('partner'),
+  organization: z
     .string()
     .trim()
-    .min(1, 'Email address is required')
-    .email('Please enter a valid email address')
-    .toLowerCase(),
-  phone: z.string().trim().min(7, 'Please enter a valid phone number').max(20),
-  partnerType: z.enum(
-    [
-      'faith-based',
-      'community-center',
-      'shelter',
-      'school-or-youth',
-      'healthcare',
-      'civic-group',
-      'other',
-    ],
-    { message: 'Please select your organization type' },
-  ),
-  hostDistribution: z.boolean().optional().default(false),
-  address: z.string().trim().min(1, 'Address is required').max(200),
-  city: z.string().trim().min(1, 'City is required').max(50),
-  zipCode: z
+    .min(2, 'Please enter your organization or business name')
+    .max(150),
+  partnershipType: z
     .string()
     .trim()
-    .regex(/^\d{5}(-\d{4})?$/, 'Please enter a valid 5-digit ZIP code'),
-  message: z.string().trim().max(1000).optional(),
+    .min(2, 'Please share what kind of partnership you are exploring')
+    .max(200),
+  capacity: z
+    .string()
+    .trim()
+    .min(
+      5,
+      'Please share details about capacity, volume, timing, or location (at least 5 characters)',
+    )
+    .max(2000),
+  primaryContact: z
+    .string()
+    .trim()
+    .min(5, 'Please provide primary contact information (name, role, email, and phone)')
+    .max(200),
+  consent: z.literal(true, {
+    message: 'You must agree to be contacted about this request',
+  }),
 });
 
 /**

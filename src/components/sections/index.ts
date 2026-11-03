@@ -25,3 +25,7 @@ export { FoodProviderInquiry, type FoodProviderInquiryProps } from './FoodProvid
 export { VolunteerHero, type VolunteerHeroProps } from './VolunteerHero';
 export { VolunteerAppreciation, type VolunteerAppreciationProps } from './VolunteerAppreciation';
 export { VolunteerFormSection, type VolunteerFormSectionProps } from './VolunteerFormSection';
+export { PartnerHero, type PartnerHeroProps } from './PartnerHero';
+export { PartnerRoster, type PartnerRosterProps } from './PartnerRoster';
+export { PartnerAppreciation, type PartnerAppreciationProps } from './PartnerAppreciation';
+export { PartnerFormSection, type PartnerFormSectionProps } from './PartnerFormSection';

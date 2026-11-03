@@ -205,3 +205,143 @@ export const volunteerFormContent: VolunteerFormContent = {
   },
   submitLabel: 'Submit Interest',
 };
+
+export interface PartnerHeroContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  primaryCta: {
+    label: string;
+    href: string;
+  };
+  secondaryCta: {
+    label: string;
+    href: string;
+  };
+  imageKey: ImageKey;
+}
+
+export const partnerHeroContent: PartnerHeroContent = {
+  eyebrow: 'BECOME A PARTNER',
+  heading: 'Community Partners',
+  description:
+    'We partner with local churches, organizations, and businesses to extend ministry, strengthen neighborhood ties, and build community through meals.',
+  primaryCta: {
+    label: 'Give Food',
+    href: '/community/food-providers',
+  },
+  secondaryCta: {
+    label: 'Give Time',
+    href: '/community/volunteers',
+  },
+  imageKey: 'community.partners.hero',
+};
+
+export interface PartnerRosterSlot {
+  id: string;
+  name?: string;
+}
+
+export interface PartnerRosterContent {
+  eyebrow: string;
+  heading: string;
+  slots: PartnerRosterSlot[];
+}
+
+export const partnerRosterContent: PartnerRosterContent = {
+  eyebrow: 'SERVING TOGETHER',
+  heading: 'Our community partners',
+  slots: [
+    { id: 'partner-slot-1' },
+    { id: 'partner-slot-2' },
+    { id: 'partner-slot-3' },
+    { id: 'partner-slot-4' },
+    { id: 'partner-slot-5' },
+  ],
+};
+
+export interface PartnerAppreciationContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  floatingCard: {
+    text: string;
+  };
+  imageKey: ImageKey;
+}
+
+export const partnerAppreciationContent: PartnerAppreciationContent = {
+  eyebrow: 'WITH GRATITUDE',
+  heading: 'Many gifts. One shared purpose.',
+  description:
+    'Individuals, businesses, and churches sustain this 100% donor-funded, volunteer-powered ministry. We receive no government funding. Your generosity helps us feed neighbors, strengthen relationships, and reflect Christ’s love.',
+  floatingCard: {
+    text: 'Volunteers are the heartbeat of our ministry.',
+  },
+  imageKey: 'community.partners.appreciation',
+};
+
+export interface PartnerFormContent {
+  cardLabel: string;
+  cardTitle: string;
+  cardDescription: string;
+  fields: {
+    organization: {
+      label: string;
+      placeholder: string;
+    };
+    partnershipType: {
+      label: string;
+      placeholder: string;
+    };
+    capacity: {
+      label: string;
+      placeholder: string;
+    };
+    primaryContact: {
+      label: string;
+      placeholder: string;
+    };
+  };
+  consentText: string;
+  submitLabel: string;
+  reassuranceText: string;
+  eyebrow: string;
+  heading: string;
+  description: string;
+  imageKey: ImageKey;
+}
+
+export const partnerFormContent: PartnerFormContent = {
+  cardLabel: 'COMMUNITY PARTNERS',
+  cardTitle: 'Explore Community Partnership',
+  cardDescription:
+    'Share your interest in in-kind food drives, volunteer teams, church collaboration, or corporate and sponsorship partnerships.',
+  fields: {
+    organization: {
+      label: 'Organization',
+      placeholder: 'Organization or business name',
+    },
+    partnershipType: {
+      label: 'What kind of partnership are you exploring?',
+      placeholder: 'Food drive, volunteer team, church partnership, or sponsorship',
+    },
+    capacity: {
+      label: 'Tell us about your capacity',
+      placeholder: 'Share any details about volume, frequency, timing, or location',
+    },
+    primaryContact: {
+      label: 'Primary contact',
+      placeholder: 'Name, role, email, and phone',
+    },
+  },
+  consentText:
+    'I agree to be contacted about this request. My information will be handled respectfully.',
+  submitLabel: 'Explore Partnership',
+  reassuranceText: 'We’ll follow up to discuss how your organization can support the mission.',
+  eyebrow: 'PARTNER WITH US',
+  heading: 'Put compassion into action.',
+  description:
+    'Bring your church, business, or community organization into the mission through food drives, volunteer teams, in-kind gifts, or sponsorship. Tell us what you have in mind.',
+  imageKey: 'community.partners.form',
+};
