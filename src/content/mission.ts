@@ -112,3 +112,87 @@ export const missionGratitudeContent: MissionGratitudeContent = {
     },
   ],
 };
+
+export type MissionSupportCardTone = 'lavender' | 'warm' | 'sage';
+export type MissionSupportCardIcon = 'HandHeart' | 'Handshake' | 'CircleDollarSign';
+
+export interface MissionSupportCard {
+  id: string;
+  tone: MissionSupportCardTone;
+  icon: MissionSupportCardIcon;
+  audience: string;
+  title: string;
+  description: string;
+  checklist: string[];
+  action: {
+    label: string;
+    href: string;
+  };
+}
+
+export interface MissionWaysToSupportContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  cards: MissionSupportCard[];
+}
+
+export const missionWaysToSupportContent: MissionWaysToSupportContent = {
+  eyebrow: 'WAYS TO GIVE',
+  heading: 'Support neighbors, volunteers, and year-round service.',
+  description:
+    'Choose the way that best fits your generosity, from one-time support to ongoing partnership.',
+  cards: [
+    {
+      id: 'give-food',
+      tone: 'lavender',
+      icon: 'HandHeart',
+      audience: 'FOR FOOD DONORS',
+      title: 'Give Food',
+      description: 'Support fresh healthy groceries for families visiting every Saturday.',
+      checklist: [
+        'Fresh groceries for Saturday visits',
+        'Supports collection and distribution',
+        'Helps serve families with dignity',
+      ],
+      action: {
+        label: 'Donate Food',
+        href: '/community/food-providers',
+      },
+    },
+    {
+      id: 'give-time',
+      tone: 'warm',
+      icon: 'Handshake',
+      audience: 'FOR VOLUNTEERS',
+      title: 'Give Time',
+      description: 'Partner with us to help collect, organize, and distribute groceries with care.',
+      checklist: [
+        'Help collect and organize groceries',
+        'Equip volunteers to serve with compassion',
+        'Strengthen community care and connection',
+      ],
+      action: {
+        label: 'Volunteer',
+        href: '/community/volunteers',
+      },
+    },
+    {
+      id: 'give-funds',
+      tone: 'sage',
+      icon: 'CircleDollarSign',
+      audience: 'FOR FUNDERS',
+      title: 'Give Funds',
+      description: 'Help provide groceries, support, and year-round service for families in need.',
+      checklist: [
+        'Secure online giving for immediate support',
+        'Monthly giving for steady support',
+        'Corporate and sponsorship partnerships',
+      ],
+      action: {
+        label: 'Give Financially',
+        href: '/donate',
+      },
+    },
+  ],
+};

@@ -18,3 +18,4 @@ export {
 } from './WaysToHelpContactPathways';
 export { MissionHero, type MissionHeroProps } from './MissionHero';
 export { MissionGratitude, type MissionGratitudeProps } from './MissionGratitude';
+export { MissionWaysToSupport, type MissionWaysToSupportProps } from './MissionWaysToSupport';
