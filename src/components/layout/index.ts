@@ -5,3 +5,4 @@ export * from './Header';
 export * from './MobileMenu';
 export * from './Footer';
 export * from './SkipLink';
+export * from './CommunitySubNav';

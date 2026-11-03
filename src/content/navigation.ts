@@ -35,6 +35,15 @@ export interface FooterColumn {
 }
 
 /**
+ * Community sub-navigation links for nested section routing.
+ */
+export const communitySubNav: readonly NavItem[] = [
+  { label: 'Food Providers', href: '/community/food-providers' },
+  { label: 'Volunteers', href: '/community/volunteers' },
+  { label: 'Partners', href: '/community/partners' },
+] as const;
+
+/**
  * Primary header navigation links.
  * Note: 'Community' is treated as active for any '/community/*' subroute.
  */
@@ -45,11 +54,7 @@ export const primaryNav: readonly NavItem[] = [
   {
     label: 'Community',
     href: '/community/food-providers',
-    children: [
-      { label: 'Food Providers', href: '/community/food-providers' },
-      { label: 'Volunteers', href: '/community/volunteers' },
-      { label: 'Partners', href: '/community/partners' },
-    ],
+    children: communitySubNav,
   },
 ] as const;
 
