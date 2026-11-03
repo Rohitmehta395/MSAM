@@ -43,13 +43,12 @@ export function PlaceholderBlock({
   ...props
 }: PlaceholderBlockProps) {
   const aspectClass = aspectStyles[aspect];
-  const customAspectStyle = aspectClass ? undefined : { aspectRatio: aspect };
 
   return (
     <div
       role="img"
       aria-label={alt}
-      style={{ ...customAspectStyle, ...style }}
+      style={{ aspectRatio: aspect, ...style }}
       className={cn(
         'border-border/60 relative flex w-full items-center justify-center overflow-hidden border select-none',
         'from-lavender via-lavender/60 to-lavender-deep/25 bg-gradient-to-br',

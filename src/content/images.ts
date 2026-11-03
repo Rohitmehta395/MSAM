@@ -147,6 +147,12 @@ export const images = {
     alt: 'Families, seniors, and neighbors gathered happily around a warm table sharing a wholesome meal',
     aspect: '4/3',
   },
+  'community.foodProviders.hero': {
+    publicId: undefined,
+    src: undefined,
+    alt: 'Volunteers and community food partners gathering outdoors around fresh produce and groceries',
+    aspect: '4/3',
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;

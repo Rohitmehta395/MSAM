@@ -75,8 +75,7 @@ export function MediaImage({
   }
 
   const aspectClass = fillContainer ? undefined : aspectStyles[asset.aspect];
-  const customAspectStyle =
-    fillContainer || aspectClass ? undefined : { aspectRatio: asset.aspect };
+  const customAspectStyle = fillContainer ? undefined : { aspectRatio: asset.aspect };
 
   const imageSrc = isCloudinary && asset.publicId ? asset.publicId : asset.src!;
   const unoptimized = !isCloudinary;
