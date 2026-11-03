@@ -98,3 +98,110 @@ export const foodProviderInquiryContent: FoodProviderInquiryContent = {
   submitLabel: 'Start a Conversation',
   reassuranceText: 'We’ll follow up to discuss details and next steps.',
 };
+
+export interface VolunteerHeroContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  cta: {
+    label: string;
+    href: string;
+  };
+  imageKey: ImageKey;
+}
+
+export const volunteerHeroContent: VolunteerHeroContent = {
+  eyebrow: 'SERVE WITH US',
+  heading: 'Be the hands and feet of Christ.',
+  description:
+    'Volunteers are the lifeblood of Manna Share A Meal: a community of faithful people who believe in compassion, respect, and practical help for neighbors.',
+  cta: {
+    label: 'Serve with Us',
+    href: '#volunteer-form',
+  },
+  imageKey: 'community.volunteers.hero',
+};
+
+export interface VolunteerAppreciationContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  floatingCard: {
+    text: string;
+  };
+  imageKey: ImageKey;
+}
+
+export const volunteerAppreciationContent: VolunteerAppreciationContent = {
+  eyebrow: 'WHY SERVE',
+  heading: 'Make a difference. Find community.',
+  description:
+    'Help pack and distribute groceries, coordinate a food drive, welcome guests, or support a special project. You’ll meet people who share your heart for service and see God at work in small, everyday acts of care.',
+  floatingCard: {
+    text: 'Volunteers are the lifeblood of Manna Share A Meal.',
+  },
+  imageKey: 'community.volunteers.appreciation',
+};
+
+export interface VolunteerFormContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  imageKey: ImageKey;
+  cardTitle: string;
+  interestOptions: string[];
+  fields: {
+    fullName: {
+      label: string;
+      placeholder: string;
+    };
+    phone: {
+      label: string;
+      placeholder: string;
+    };
+    email: {
+      label: string;
+      placeholder: string;
+    };
+    interests: {
+      label: string;
+    };
+    availabilityAndNotes: {
+      label: string;
+      placeholder: string;
+    };
+  };
+  submitLabel: string;
+}
+
+export const volunteerFormContent: VolunteerFormContent = {
+  eyebrow: 'GET STARTED',
+  heading: 'Bring your heart for service.',
+  description:
+    'Share your interests and availability. Our team will help you explore a role, learn what to expect, and take the next step toward serving together.',
+  imageKey: 'community.volunteers.form',
+  cardTitle: 'Volunteer Interest Form',
+  interestOptions: ['Food Packing', 'Food Distribution', 'Food Drives', 'Other'],
+  fields: {
+    fullName: {
+      label: 'Full Name',
+      placeholder: 'Name',
+    },
+    phone: {
+      label: 'Phone',
+      placeholder: 'Phone Number',
+    },
+    email: {
+      label: 'Email',
+      placeholder: 'Email',
+    },
+    interests: {
+      label: 'Areas of Interest',
+    },
+    availabilityAndNotes: {
+      label: 'Availability and Notes',
+      placeholder: 'Share your availability, preferred role, or any questions.',
+    },
+  },
+  submitLabel: 'Submit Interest',
+};

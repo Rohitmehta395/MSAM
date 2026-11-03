@@ -46,24 +46,41 @@ export const foodProviderInquirySchema = z.object({
 });
 
 /**
+ * Allowed volunteer interest areas grounded in Figma frame:
+ * `design-reference/Community Page/2-Volunteers/3-Volunteer Form - updated.png`.
+ */
+export const VOLUNTEER_INTEREST_OPTIONS = [
+  'Food Packing',
+  'Food Distribution',
+  'Food Drives',
+  'Other',
+] as const;
+
+export const volunteerInterestOptionSchema = z.enum(VOLUNTEER_INTEREST_OPTIONS);
+
+export type VolunteerInterestOption = z.infer<typeof volunteerInterestOptionSchema>;
+
+/**
  * 2. Volunteer inquiry schema (individual or group volunteers).
+ * Grounded in Figma frame: `design-reference/Community Page/2-Volunteers/3-Volunteer Form - updated.png`.
  */
 export const volunteerInquirySchema = z.object({
-  kind: z.literal('volunteer'),
-  name: z.string().trim().min(1, 'Full name is required').max(100),
+  kind: z.literal('volunteer').default('volunteer'),
+  fullName: z.string().trim().min(2, 'Please enter your name').max(100),
+  phone: z.string().trim().min(7, 'Please enter a valid phone number').max(20),
   email: z
     .string()
     .trim()
     .min(1, 'Email address is required')
     .email('Please enter a valid email address')
     .toLowerCase(),
-  phone: z.string().trim().min(7, 'Please enter a valid phone number').max(20),
-  interests: z.array(z.string().trim()).min(1, 'Please select at least one area of interest'),
-  availability: z.array(z.string().trim()).min(1, 'Please select your general availability'),
-  isGroup: z.boolean().optional().default(false),
-  groupSize: z.number().int().min(1).max(500).optional(),
-  organizationName: z.string().trim().max(150).optional(),
-  message: z.string().trim().max(1000).optional(),
+  interests: z
+    .array(volunteerInterestOptionSchema)
+    .min(1, 'Please select at least one area of interest')
+    .refine((items) => new Set(items).size === items.length, {
+      message: 'Duplicate areas of interest are not allowed',
+    }),
+  availabilityAndNotes: z.string().trim().max(2000).optional().or(z.literal('')),
 });
 
 /**

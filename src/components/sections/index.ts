@@ -22,3 +22,6 @@ export { MissionWaysToSupport, type MissionWaysToSupportProps } from './MissionW
 export { FoodProviderHero, type FoodProviderHeroProps } from './FoodProviderHero';
 export { FoodProviderPartners, type FoodProviderPartnersProps } from './FoodProviderPartners';
 export { FoodProviderInquiry, type FoodProviderInquiryProps } from './FoodProviderInquiry';
+export { VolunteerHero, type VolunteerHeroProps } from './VolunteerHero';
+export { VolunteerAppreciation, type VolunteerAppreciationProps } from './VolunteerAppreciation';
+export { VolunteerFormSection, type VolunteerFormSectionProps } from './VolunteerFormSection';
