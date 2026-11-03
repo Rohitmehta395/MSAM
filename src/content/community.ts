@@ -22,3 +22,15 @@ export const foodProviderHeroContent: FoodProviderHeroContent = {
   },
   imageKey: 'community.foodProviders.hero',
 };
+
+export interface FoodProviderPartnersContent {
+  eyebrow: string;
+  heading: string;
+  slotCount: number;
+}
+
+export const foodProviderPartnersContent: FoodProviderPartnersContent = {
+  eyebrow: 'OUR COMMUNITY PARTNERS',
+  heading: 'Food Provider Partners',
+  slotCount: 5,
+};

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { FoodProviderHero } from '@/components/sections';
+import { FoodProviderHero, FoodProviderPartners } from '@/components/sections';
 
 export const metadata: Metadata = {
   title: 'Become a Food Provider',
@@ -11,6 +11,7 @@ export default function FoodProvidersPage() {
   return (
     <>
       <FoodProviderHero />
+      <FoodProviderPartners />
     </>
   );
 }
