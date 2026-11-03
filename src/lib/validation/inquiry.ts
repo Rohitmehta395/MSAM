@@ -17,33 +17,32 @@ export type InquiryKind = z.infer<typeof inquiryKindSchema>;
 
 /**
  * 1. Food Provider inquiry schema (farms, grocers, restaurants, distributors).
+ * Grounded in Figma frame: `design-reference/Community Page/1-Food Providers/3-Food Provider Form - updated.png`.
  */
 export const foodProviderInquirySchema = z.object({
-  kind: z.literal('food_provider'),
-  name: z.string().trim().min(1, 'Contact name is required').max(100),
-  organizationName: z.string().trim().min(1, 'Business or organization name is required').max(150),
-  email: z
+  kind: z.literal('food_provider').default('food_provider'),
+  nameAndOrg: z.string().trim().min(2, 'Please enter your name, title, and organization').max(150),
+  foodType: z
     .string()
     .trim()
-    .min(1, 'Email address is required')
-    .email('Please enter a valid email address')
-    .toLowerCase(),
-  phone: z.string().trim().min(7, 'Please enter a valid phone number').max(20),
-  foodTypes: z
-    .array(z.string().trim())
-    .min(1, 'Please select at least one type of food you wish to donate'),
-  frequency: z.enum(['one-time', 'daily', 'weekly', 'bi-weekly', 'monthly', 'as-available'], {
-    message: 'Please select an estimated donation frequency',
+    .min(2, 'Please specify the type of food (e.g. fresh produce, prepared meals)')
+    .max(200),
+  quantityAndFrequency: z
+    .string()
+    .trim()
+    .min(
+      5,
+      'Please share approximate volume, frequency, and handling notes (at least 5 characters)',
+    )
+    .max(2000),
+  contactDetails: z
+    .string()
+    .trim()
+    .min(5, 'Please provide your email or phone and best time to discuss')
+    .max(200),
+  consent: z.literal(true, {
+    message: 'You must agree to be contacted about this request',
   }),
-  address: z.string().trim().min(1, 'Pickup address is required').max(200),
-  city: z.string().trim().min(1, 'City is required').max(50),
-  zipCode: z
-    .string()
-    .trim()
-    .regex(/^\d{5}(-\d{4})?$/, 'Please enter a valid 5-digit ZIP code'),
-  refrigerationNeeded: z.boolean().optional().default(false),
-  estimatedWeightLbs: z.number().positive().optional(),
-  message: z.string().trim().max(1000).optional(),
 });
 
 /**

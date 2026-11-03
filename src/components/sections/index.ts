@@ -21,3 +21,4 @@ export { MissionGratitude, type MissionGratitudeProps } from './MissionGratitude
 export { MissionWaysToSupport, type MissionWaysToSupportProps } from './MissionWaysToSupport';
 export { FoodProviderHero, type FoodProviderHeroProps } from './FoodProviderHero';
 export { FoodProviderPartners, type FoodProviderPartnersProps } from './FoodProviderPartners';
+export { FoodProviderInquiry, type FoodProviderInquiryProps } from './FoodProviderInquiry';
