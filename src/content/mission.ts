@@ -61,3 +61,54 @@ export const missionHeroContent: MissionHeroContent = {
     ],
   },
 };
+
+export type MissionGratitudeIcon = 'Heart' | 'HandHeart' | 'CircleDollarSign';
+
+export interface MissionGratitudeCard {
+  id: string;
+  icon: MissionGratitudeIcon;
+  title: string;
+  description: string;
+}
+
+export interface MissionGratitudeContent {
+  eyebrow: string;
+  heading: string;
+  headlineLine1: string;
+  headlineLine2: string;
+  description: string;
+  badgeLabel: string;
+  cards: MissionGratitudeCard[];
+}
+
+export const missionGratitudeContent: MissionGratitudeContent = {
+  eyebrow: 'THANK YOU FOR MAKING THE DIFFERENCE',
+  heading: 'Every meal shared is more than nourishment.',
+  headlineLine1: 'Every meal shared is more than',
+  headlineLine2: 'nourishment.',
+  description:
+    'Because of your generosity, we serve with hope and compassion, and gifts strengthen families and community.',
+  badgeLabel: 'A HEARTFELT THANKS',
+  cards: [
+    {
+      id: 'someone-cares',
+      icon: 'Heart',
+      title: 'A message someone cares',
+      description: 'Every meal shared reminds families that hope is alive and God’s love is real.',
+    },
+    {
+      id: 'strengthen-families',
+      icon: 'HandHeart',
+      title: 'Gifts strengthen families',
+      description:
+        'Together, one meal and one act of kindness at a time, we build a more compassionate community.',
+    },
+    {
+      id: 'grateful',
+      icon: 'CircleDollarSign',
+      title: 'We are grateful',
+      description:
+        'We value transparency, faithful stewardship, and maximizing every dollar for impact.',
+    },
+  ],
+};

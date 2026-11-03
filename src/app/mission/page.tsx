@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { MissionHero } from '@/components/sections';
+import { MissionHero, MissionGratitude } from '@/components/sections';
 
 export const metadata: Metadata = {
   title: 'Our Mission',
@@ -11,6 +11,7 @@ export default function MissionPage() {
   return (
     <>
       <MissionHero />
+      <MissionGratitude />
     </>
   );
 }
