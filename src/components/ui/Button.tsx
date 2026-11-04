@@ -138,7 +138,7 @@ export function Button({
           loading && icon === 'none' && 'invisible',
         )}
       >
-        <span className="whitespace-nowrap">{children}</span>
+        <span className="inline-flex items-center gap-[inherit] whitespace-nowrap">{children}</span>
         {icon !== 'none' && renderIcon()}
       </span>
       {loading && icon === 'none' && (

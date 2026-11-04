@@ -69,7 +69,7 @@ export function SegmentedControl<T extends string = string>({
       role="radiogroup"
       aria-label={ariaLabel}
       className={cn(
-        'rounded-pill bg-lavender inline-flex w-full items-center p-1 select-none sm:w-auto',
+        'rounded-pill bg-lavender inline-flex w-full items-center p-1 select-none',
         disabled && 'cursor-not-allowed opacity-50',
         className,
       )}
@@ -84,7 +84,11 @@ export function SegmentedControl<T extends string = string>({
             key={option.value}
             htmlFor={optionId}
             className={cn(
-              'group rounded-pill relative flex flex-1 cursor-pointer items-center justify-center gap-2 px-4 py-2 text-center text-sm font-semibold transition-colors sm:flex-initial',
+              'group rounded-pill relative flex min-w-0 cursor-pointer items-center justify-center transition-colors',
+              option.badge ? 'flex-[1.35_1_0%]' : 'flex-[0.65_1_0%]',
+              'xl:flex-1',
+              'gap-1 px-1.5 py-2 sm:gap-1.5 sm:px-3 sm:py-2.5 lg:gap-2 lg:px-4',
+              'text-xs font-semibold sm:text-sm',
               isSelected ? 'bg-navy text-white shadow-sm' : 'text-navy/70 hover:text-navy',
               isOptionDisabled && 'cursor-not-allowed opacity-50',
             )}
@@ -99,7 +103,7 @@ export function SegmentedControl<T extends string = string>({
               onChange={() => handleSelect(option.value)}
               className="peer sr-only"
             />
-            <span className="rounded-pill peer-focus-visible:outline-navy pointer-events-none peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2">
+            <span className="rounded-pill peer-focus-visible:outline-navy pointer-events-none whitespace-nowrap peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2">
               {option.label}
             </span>
 
@@ -108,7 +112,7 @@ export function SegmentedControl<T extends string = string>({
                 {typeof option.badge === 'string' ? (
                   <Badge
                     tone="gold"
-                    className="px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase"
+                    className="px-1.5 py-0.5 text-[9px] leading-none font-bold tracking-tight uppercase sm:px-2 sm:text-[10px] sm:tracking-wider"
                   >
                     {option.badge}
                   </Badge>

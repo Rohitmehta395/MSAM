@@ -613,16 +613,16 @@ export interface HomeDonationContent {
 
 /**
  * Donation Section content grounded in:
- * `design-reference/Home Page/6-Donation.png`
+ * `design-reference/Home Page/6-Donation - updated.png`
  */
 export const homeDonationContent: HomeDonationContent = {
   eyebrow: 'GIVE WITH STAYING POWER',
-  headline: 'Help provide groceries and support for families in need.',
-  lead: 'Your gift helps provide groceries and support for families in need.',
+  headline: 'Your generosity keeps hope on the table.',
+  lead: 'As a fully donor-funded ministry, we rely on your gifts for food, program operations, and outreach—not government funding.',
   checklist: [
-    'Help provide groceries and support for families in need',
-    'Support our mission with a gift that makes a difference',
-    'Your gift helps provide groceries and support with dignity and care',
+    'Source fresh, healthy groceries',
+    'Support collection and distribution',
+    'Sustain year-round care for neighbors',
   ],
   quote: {
     text: 'Fed by Faith. Driven by Love.',
@@ -632,50 +632,45 @@ export const homeDonationContent: HomeDonationContent = {
     },
   },
   selector: {
-    frequencyLabel: 'Donation Frequency',
+    frequencyLabel: 'Donation frequency',
     frequencies: [
       { value: 'once', label: 'Give once' },
       { value: 'monthly', label: 'Give monthly', badge: 'MOST IMPACT' },
     ],
     defaultFrequency: 'monthly',
     amountsLabel: 'Choose a gift amount',
-    amountsSubtitle: 'Published donation choices',
-    presetAmounts: [5, 10, 15, 20, 150, 300],
+    amountsSubtitle: 'Choose an amount that works for you',
+    presetAmounts: [5, 10, 15, 20, 150],
     defaultAmount: 150,
     impactNotes: {
       5: {
         headline: '$5 supplies wholesome staple items.',
-        description:
-          'Every gift provides essential nutrition for families attending our Saturday distribution.',
+        description: 'Every gift helps sustain the ministry.',
       },
       10: {
         headline: '$10 provides fresh fruits and vegetables.',
-        description: 'Nutritious produce sourced and staged with care for neighborhood families.',
+        description: 'Every gift helps sustain the ministry.',
       },
       15: {
         headline: '$15 covers pantry staples and canned goods.',
-        description: 'Protein, grains, and canned staples ready for dependable distribution.',
+        description: 'Every gift helps sustain the ministry.',
       },
       20: {
         headline: '$20 provides grocery essentials for a local family.',
-        description: 'Nutritious groceries distributed by appointment every Saturday morning.',
+        description: 'Every gift helps sustain the ministry.',
       },
       150: {
-        headline: '$150 feeds one family.',
-        description: 'Comprehensive grocery provisions and dignified care for a full household.',
-      },
-      300: {
-        headline: '$300 supports multiple local households.',
-        description: 'Expands our weekend distribution reach across Broward County communities.',
+        headline: 'A family visit provides about $150 in groceries.',
+        description: 'Every gift helps sustain the ministry.',
       },
     },
     defaultImpactNote: {
-      headline: 'Your gift makes a direct difference.',
-      description: 'Support is provided with dignity, care, and no judgment every Saturday.',
+      headline: 'A family visit provides about $150 in groceries.',
+      description: 'Every gift helps sustain the ministry.',
     },
     customAmountLabel: 'Or enter custom amount ($ USD)',
     customAmountPlaceholder: '$ Other amount',
     ctaBaseText: 'Donate',
-    taxExemptNotice: 'Registered 501(c)(3) nonprofit organization',
+    taxExemptNotice: 'Registered 501(c)(3), EIN 65-0637594',
   },
 };

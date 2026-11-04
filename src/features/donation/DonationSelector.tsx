@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState, useId, useRef, useEffect } from 'react';
-import { Loader2, AlertCircle, Info, ExternalLink } from 'lucide-react';
+import { Loader2, AlertCircle, Info, ExternalLink, Heart, Lock, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { siteConfig } from '@/config/site';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
-import { ChipToggle } from '@/components/form/ChipToggle';
 import { Button } from '@/components/ui/Button';
 import { donationIntentSchema } from '@/lib/validation';
 import { homeDonationContent, type HomeDonationContent } from '@/content/home';
@@ -25,14 +24,14 @@ export type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'unconfigured
 
 /**
  * Interactive donation selection card with frequency toggle, preset amount tiles,
- * custom amount input, dynamic CTA, and hand-off to /api/donate/intent.
+ * dynamic impact note, full-width CTA, and hand-off to /api/donate/intent.
+ *
+ * Grounded in: `design-reference/Home Page/6-Donation - updated.png`
  */
 export function DonationSelector({
   selectorContent = homeDonationContent.selector,
   className,
 }: DonationSelectorProps) {
-  const customInputId = useId();
-  const errorId = useId();
   const statusId = useId();
 
   // 1. Frequency state ('once' | 'monthly')
@@ -42,8 +41,6 @@ export function DonationSelector({
   const [selectedPreset, setSelectedPreset] = useState<number | null>(
     selectorContent.defaultAmount,
   );
-  const [isCustom, setIsCustom] = useState<boolean>(false);
-  const [customAmountInput, setCustomAmountInput] = useState<string>('');
   const [inputError, setInputError] = useState<string | null>(null);
 
   // 3. Submission state
@@ -56,74 +53,21 @@ export function DonationSelector({
     mountTimeRef.current = Date.now();
   }, []);
 
-  // Active numerical amount calculation
-  const parsedCustom = parseFloat(customAmountInput);
-  const isCustomValid =
-    isCustom &&
-    !customAmountInput.startsWith('-') &&
-    !isNaN(parsedCustom) &&
-    parsedCustom > 0 &&
-    parsedCustom <= 100000;
-  const activeAmount = isCustom ? (isCustomValid ? parsedCustom : null) : selectedPreset;
+  const activeAmount = selectedPreset;
 
   // Active impact note text
   const currentImpact =
-    !isCustom && selectedPreset && selectorContent.impactNotes[selectedPreset]
+    selectedPreset && selectorContent.impactNotes[selectedPreset]
       ? selectorContent.impactNotes[selectedPreset]
       : selectorContent.defaultImpactNote;
 
   // Preset amount tile click handler
   const handleSelectPreset = (amount: number) => {
     setSelectedPreset(amount);
-    setIsCustom(false);
-    setCustomAmountInput('');
     setInputError(null);
     if (submissionStatus === 'error') {
       setSubmissionStatus('idle');
       setStatusMessage(null);
-    }
-  };
-
-  // Custom amount change handler
-  const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value;
-
-    // Allow leading minus, digits, and a single decimal point
-    const hasMinus = raw.trim().startsWith('-');
-    const withoutMinus = raw.replace(/-/g, '').replace(/[^0-9.]/g, '');
-    const parts = withoutMinus.split('.');
-    const cleanNumbers = parts.length > 2 ? `${parts[0]}.${parts.slice(1).join('')}` : withoutMinus;
-    const sanitized = hasMinus ? `-${cleanNumbers}` : cleanNumbers;
-
-    setIsCustom(true);
-    setSelectedPreset(null);
-    setCustomAmountInput(sanitized);
-
-    if (submissionStatus === 'error') {
-      setSubmissionStatus('idle');
-      setStatusMessage(null);
-    }
-
-    if (sanitized === '' || sanitized === '-') {
-      if (sanitized === '-') {
-        setInputError('Donation amount must be greater than zero');
-      } else {
-        setInputError(null);
-      }
-      return;
-    }
-
-    const num = parseFloat(sanitized);
-    if (isNaN(num)) {
-      setInputError('Please enter a valid donation amount');
-    } else if (sanitized.startsWith('-') || num < 0) {
-      setInputError('Donation amount must be greater than zero');
-    } else if (num === 0) {
-      setInputError('Please enter an amount greater than $0');
-    } else if (num > 100000) {
-      setInputError('Donation amount exceeds $100,000 processing limit');
-    } else {
-      setInputError(null);
     }
   };
 
@@ -132,28 +76,10 @@ export function DonationSelector({
     e.preventDefault();
     if (submissionStatus === 'submitting') return;
 
-    let finalAmount: number | null = null;
-    if (isCustom) {
-      const num = parseFloat(customAmountInput);
-      if (customAmountInput.startsWith('-') || num < 0) {
-        setInputError('Donation amount must be greater than zero');
-        return;
-      }
-      if (isNaN(num) || num === 0) {
-        setInputError('Please enter an amount greater than $0');
-        return;
-      }
-      if (num > 100000) {
-        setInputError('Donation amount exceeds $100,000 processing limit');
-        return;
-      }
-      finalAmount = num;
-    } else {
-      finalAmount = selectedPreset ?? selectorContent.defaultAmount;
-    }
+    const finalAmount = selectedPreset ?? selectorContent.defaultAmount;
 
     if (!finalAmount || finalAmount <= 0) {
-      setInputError('Please select or enter a donation amount');
+      setInputError('Please select a donation amount');
       return;
     }
 
@@ -196,7 +122,6 @@ export function DonationSelector({
       const redirectUrl = json.data?.redirectUrl;
 
       if (redirectUrl) {
-        // Validate destination URL scheme before navigating
         let isValidUrl = false;
         try {
           const parsed = new URL(redirectUrl);
@@ -213,7 +138,6 @@ export function DonationSelector({
           return;
         }
 
-        // Destination is configured: proceed to checkout
         setSubmissionStatus('success');
         setStatusMessage(
           'Donation intent received. Redirecting to secure checkout (please confirm your gift amount and frequency on the form)...',
@@ -222,7 +146,6 @@ export function DonationSelector({
           window.location.assign(redirectUrl);
         }
       } else {
-        // Destination is not configured: display truthful explanation
         setSubmissionStatus('unconfigured');
         setStatusMessage(
           `Online checkout is currently being established. Your intent to give $${finalAmount.toLocaleString()} ${
@@ -240,7 +163,7 @@ export function DonationSelector({
     }
   };
 
-  // Dynamic button label
+  // Dynamic button label: e.g. "Donate $150"
   const buttonLabel =
     activeAmount !== null && activeAmount > 0
       ? `${selectorContent.ctaBaseText} $${activeAmount.toLocaleString()}`
@@ -252,16 +175,13 @@ export function DonationSelector({
   return (
     <div
       className={cn(
-        'rounded-card shadow-float border-border/50 text-navy w-full max-w-xl border bg-white p-6 sm:p-8 md:p-10',
+        'rounded-card shadow-float border-border/50 text-navy w-full max-w-xl border bg-white p-4.5 sm:p-8 md:p-10',
         className,
       )}
     >
       <form onSubmit={handleSubmit} noValidate className="space-y-6">
         {/* 1. Frequency Control */}
         <div>
-          <label className="text-navy/70 mb-3 block text-xs font-bold tracking-wider uppercase">
-            {selectorContent.frequencyLabel}
-          </label>
           <SegmentedControl<DonationFrequency>
             aria-label={selectorContent.frequencyLabel}
             name="home-donation-frequency"
@@ -280,87 +200,59 @@ export function DonationSelector({
 
         {/* 2. Amount Options */}
         <div>
-          <div className="mb-3 flex items-baseline justify-between">
-            <label className="text-navy/70 block text-xs font-bold tracking-wider uppercase">
-              {selectorContent.amountsLabel}
-            </label>
-            {selectorContent.amountsSubtitle && (
-              <span className="text-navy/50 text-xs">{selectorContent.amountsSubtitle}</span>
-            )}
-          </div>
+          <h3 className="text-navy font-sans text-xl font-medium tracking-tight">
+            {selectorContent.amountsLabel}
+          </h3>
+          {selectorContent.amountsSubtitle && (
+            <p className="text-navy/60 mt-0.5 text-sm">{selectorContent.amountsSubtitle}</p>
+          )}
 
-          {/* 6 Preset Amount Tiles: exactly $5, $10, $15, $20, $150, $300 */}
+          {/* Preset Amount Grid: $5, $10, $15, $20, $150 */}
           <div
             role="radiogroup"
             aria-label="Preset donation amounts"
-            className="grid grid-cols-3 gap-3"
+            className="mt-4 grid grid-cols-3 gap-3"
           >
             {selectorContent.presetAmounts.map((amount) => {
-              const isChecked = !isCustom && selectedPreset === amount;
+              const isChecked = selectedPreset === amount;
 
               return (
-                <ChipToggle
+                <button
                   key={amount}
-                  type="radio"
-                  name="home-donation-preset-group"
-                  value={String(amount)}
-                  tone="plain"
-                  checked={isChecked}
-                  onChange={() => handleSelectPreset(amount)}
-                  className="w-full justify-center [&>span]:w-full"
+                  type="button"
+                  role="radio"
+                  aria-checked={isChecked}
+                  onClick={() => handleSelectPreset(amount)}
+                  className={cn(
+                    'focus-visible:outline-navy flex h-14 cursor-pointer items-center justify-center rounded-2xl border text-base font-bold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-16 sm:text-lg',
+                    isChecked
+                      ? 'border-gold text-navy ring-gold/40 bg-[#FAF3E2] shadow-xs ring-1'
+                      : 'border-border/60 hover:border-navy/30 hover:bg-canvas/50 text-navy bg-white',
+                  )}
                 >
                   ${amount}
-                </ChipToggle>
+                </button>
               );
             })}
           </div>
         </div>
 
-        {/* 3. Impact Note */}
-        <div className="border-border/40 bg-canvas/70 rounded-2xl border p-4 transition-all duration-150">
-          <p className="text-navy text-sm leading-snug font-bold">{currentImpact.headline}</p>
-          <p className="text-navy/70 mt-1 text-xs leading-relaxed">{currentImpact.description}</p>
-        </div>
-
-        {/* 4. Custom Amount Input */}
-        <div>
-          <label htmlFor={customInputId} className="text-navy/80 mb-2 block text-xs font-semibold">
-            {selectorContent.customAmountLabel}
-          </label>
-          <div className="relative">
-            <input
-              id={customInputId}
-              type="text"
-              inputMode="decimal"
-              autoComplete="off"
-              placeholder={selectorContent.customAmountPlaceholder}
-              value={customAmountInput}
-              onChange={handleCustomChange}
-              aria-invalid={Boolean(inputError)}
-              aria-describedby={inputError ? errorId : undefined}
-              className={cn(
-                'rounded-field text-navy placeholder:text-muted/70 h-[52px] w-full border bg-white px-4 py-3 text-base transition-colors focus-visible:outline-2 focus-visible:outline-offset-2',
-                inputError
-                  ? 'border-danger focus-visible:outline-danger'
-                  : isCustom && isCustomValid
-                    ? 'border-gold focus-visible:outline-navy bg-[#FAF3E2]/40'
-                    : 'border-border hover:border-navy/40 focus-visible:outline-navy',
-              )}
-            />
+        {/* 3. Impact Callout */}
+        <div className="border-gold/30 flex items-center gap-3.5 rounded-2xl border bg-[#FAF3E2] p-4 transition-all duration-150 sm:p-4.5">
+          <div className="bg-gold/80 text-navy flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+            <ShoppingBag className="h-5 w-5 stroke-[2]" aria-hidden="true" />
           </div>
-          {inputError && (
-            <p
-              id={errorId}
-              role="alert"
-              className="text-danger mt-1.5 flex items-center gap-1.5 text-xs font-medium"
-            >
-              <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              <span>{inputError}</span>
+          <div>
+            <p className="text-navy text-sm leading-snug font-semibold sm:text-base">
+              {currentImpact.headline}
             </p>
-          )}
+            <p className="text-navy/70 mt-0.5 text-xs leading-normal sm:text-sm">
+              {currentImpact.description}
+            </p>
+          </div>
         </div>
 
-        {/* 5. Status Feedback Banner */}
+        {/* Status Feedback Banner */}
         {submissionStatus !== 'idle' && statusMessage && (
           <div
             id={statusId}
@@ -395,24 +287,32 @@ export function DonationSelector({
           </div>
         )}
 
-        {/* 6. Primary Action CTA */}
+        {/* 4. Primary Action CTA */}
         <div className="space-y-3 pt-2">
           <Button
             type="submit"
             variant="primary"
             size="lg"
             fullWidth
-            icon="heart"
+            icon="none"
             disabled={isButtonDisabled}
             loading={submissionStatus === 'submitting'}
+            className="h-14 text-base font-bold sm:text-lg"
           >
-            {buttonLabel}
+            <span className="inline-flex items-center justify-center gap-2">
+              <Heart className="fill-navy/10 h-5 w-5 shrink-0 stroke-[2]" aria-hidden="true" />
+              <span>{buttonLabel}</span>
+            </span>
           </Button>
 
-          {/* 7. Tax-deductible notice & EIN line */}
-          <p className="text-navy/60 text-center text-xs leading-relaxed">
-            {selectorContent.taxExemptNotice} • EIN {siteConfig.ein}
-          </p>
+          {/* 5. Registered 501(c)(3) Notice & Lock Icon */}
+          <div className="text-navy/70 flex items-center justify-center gap-1.5 text-center text-xs">
+            <Lock
+              className="h-3.5 w-3.5 shrink-0 stroke-[2.2] text-emerald-700"
+              aria-hidden="true"
+            />
+            <span className="leading-tight">{selectorContent.taxExemptNotice}</span>
+          </div>
         </div>
       </form>
     </div>

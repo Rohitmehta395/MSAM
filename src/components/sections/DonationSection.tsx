@@ -19,13 +19,14 @@ export interface DonationSectionProps {
 /**
  * Home page Donation section.
  *
- * Grounded in Figma frame: `design-reference/Home Page/6-Donation.png`
+ * Grounded in Figma frame: `design-reference/Home Page/6-Donation - updated.png`
  * Layout:
- * - Two-column split on navy background (`tone="navy"`).
- * - Left: "GIVE WITH STAYING POWER" gold eyebrow, headline, lead description,
- *   3 gold checklist points, and bottom mission quote with link.
- * - Right: DonationSelector card with frequency toggle, 6 preset amount tiles ($5–$300),
- *   impact note, custom amount input, full-width dynamic CTA, and official EIN line.
+ * - Two-column split on dark navy background (`tone="navy"`).
+ * - Left: "GIVE WITH STAYING POWER" gold eyebrow, headline ("Your generosity keeps hope on the table."),
+ *   lead description, 3 benefit points with circular checkmarks, short gold divider, and
+ *   mission quotation with attribution link.
+ * - Right: DonationSelector card with frequency toggle, 5 preset amount tiles ($5–$150),
+ *   impact note, primary CTA, and official 501(c)(3) EIN badge.
  */
 export function DonationSection({ content, className }: DonationSectionProps) {
   const { eyebrow, headline, lead, checklist, quote, selector } = {
@@ -50,11 +51,11 @@ export function DonationSection({ content, className }: DonationSectionProps) {
               </Eyebrow>
               <Heading
                 as="h2"
-                className="font-sans text-3xl leading-tight font-normal tracking-tight text-balance text-white sm:text-4xl lg:text-[40px]"
+                className="font-sans text-3xl leading-tight font-normal tracking-tight text-balance text-white sm:text-4xl lg:text-[44px] xl:text-[48px]"
               >
                 {headline}
               </Heading>
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
                 {lead}
               </p>
 
@@ -63,13 +64,20 @@ export function DonationSection({ content, className }: DonationSectionProps) {
             </div>
 
             {/* Bottom Quote & Mission Link */}
-            <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
-              <p className="font-serif text-sm text-white/70 italic sm:text-base">
+            <div className="pt-6 sm:pt-8">
+              <div className="mb-4 h-0.5 w-12 bg-gold" aria-hidden="true" />
+              <p className="font-serif text-lg italic text-white/90 sm:text-xl">
                 &ldquo;{quote.text}&rdquo;
               </p>
-              <TextLink href={quote.action.href} onDark className="text-sm sm:text-base">
-                {quote.action.label}
-              </TextLink>
+              <div className="mt-1.5">
+                <TextLink
+                  href={quote.action.href}
+                  onDark
+                  className="text-sm font-semibold text-white/70 hover:text-white sm:text-base"
+                >
+                  {quote.action.label}
+                </TextLink>
+              </div>
             </div>
           </div>
 
