@@ -18,26 +18,27 @@ export interface WaysToHelpProps {
 }
 
 const toneCardStyles: Record<string, string> = {
-  lavender: 'bg-[#F3EFF8] border-border/50',
-  warm: 'bg-[#FAF3E2] border-border/50',
-  sage: 'bg-[#EEF5F1] border-border/50',
+  lavender: 'bg-[#F2EDFA] border-[#E5DBF5]/70',
+  warm: 'bg-[#FBF4DF] border-[#F2E5C2]/70',
+  sage: 'bg-[#EEF4F1] border-[#D6E5DC]/70',
 };
 
 /**
  * Home page Ways to Help & Many Hands section.
  *
- * Grounded in Figma frame: `design-reference/Home Page/4-Ways to take part.png`
+ * Grounded in Figma frame: `design-reference/Home Page/4-Ways to take part - updated.png`
  * Layout:
- * 1. Centered Section Header: "WAYS TO HELP" eyebrow, "Three ways to help." headline,
+ * 1. Centered Section Header: "WAYS TO HELP" eyebrow, "Find your next step." headline,
  *    and clear editorial lead copy.
- * 2. Three Pathway Cards:
+ * 2. Four Pathway Cards:
  *    - For Neighbors (Request Food Support) in soft lavender surface
  *    - For Food and Site Partners (Partner with Us) in soft warm surface
  *    - For Funders and Sponsors (Fund the Mission) in soft sage surface
+ *    - For Volunteers (Serve with Us) in soft lavender surface
  *    Each card includes a white icon badge, uppercase audience tag, title, description,
  *    feature checklist with green checkmarks, and a dark pill button.
  * 3. "MADE OF MANY HANDS" Mosaic Card:
- *    - Contained navy card with statement headline and description on the left
+ *    - Contained navy card with statement headline ("Many hands. One shared mission.") and description on the left
  *    - Community tag chips (`Neighbors`, `Food donors`, `Site hosts`, `Drivers`, etc.)
  *    - "Learn more about partnership →" white button
  *    - Right-hand photographic mosaic band with 3 coordinated community images.
@@ -65,7 +66,7 @@ export function WaysToHelp({ content, className }: WaysToHelpProps) {
           <Eyebrow className="mb-3 justify-center">{eyebrow}</Eyebrow>
           <Heading
             as="h2"
-            className="text-navy font-serif text-3xl font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl"
+            className="text-navy font-serif text-2xl font-bold tracking-tight sm:text-4xl lg:text-5xl"
           >
             {headline}
           </Heading>
@@ -76,8 +77,8 @@ export function WaysToHelp({ content, className }: WaysToHelpProps) {
           )}
         </div>
 
-        {/* Three Pathway Cards */}
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-3 lg:gap-8">
+        {/* Four Pathway Cards */}
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-2 lg:gap-8">
           {pathways.map((card) => {
             const Icon = card.icon;
 
@@ -89,16 +90,16 @@ export function WaysToHelp({ content, className }: WaysToHelpProps) {
                   toneCardStyles[card.tone] ?? 'border-border/50 bg-white',
                 )}
               >
-                <div>
+                <div className="flex flex-1 flex-col">
                   {/* Card Header: Icon Badge on left + Audience on right */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-start justify-between gap-3">
                     <span
                       aria-hidden="true"
                       className="text-navy flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white shadow-xs"
                     >
                       <Icon className="h-6 w-6 stroke-[1.75]" />
                     </span>
-                    <span className="text-navy/70 text-xs font-bold tracking-widest uppercase">
+                    <span className="text-navy/70 text-right text-xs font-bold tracking-wider uppercase sm:tracking-widest">
                       {card.audience}
                     </span>
                   </div>
@@ -122,7 +123,7 @@ export function WaysToHelp({ content, className }: WaysToHelpProps) {
                   icon="arrow"
                   fullWidth
                   size="md"
-                  className="justify-center"
+                  className="mt-auto justify-center"
                 >
                   {card.action.label}
                 </Button>
@@ -140,7 +141,7 @@ export function WaysToHelp({ content, className }: WaysToHelpProps) {
                 <Eyebrow onDark className="mb-4">
                   {manyHands.eyebrow}
                 </Eyebrow>
-                <h3 className="font-sans text-2xl leading-snug font-light tracking-tight text-balance text-white sm:text-3xl lg:text-[32px] xl:text-[34px]">
+                <h3 className="font-sans text-2xl leading-tight font-medium tracking-tight text-balance text-white sm:text-3xl lg:text-[34px] xl:text-[36px]">
                   {manyHands.headline}
                 </h3>
                 <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base">
@@ -167,7 +168,13 @@ export function WaysToHelp({ content, className }: WaysToHelpProps) {
 
               {/* Bottom Action Button */}
               <div className="pt-8 sm:pt-10">
-                <Button href={manyHands.action.href} variant="light" icon="arrow" size="md">
+                <Button
+                  href={manyHands.action.href}
+                  variant="light"
+                  icon="arrow"
+                  size="md"
+                  className="w-full sm:w-auto"
+                >
                   {manyHands.action.label}
                 </Button>
               </div>

@@ -374,8 +374,8 @@ export interface HomeWaysToHelpContent {
  */
 export const homeWaysToHelpContent: HomeWaysToHelpContent = {
   eyebrow: 'WAYS TO HELP',
-  headline: 'Three ways to help.',
-  lead: 'Whether you need food support, can share resources, or want to fund the mission, there is a clear next step.',
+  headline: 'Find your next step.',
+  lead: 'Give, serve, partner, or register for support. There is a place for you in this community.',
   pathways: [
     {
       id: 'neighbors',
@@ -385,7 +385,7 @@ export const homeWaysToHelpContent: HomeWaysToHelpContent = {
       title: 'Request Food Support',
       description: 'Request groceries and support by appointment every Saturday.',
       features: [
-        'Locate the nearest distribution',
+        'Arrange a Saturday appointment',
         'Share dietary or access needs',
         'Receive a private follow-up',
       ],
@@ -403,7 +403,7 @@ export const homeWaysToHelpContent: HomeWaysToHelpContent = {
       description: 'Partner with us to help collect, recover, and distribute groceries.',
       features: [
         'Offer food or logistics capacity',
-        'Host a distribution point',
+        'Bring a church or business team',
         'Plan safe, reliable handoffs',
       ],
       action: {
@@ -419,21 +419,38 @@ export const homeWaysToHelpContent: HomeWaysToHelpContent = {
       title: 'Fund the Mission',
       description: 'Help provide groceries and support for families in need.',
       features: [
-        'Sponsor a route or center',
-        'Support capacity-building grants',
-        'Build an employee giving plan',
+        'Give once or give monthly',
+        'Support food and outreach',
+        'Explore business sponsorship',
       ],
       action: {
         label: 'Learn More About Giving',
         href: '/donate',
       },
     },
+    {
+      id: 'volunteers',
+      audience: 'FOR VOLUNTEERS',
+      icon: HandHeart,
+      tone: 'lavender',
+      title: 'Serve with Us',
+      description: 'Join volunteers who help collect, prepare, and distribute groceries with care.',
+      features: [
+        'Help prepare and distribute groceries',
+        'Serve with dignity and care',
+        'Connect with neighbors and donors',
+      ],
+      action: {
+        label: 'Learn more about serving',
+        href: '/community/volunteers',
+      },
+    },
   ],
   manyHands: {
     eyebrow: 'MADE OF MANY HANDS',
-    headline:
-      'Together, we collect, recover, and distribute food that might otherwise go to waste straight into the homes of families who need it most.',
-    description: 'We are grateful for the community partners who help make this work possible.',
+    headline: 'Many hands. One shared mission.',
+    description:
+      'Individuals, businesses, and churches bring food, time, and generosity together. Help spread the word so more neighbors can find support and more hands can join the mission.',
     tags: ['Neighbors', 'Food donors', 'Site hosts', 'Drivers', 'Volunteers', 'Funders'],
     action: {
       label: 'Learn more about partnership',
