@@ -1,5 +1,5 @@
 import React from 'react';
-import { Share2 } from 'lucide-react';
+import { Route } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
@@ -22,17 +22,18 @@ export interface OperationalFootprintProps {
 /**
  * Home page Operational Footprint section.
  *
- * Grounded in Figma frame: `design-reference/Home Page/5-Operational footprint.png`
+ * Grounded in Figma frame: `design-reference/Home Page/5-Operational footprint - updated.png`
  * Layout:
  * 1. Top Two-Column Block:
  *    - Left: Primary operational warehouse photograph (`aspect-[4/3] rounded-card`) with
  *      the floating "Saturday support" mini-timeline card anchored at the bottom-right.
- *    - Right: "BUILT FOR DEPENDABLE ACCESS" eyebrow, section headline, explanatory lead copy,
- *      warm-tinted Lightbulb callout card, and "Learn more about our mission →" link.
- * 2. Bottom Three Feature Cards:
- *    - Cold-safe receiving (Snowflake icon in lavender badge)
- *    - Flexible staging (Boxes icon in lavender badge)
- *    - Neighborhood reach (MapPin icon in lavender badge)
+ *    - Right: "WHY THIS WORK MATTERS" eyebrow, section headline ("Hope for a difficult season."),
+ *      explanatory lead copy, warm-tinted Lightbulb callout card ("Every meal is a reminder that someone cares."),
+ *      and "Learn more about our mission →" link.
+ * 2. Bottom Three Value Cards:
+ *    - Nourishment (Snowflake icon in lavender badge)
+ *    - Connection (Boxes icon in lavender badge)
+ *    - Encouragement (HeartHandshake icon in lavender badge)
  *
  * Architecture note:
  * - Uses `<Section bleed tone="canvas" spacing="none">` with a single `<Container className="max-w-[1440px]">`
@@ -69,13 +70,13 @@ export function OperationalFootprint({ content, className }: OperationalFootprin
             </div>
 
             {/* Floating "Saturday support" Mini-Timeline Card */}
-            <div className="rounded-card shadow-float border-border/50 absolute right-4 -bottom-4 z-10 w-[240px] border bg-white p-5 sm:right-6 sm:-bottom-6 sm:w-[260px] sm:p-6">
-              {/* Card Header: Title + Share/Flow Icon */}
+            <div className="rounded-card shadow-card border-border/40 absolute right-3 -bottom-4 z-10 w-[240px] border bg-white p-5 sm:right-6 sm:-bottom-6 sm:w-[260px] sm:p-6">
+              {/* Card Header: Title + Route Icon */}
               <div className="flex items-center justify-between">
                 <span className="text-navy/70 text-[11px] font-bold tracking-widest uppercase">
                   {miniTimeline.title}
                 </span>
-                <Share2 className="text-gold h-4 w-4 shrink-0 stroke-[2.2]" />
+                <Route className="text-gold h-4.5 w-4.5 shrink-0 stroke-[2.2]" />
               </div>
 
               {/* 3-Step Timeline Dots */}
@@ -108,7 +109,7 @@ export function OperationalFootprint({ content, className }: OperationalFootprin
               </div>
 
               {/* Card Footer Note */}
-              <p className="border-border/40 text-navy/60 mt-3 border-t pt-3 text-[11px] leading-snug sm:text-xs">
+              <p className="text-navy/60 mt-4 text-[11px] leading-snug sm:text-xs">
                 {miniTimeline.note}
               </p>
             </div>
@@ -119,7 +120,7 @@ export function OperationalFootprint({ content, className }: OperationalFootprin
             <Eyebrow className="mb-3">{eyebrow}</Eyebrow>
             <Heading
               as="h2"
-              className="text-navy font-sans text-3xl leading-tight font-normal tracking-tight text-balance sm:text-4xl lg:text-[40px]"
+              className="text-navy font-sans text-3xl leading-tight font-normal tracking-tight text-balance sm:text-4xl lg:text-[44px]"
             >
               {headline}
             </Heading>
@@ -128,7 +129,7 @@ export function OperationalFootprint({ content, className }: OperationalFootprin
             </p>
 
             {/* Lightbulb Callout Box */}
-            <div className="border-gold/30 text-navy mt-6 flex max-w-xl items-center gap-3.5 rounded-2xl border bg-[#FAF3E2] p-4 sm:p-5">
+            <div className="border-gold/30 text-navy mt-6 flex w-full max-w-xl items-center gap-3.5 rounded-2xl border bg-[#FAF3E2] p-4 sm:p-5">
               <CalloutIcon className="text-navy h-5 w-5 shrink-0" />
               <p className="text-navy/90 text-sm leading-snug font-medium sm:text-base">
                 {callout.text}
@@ -137,7 +138,7 @@ export function OperationalFootprint({ content, className }: OperationalFootprin
 
             {/* Link to Mission */}
             <div className="mt-6 sm:mt-8">
-              <TextLink href={action.href} className="text-sm sm:text-base">
+              <TextLink href={action.href} className="text-sm font-semibold sm:text-base">
                 {action.label}
               </TextLink>
             </div>
@@ -145,17 +146,17 @@ export function OperationalFootprint({ content, className }: OperationalFootprin
         </div>
 
         {/* Bottom Three Feature Cards */}
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:mt-20 md:grid-cols-3 lg:mt-24 lg:gap-8">
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:mt-20 lg:mt-24 lg:grid-cols-3 lg:gap-8">
           {features.map((feature) => {
             const FeatureIcon = feature.icon;
 
             return (
               <div
                 key={feature.id}
-                className="rounded-panel border-border/60 flex items-start gap-4 border bg-white p-6 shadow-xs transition-all duration-200 sm:gap-5 sm:p-8"
+                className="rounded-card flex items-start gap-4 border border-[#E5DBF5]/70 bg-white p-6 shadow-xs transition-all duration-200 sm:gap-5 sm:p-8"
               >
                 {/* Icon Badge in soft lavender */}
-                <div className="bg-lavender text-navy flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-xs">
+                <div className="text-navy flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F2EDFA] shadow-xs">
                   <FeatureIcon className="h-6 w-6 stroke-[1.75]" />
                 </div>
 

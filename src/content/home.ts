@@ -1,11 +1,11 @@
 import {
-  MapPin,
   Building2,
   Share2,
   Truck,
   Users,
   HandHeart,
   Handshake,
+  HeartHandshake,
   CircleDollarSign,
   Snowflake,
   Boxes,
@@ -515,15 +515,15 @@ export interface HomeOperationalFootprintContent {
 
 /**
  * Operational Footprint content grounded in:
- * `design-reference/Home Page/5-Operational footprint.png`
+ * `design-reference/Home Page/5-Operational footprint - updated.png`
  */
 export const homeOperationalFootprintContent: HomeOperationalFootprintContent = {
-  eyebrow: 'BUILT FOR DEPENDABLE ACCESS',
-  headline: 'Support is provided with dignity and care.',
-  lead: 'Families receive groceries and support by appointment every Saturday.',
+  eyebrow: 'WHY THIS WORK MATTERS',
+  headline: 'Hope for a difficult season.',
+  lead: 'Rising living costs, housing instability, and unexpected setbacks leave families unsure how to put food on the table. With your partnership, Manna can continue to meet that need.',
   callout: {
     icon: Lightbulb,
-    text: 'Support is provided with dignity, care, and no judgment.',
+    text: 'Every meal is a reminder that someone cares.',
   },
   action: {
     label: 'Learn more about our mission',
@@ -541,23 +541,22 @@ export const homeOperationalFootprintContent: HomeOperationalFootprintContent = 
   },
   features: [
     {
-      id: 'cold-safe',
+      id: 'nourishment',
       icon: Snowflake,
-      title: 'Cold-safe receiving',
-      description: 'Temperature-aware intake, labeling, and short-term storage protect quality.',
+      title: 'Nourishment',
+      description: 'Nutritious groceries help families navigate a difficult season.',
     },
     {
-      id: 'flexible-staging',
+      id: 'connection',
       icon: Boxes,
-      title: 'Flexible staging',
-      description:
-        'Modular zones adapt to produce, pantry staples, prepared meals, and household needs.',
+      title: 'Connection',
+      description: 'A friendly welcome and a kind word remind neighbors they are not alone.',
     },
     {
-      id: 'neighborhood-reach',
-      icon: MapPin,
-      title: 'Neighborhood reach',
-      description: 'Centers anchor smaller pop-ups and delivery routes closer to residents.',
+      id: 'encouragement',
+      icon: HeartHandshake,
+      title: 'Encouragement',
+      description: 'Prayer, care, and community reflect Christ’s love in practical ways.',
     },
   ],
 };
