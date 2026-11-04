@@ -132,17 +132,6 @@ export interface FoodJourneyStep {
   imageKey: ImageKey;
 }
 
-export interface FoodJourneySummaryChip {
-  /** Unique identifier */
-  id: string;
-  /** Large metric number or range */
-  value: string;
-  /** Descriptive label */
-  label: string;
-  /** Whether the chip is given a highlighted warm background */
-  isHighlighted?: boolean;
-}
-
 export interface HomeFoodJourneyContent {
   /** Section eyebrow */
   eyebrow: string;
@@ -156,16 +145,6 @@ export interface HomeFoodJourneyContent {
   };
   /** The 4 timeline steps */
   steps: FoodJourneyStep[];
-  /** White summary card at bottom */
-  summaryCard: {
-    headline: string;
-    lead: string;
-    action: {
-      label: string;
-      href: string;
-    };
-    chips: FoodJourneySummaryChip[];
-  };
 }
 
 /**
@@ -177,7 +156,7 @@ export const homeHeroContent: HomeHeroContent = {
   headline: 'Serving hope. Feeding neighbors. Reflecting Christ’s love.',
   lead: 'For more than 35 years, Manna Share A Meal has served neighbors facing food insecurity with compassion, dignity, and the love of Christ.',
   primaryAction: {
-    label: 'Register for support',
+    label: 'Get Food Support',
     href: '/get-help',
     variant: 'primary',
     icon: 'arrow',
@@ -190,8 +169,8 @@ export const homeHeroContent: HomeHeroContent = {
   },
   reassurance: '100% donor-funded and volunteer-powered, with no government funding.',
   floatingCard: {
-    title: 'Support by appointment',
-    subtitle: 'Families receive groceries with dignity and care.',
+    title: 'We Provide Food Every Saturday',
+    subtitle: 'between 9:00 AM and 10:30 AM, as service is first-come, first-served.',
   },
 };
 
@@ -289,9 +268,9 @@ export const homeImpactContent: HomeImpactContent = {
  * `design-reference/Home Page/3-Food journey.png`
  */
 export const homeFoodJourneyContent: HomeFoodJourneyContent = {
-  eyebrow: 'HOW WE SERVE',
-  headline: 'Support by appointment every Saturday.',
-  lead: 'Families receive groceries and support with dignity, care, and no judgment.',
+  eyebrow: 'OUR PURPOSE',
+  headline: 'Three convictions guide every meal.',
+  lead: 'We believe practical help and a loving Christian community belong together. Here is what that means in action.',
   pathCue: {
     label: 'THE PATH CONTINUES',
   },
@@ -299,75 +278,37 @@ export const homeFoodJourneyContent: HomeFoodJourneyContent = {
     {
       id: 'step-01',
       stepNumber: '01',
-      category: 'FAMILIES RECEIVE GROCERIES',
+      category: 'Donor-funded. Volunteer-powered.',
       categoryIcon: Building2,
-      heading: 'Support is provided by appointment.',
-      description: 'Families receive groceries and support with dignity, care, and no judgment.',
-      checkText: 'No income verification, paperwork, or judgment.',
+      heading: 'Generosity keeps the mission moving.',
+      description:
+        'We receive no government funding. Individuals, businesses, and churches sustain the food, operations, and outreach our neighbors depend on.',
+      checkText: '100% privately supported',
       imageKey: 'home.journey.step1',
     },
     {
       id: 'step-02',
       stepNumber: '02',
-      category: 'SUPPORT IS SHARED',
+      category: 'Compassion without judgment.',
       categoryIcon: Share2,
-      heading: 'Families receive groceries and care.',
-      description: 'Support is provided with dignity, care, and no judgment.',
-      checkText: 'Support is provided every Saturday.',
+      heading: 'Every neighbor deserves dignity.',
+      description:
+        'Each person who comes to us is respected, valued, and welcomed. Food assistance is practical care, offered with kindness.',
+      checkText: 'Respect in every interaction',
       imageKey: 'home.journey.step2',
     },
     {
       id: 'step-03',
       stepNumber: '03',
-      category: 'FAMILIES ARE SERVED',
+      category: 'Community beyond the meal.',
       categoryIcon: Truck,
-      heading: 'Families receive groceries and support.',
-      description: 'Support is provided with dignity, care, and no judgment.',
-      checkText: 'Support is provided every Saturday.',
+      heading: 'Sharing food connects hearts.',
+      description:
+        'Volunteers, donors, and families form a community of care. Every shared meal is a reminder that no one has to face hardship alone.',
+      checkText: 'Feeding neighbors. Building connection.',
       imageKey: 'home.journey.step3',
     },
-    {
-      id: 'step-04',
-      stepNumber: '04',
-      category: 'FAMILIES ARE SERVED',
-      categoryIcon: Users,
-      heading: 'Families receive groceries and support.',
-      description: 'Support is provided with dignity, care, and no judgment.',
-      checkText: 'Support is provided every Saturday.',
-      imageKey: 'home.journey.step4',
-    },
   ],
-  summaryCard: {
-    headline: 'Support by appointment every Saturday.',
-    lead: 'Families receive groceries and support with dignity, care, and no judgment.',
-    action: {
-      label: 'See how we measure impact',
-      href: '/mission',
-    },
-    chips: [
-      {
-        id: 'families-weekly',
-        value: '40-60',
-        label: 'families served every Saturday',
-      },
-      {
-        id: 'annual-groceries',
-        value: '$390,000+',
-        label: 'in groceries distributed annually',
-      },
-      {
-        id: 'per-visit',
-        value: '$150',
-        label: 'in groceries per family visit',
-      },
-      {
-        id: 'weekly-goal',
-        value: '100',
-        label: 'families weekly goal',
-        isHighlighted: true,
-      },
-    ],
-  },
 };
 
 export interface PathwayCard {
