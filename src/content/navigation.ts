@@ -71,7 +71,7 @@ export const headerCtas: readonly NavItem[] = [
  * Phone details are dynamically sourced from siteConfig.
  */
 export const urgentMessage: UrgentMessageData = {
-  text: 'Need Prayer? Call us: 954-406-7580',
+  text: 'Here for Our Neighbors. Your gift helps provide groceries and support for families in need.',
   phoneDisplay: siteConfig.phoneDisplay,
   phoneHref: siteConfig.phoneHref,
   action: {

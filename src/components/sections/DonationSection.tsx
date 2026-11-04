@@ -39,7 +39,7 @@ export function DonationSection({ content, className }: DonationSectionProps) {
       bleed
       tone="navy"
       spacing="none"
-      className={cn('py-16 text-white sm:py-20 lg:py-24', className)}
+      className={cn('border-b border-white/10 py-16 text-white sm:py-20 lg:py-24', className)}
     >
       <Container className="max-w-[1440px]">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">
@@ -65,8 +65,8 @@ export function DonationSection({ content, className }: DonationSectionProps) {
 
             {/* Bottom Quote & Mission Link */}
             <div className="pt-6 sm:pt-8">
-              <div className="mb-4 h-0.5 w-12 bg-gold" aria-hidden="true" />
-              <p className="font-serif text-lg italic text-white/90 sm:text-xl">
+              <div className="bg-gold mb-4 h-0.5 w-12" aria-hidden="true" />
+              <p className="font-serif text-lg text-white/90 italic sm:text-xl">
                 &ldquo;{quote.text}&rdquo;
               </p>
               <div className="mt-1.5">
