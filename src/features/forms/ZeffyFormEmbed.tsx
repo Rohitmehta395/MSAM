@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import Script from 'next/script';
 import { ExternalLink, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -33,6 +33,15 @@ interface ZeffyGlobal {
   };
 }
 
+const emptySubscribe = () => () => {};
+function useIsMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
+}
+
 /**
  * Reusable official Zeffy embedded form component for Next.js App Router.
  *
@@ -53,8 +62,10 @@ export function ZeffyFormEmbed({
   embedStyle,
 }: ZeffyFormEmbedProps) {
   const [hasScriptError, setHasScriptError] = useState(false);
+  const isMounted = useIsMounted();
 
   useEffect(() => {
+
     // If Zeffy script is already loaded on window (e.g. client-side navigation),
     // trigger init() to scan and bind the newly mounted data-zeffy-embed element.
     if (typeof window !== 'undefined') {
@@ -87,7 +98,7 @@ export function ZeffyFormEmbed({
   const fallbackMinHeight = minHeightStyle || '240px';
 
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn('w-full', className)} suppressHydrationWarning>
       {/* 1. Official Zeffy Embed Script via Next.js Script (deduplicated by id="zeffy-embed-v2") */}
       <Script
         id="zeffy-embed-v2"
@@ -115,8 +126,9 @@ export function ZeffyFormEmbed({
 
       {/* 2. Official Zeffy Embed Mount Target */}
       <div
-        data-zeffy-embed
+        data-zeffy-embed={isMounted ? true : undefined}
         data-form-url={formPath}
+        suppressHydrationWarning
         style={{
           ...(minHeightStyle ? { minHeight: minHeightStyle } : {}),
           ...embedStyle,
@@ -128,12 +140,45 @@ export function ZeffyFormEmbed({
         )}
       />
 
-      {/* 3. Official Fallback Iframe Container */}
-      <div
-        data-zeffy-embed-fallback
-        style={{ display: hasScriptError ? 'block' : 'none' }}
-        className={cn('w-full space-y-3', fallbackClassName)}
-      >
+      {/* 3. Official Fallback Iframe Container (rendered when script fails or is blocked) */}
+      {hasScriptError && (
+        <div
+          data-zeffy-embed-fallback
+          className={cn('w-full space-y-3', fallbackClassName)}
+        >
+          <div
+            className="border-border/40 bg-canvas/30 relative w-full overflow-hidden rounded-xl border"
+            style={{ minHeight: fallbackMinHeight }}
+          >
+            <iframe
+              title={title}
+              className="absolute inset-0 h-full w-full border-0"
+              src={fallbackUrl}
+              data-zeffy-embed-src={fallbackUrl}
+              allow="payment"
+            />
+          </div>
+
+          {/* Fallback direct link banner */}
+          <div className="flex flex-col items-center justify-between gap-2 rounded-xl border border-amber-300 bg-amber-50/90 p-3 text-xs text-amber-900 sm:flex-row sm:text-sm">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
+              <span>Standard form embed could not be initialized.</span>
+            </div>
+            <a
+              href={fallbackUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-bold text-amber-950 underline hover:text-black"
+            >
+              <span>Open form in new window</span>
+              <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      )}
+
+      <noscript>
         <div
           className="border-border/40 bg-canvas/30 relative w-full overflow-hidden rounded-xl border"
           style={{ minHeight: fallbackMinHeight }}
@@ -141,29 +186,11 @@ export function ZeffyFormEmbed({
           <iframe
             title={title}
             className="absolute inset-0 h-full w-full border-0"
-            src={hasScriptError ? fallbackUrl : undefined}
-            data-zeffy-embed-src={fallbackUrl}
+            src={fallbackUrl}
             allow="payment"
           />
         </div>
-
-        {/* Fallback direct link banner */}
-        <div className="flex flex-col items-center justify-between gap-2 rounded-xl border border-amber-300 bg-amber-50/90 p-3 text-xs text-amber-900 sm:flex-row sm:text-sm">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
-            <span>Standard form embed could not be initialized.</span>
-          </div>
-          <a
-            href={fallbackUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-bold text-amber-950 underline hover:text-black"
-          >
-            <span>Open form in new window</span>
-            <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
+      </noscript>
     </div>
   );
 }

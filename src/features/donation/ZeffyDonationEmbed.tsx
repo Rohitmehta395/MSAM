@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import Script from 'next/script';
 import { ExternalLink, Lock, ShieldCheck, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -30,6 +30,15 @@ interface ZeffyGlobal {
   };
 }
 
+const emptySubscribe = () => () => {};
+function useIsMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
+}
+
 /**
  * Official Zeffy embedded donation checkout integration for Next.js App Router.
  *
@@ -47,6 +56,7 @@ export function ZeffyDonationEmbed({
   className,
 }: ZeffyDonationEmbedProps) {
   const [hasScriptError, setHasScriptError] = useState(false);
+  const isMounted = useIsMounted();
 
   useEffect(() => {
     // If Zeffy script is already loaded on window (e.g. client-side navigation back to Home),
@@ -64,7 +74,7 @@ export function ZeffyDonationEmbed({
   }, []);
 
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn('w-full', className)} suppressHydrationWarning>
       {/* 1. Official Zeffy Embed Script via Next.js Script */}
       <Script
         id="zeffy-embed-v2"
@@ -92,47 +102,60 @@ export function ZeffyDonationEmbed({
 
       {/* 2. Official Zeffy Embed Mount Target */}
       <div
-        data-zeffy-embed
+        data-zeffy-embed={isMounted ? true : undefined}
         data-form-url={formUrl}
+        suppressHydrationWarning
         className={cn(
           'min-h-[460px] w-full transition-all duration-300',
           hasScriptError && 'hidden',
         )}
       />
 
-      {/* 3. Official Fallback Iframe Container */}
-      <div
-        data-zeffy-embed-fallback
-        style={{ display: hasScriptError ? 'block' : 'none' }}
-        className="w-full space-y-4"
-      >
+      {/* 3. Official Fallback Iframe Container (rendered when script fails or is blocked) */}
+      {hasScriptError && (
+        <div
+          data-zeffy-embed-fallback
+          className="w-full space-y-4"
+        >
+          <div className="border-border/40 bg-canvas/30 relative min-h-[480px] w-full overflow-hidden rounded-xl border">
+            <iframe
+              title="Donation form powered by Zeffy"
+              className="absolute inset-0 h-full w-full border-0"
+              src={fallbackUrl}
+              data-zeffy-embed-src={fallbackUrl}
+              allow="payment"
+            />
+          </div>
+
+          {/* Informative fallback banner with direct modal link */}
+          <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50/80 p-3.5 text-xs text-amber-900 sm:flex-row sm:text-sm">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
+              <span>Standard checkout embed could not be initialized.</span>
+            </div>
+            <a
+              href={modalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-bold text-amber-950 underline hover:text-black"
+            >
+              <span>Open secure donation form</span>
+              <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      )}
+
+      <noscript>
         <div className="border-border/40 bg-canvas/30 relative min-h-[480px] w-full overflow-hidden rounded-xl border">
           <iframe
             title="Donation form powered by Zeffy"
             className="absolute inset-0 h-full w-full border-0"
-            src={hasScriptError ? fallbackUrl : undefined}
-            data-zeffy-embed-src={fallbackUrl}
+            src={fallbackUrl}
             allow="payment"
           />
         </div>
-
-        {/* Informative fallback banner with direct modal link */}
-        <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50/80 p-3.5 text-xs text-amber-900 sm:flex-row sm:text-sm">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
-            <span>Standard checkout embed could not be initialized.</span>
-          </div>
-          <a
-            href={modalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-bold text-amber-950 underline hover:text-black"
-          >
-            <span>Open secure donation form</span>
-            <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
+      </noscript>
 
       {/* 4. Trust Badges & Accessibility Pathways */}
       <div className="border-border/40 text-navy/70 mt-4 flex flex-col items-center justify-center gap-1.5 border-t pt-3 text-center text-xs">
