@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BadgeDollarSign } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/Tabs';
@@ -34,11 +34,12 @@ const tabPrompts: Record<PathwayTabId, string> = {
  * - Tab 2 (Serve): Reusable Zeffy volunteer interest form embed
  * - Tab 3 (Give Funds): Existing Zeffy donation campaign embed with trust badges
  *
- * Tab preservation strategy:
- * - Tabs are lazy-mounted on first visit to avoid loading unused iframes.
- * - Once visited, panels remain mounted in the DOM with `hidden` to avoid
- *   destroying or re-initializing running Zeffy embeds upon tab switching.
- * - Single script loading deduplication via `zeffy-embed-v2` Next.js Script ID.
+ * Performance optimization (Active-Tab-Only Mounting Strategy):
+ * - Exactly one Zeffy embed iframe is mounted in this component at any given time.
+ * - When switching tabs, the previously active form iframe is unmounted, immediately
+ *   releasing its browser memory, background network polling, and DOM footprint.
+ * - Inactive forms are never preloaded in the background.
+ * - Single script loading deduplication via zeffyScriptLoader.
  * - Supports keyboard Tab button navigation (`tabIndex={0}`) as well as arrow keys.
  */
 export function WaysToHelpZeffyTabs({
@@ -53,36 +54,10 @@ export function WaysToHelpZeffyTabs({
   const { tabs, subheading } = content;
 
   const [activeTab, setActiveTab] = useState<PathwayTabId>('give-food');
-  const [visitedTabs, setVisitedTabs] = useState<Set<PathwayTabId>>(
-    () => new Set<PathwayTabId>(['give-food']),
-  );
 
   const handleTabChange = (val: string) => {
-    const nextTab = val as PathwayTabId;
-    setActiveTab(nextTab);
-    setVisitedTabs((prev) => {
-      if (prev.has(nextTab)) return prev;
-      const next = new Set(prev);
-      next.add(nextTab);
-      return next;
-    });
+    setActiveTab(val as PathwayTabId);
   };
-
-  // Re-trigger Zeffy embed initialization if a newly mounted tab needs binding
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const zeffy = (window as unknown as { Zeffy?: { embed?: { init: () => void } } }).Zeffy;
-      if (zeffy?.embed?.init) {
-        requestAnimationFrame(() => {
-          try {
-            zeffy?.embed?.init();
-          } catch (e) {
-            console.warn('[WaysToHelpZeffyTabs] Error initializing Zeffy on tab change:', e);
-          }
-        });
-      }
-    }
-  }, [activeTab]);
 
   return (
     <div className={cn('w-full', className)}>
@@ -118,67 +93,59 @@ export function WaysToHelpZeffyTabs({
 
       <hr className="border-border/60 mb-6" />
 
-      {/* 3. Tab Panels with Persistent Mount & Dynamic Display */}
+      {/* 3. Tab Panels with Active-Tab-Only Mounting Strategy */}
       <div className="w-full">
         {/* Tab 1: Give Food */}
-        {visitedTabs.has('give-food') && (
+        {activeTab === 'give-food' && (
           <div
             role="tabpanel"
             id="ways-to-help-tabs-panel-give-food"
             aria-labelledby="ways-to-help-tabs-tab-give-food"
-            tabIndex={activeTab === 'give-food' ? 0 : -1}
-            hidden={activeTab !== 'give-food'}
-            className={cn(
-              'focus-visible:outline-navy w-full focus-visible:outline-2 focus-visible:outline-offset-2',
-              activeTab !== 'give-food' && 'hidden',
-            )}
+            tabIndex={0}
+            className="focus-visible:outline-navy w-full focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             <ZeffyFormEmbed
+              key="give-food"
               formPath="/en-US/embed/newsletter-form/food-provider-inquiry"
               fallbackUrl="https://www.zeffy.com/en-US/embed/newsletter-form/food-provider-inquiry"
               title="Food provider inquiry form powered by Zeffy"
               minHeight="540px"
+              lazy={false}
             />
           </div>
         )}
 
         {/* Tab 2: Serve */}
-        {visitedTabs.has('serve') && (
+        {activeTab === 'serve' && (
           <div
             role="tabpanel"
             id="ways-to-help-tabs-panel-serve"
             aria-labelledby="ways-to-help-tabs-tab-serve"
-            tabIndex={activeTab === 'serve' ? 0 : -1}
-            hidden={activeTab !== 'serve'}
-            className={cn(
-              'focus-visible:outline-navy w-full focus-visible:outline-2 focus-visible:outline-offset-2',
-              activeTab !== 'serve' && 'hidden',
-            )}
+            tabIndex={0}
+            className="focus-visible:outline-navy w-full focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             <ZeffyFormEmbed
+              key="serve"
               formPath="/en-US/embed/newsletter-form/volunteer-interest-form-11"
               fallbackUrl="https://www.zeffy.com/en-US/embed/newsletter-form/volunteer-interest-form-11"
               title="Volunteer interest form powered by Zeffy"
               minHeight="540px"
+              lazy={false}
             />
           </div>
         )}
 
         {/* Tab 3: Give Funds */}
-        {visitedTabs.has('give-funds') && (
+        {activeTab === 'give-funds' && (
           <div
             role="tabpanel"
             id="ways-to-help-tabs-panel-give-funds"
             aria-labelledby="ways-to-help-tabs-tab-give-funds"
-            tabIndex={activeTab === 'give-funds' ? 0 : -1}
-            hidden={activeTab !== 'give-funds'}
-            className={cn(
-              'focus-visible:outline-navy w-full focus-visible:outline-2 focus-visible:outline-offset-2',
-              activeTab !== 'give-funds' && 'hidden',
-            )}
+            tabIndex={0}
+            className="focus-visible:outline-navy w-full focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             <div className="mx-auto max-w-xl">
-              <ZeffyDonationEmbed />
+              <ZeffyDonationEmbed key="give-funds" lazy={false} />
             </div>
           </div>
         )}

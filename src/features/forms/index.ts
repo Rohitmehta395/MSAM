@@ -8,3 +8,4 @@ export * from './VolunteerInterestForm';
 export * from './PartnerInquiryForm';
 export * from './ZeffyFormEmbed';
 export * from './WaysToHelpZeffyTabs';
+export * from './zeffyScriptLoader';

@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useSyncExternalStore } from 'react';
-import Script from 'next/script';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import { ExternalLink, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { loadZeffyScript, initZeffyEmbeds, type ZeffyGlobal } from './zeffyScriptLoader';
 
 export interface ZeffyFormEmbedProps {
   /** Relative form URL for the embed script (e.g. '/en-US/embed/newsletter-form/volunteer-interest-form-11') */
@@ -14,6 +14,10 @@ export interface ZeffyFormEmbedProps {
   title?: string;
   /** Minimum container height during loading / fallback. Set to 'auto' to allow natural content height. Default: '280px' */
   minHeight?: string | number;
+  /** Whether to lazy load the embed using IntersectionObserver. Default: true */
+  lazy?: boolean;
+  /** Root margin for IntersectionObserver viewport detection. Default: '250px 0px' */
+  rootMargin?: string;
   /** Optional custom class name for the wrapper */
   className?: string;
   /** Optional custom class name for the fallback container */
@@ -22,15 +26,6 @@ export interface ZeffyFormEmbedProps {
   embedClassName?: string;
   /** Optional inline styles for the [data-zeffy-embed] element */
   embedStyle?: React.CSSProperties;
-}
-
-const ZEFFY_EMBED_SCRIPT_URL = 'https://www.zeffy.com/embed/v2/zeffy-embed.js';
-
-interface ZeffyGlobal {
-  embed?: {
-    version?: string;
-    init: () => void;
-  };
 }
 
 const emptySubscribe = () => () => {};
@@ -43,51 +38,107 @@ function useIsMounted() {
 }
 
 /**
- * Reusable official Zeffy embedded form component for Next.js App Router.
+ * Reusable official Zeffy embedded form component with lazy-loading and on-demand script lifecycle.
  *
- * Implements:
- * 1. Single script load of https://www.zeffy.com/embed/v2/zeffy-embed.js using Next.js Script deduplication (`id="zeffy-embed-v2"`).
- * 2. Client-side re-initialization hook on route changes / mounts.
- * 3. Official fallback mechanism if script is blocked or fails to load.
- * 4. Responsive iframe sizing with accessible title and overflow handling.
+ * Optimizations:
+ * 1. IntersectionObserver lazy-loading: delays iframe creation and script fetching until the embed
+ *    approaches the viewport, dramatically reducing initial page load weight and third-party requests.
+ * 2. On-demand script loader: loads https://www.zeffy.com/embed/v2/zeffy-embed.js once only when needed.
+ * 3. Zero layout shift: reserves height during loading/placeholder state.
+ * 4. Proper cleanup: observer disconnects and unmounting completely releases iframe memory.
  */
 export function ZeffyFormEmbed({
   formPath,
   fallbackUrl,
   title = 'Signup form powered by Zeffy',
   minHeight = '280px',
+  lazy = true,
+  rootMargin = '250px 0px',
   className,
   fallbackClassName,
   embedClassName,
   embedStyle,
 }: ZeffyFormEmbedProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(!lazy);
   const [hasScriptError, setHasScriptError] = useState(false);
+  const fallbackActiveRef = useRef(false);
   const isMounted = useIsMounted();
 
+  // 1. IntersectionObserver to detect when embed approaches viewport
   useEffect(() => {
+    if (!lazy || isVisible) return;
 
-    // If Zeffy script is already loaded on window (e.g. client-side navigation),
-    // trigger init() to scan and bind the newly mounted data-zeffy-embed element.
-    if (typeof window !== 'undefined') {
-      const zeffy = (window as unknown as { Zeffy?: ZeffyGlobal }).Zeffy;
-      if (zeffy?.embed?.init) {
-        try {
-          zeffy.embed.init();
-        } catch (err) {
-          console.warn('[ZeffyFormEmbed] Error initializing Zeffy embed:', err);
-        }
-      } else {
-        // Fallback watchdog: if script fails to load or is blocked by an extension without firing onError
-        const timer = setTimeout(() => {
-          const currentZeffy = (window as unknown as { Zeffy?: ZeffyGlobal }).Zeffy;
-          if (!currentZeffy?.embed?.init) {
-            setHasScriptError(true);
-          }
-        }, 3500);
-        return () => clearTimeout(timer);
-      }
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return;
     }
-  }, []);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [lazy, isVisible, rootMargin]);
+
+  // 2. Once visible, trigger on-demand script loading and initialization
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let isSubscribed = true;
+    let watchdogTimer: NodeJS.Timeout | null = null;
+
+    loadZeffyScript()
+      .then(() => {
+        if (!isSubscribed || fallbackActiveRef.current) return;
+        if (watchdogTimer) {
+          clearTimeout(watchdogTimer);
+          watchdogTimer = null;
+        }
+        requestAnimationFrame(() => {
+          if (!isSubscribed || fallbackActiveRef.current) return;
+          initZeffyEmbeds();
+        });
+      })
+      .catch((err) => {
+        if (!isSubscribed) return;
+        if (watchdogTimer) {
+          clearTimeout(watchdogTimer);
+          watchdogTimer = null;
+        }
+        console.warn(`[ZeffyFormEmbed] Failed to load official Zeffy embed script for ${formPath}:`, err);
+        fallbackActiveRef.current = true;
+        setHasScriptError(true);
+      });
+
+    // Fallback watchdog (7 seconds): if network stalls, ad-blocker silently swallows, or script hangs.
+    // 7s provides ample time on slow mobile connections before falling back, preventing premature triggers.
+    watchdogTimer = setTimeout(() => {
+      if (!isSubscribed || fallbackActiveRef.current) return;
+      const currentZeffy = (window as unknown as { Zeffy?: ZeffyGlobal }).Zeffy;
+      if (!currentZeffy?.embed?.init) {
+        fallbackActiveRef.current = true;
+        setHasScriptError(true);
+      }
+    }, 7000);
+
+    return () => {
+      isSubscribed = false;
+      if (watchdogTimer) {
+        clearTimeout(watchdogTimer);
+        watchdogTimer = null;
+      }
+    };
+  }, [isVisible, formPath]);
 
   const isAutoMinHeight = minHeight === 'auto' || minHeight === undefined;
   const minHeightStyle = isAutoMinHeight
@@ -97,50 +148,48 @@ export function ZeffyFormEmbed({
       : minHeight;
   const fallbackMinHeight = minHeightStyle || '240px';
 
-  return (
-    <div className={cn('w-full', className)} suppressHydrationWarning>
-      {/* 1. Official Zeffy Embed Script via Next.js Script (deduplicated by id="zeffy-embed-v2") */}
-      <Script
-        id="zeffy-embed-v2"
-        src={ZEFFY_EMBED_SCRIPT_URL}
-        strategy="afterInteractive"
-        onLoad={() => {
-          if (typeof window !== 'undefined') {
-            const zeffy = (window as unknown as { Zeffy?: ZeffyGlobal }).Zeffy;
-            if (zeffy?.embed?.init) {
-              try {
-                zeffy.embed.init();
-              } catch (err) {
-                console.warn('[ZeffyFormEmbed] Error in onLoad init:', err);
-              }
-            }
-          }
-        }}
-        onError={() => {
-          console.warn(
-            `[ZeffyFormEmbed] Failed to load official Zeffy embed script for ${formPath}. Activating fallback iframe.`,
-          );
-          setHasScriptError(true);
-        }}
-      />
-
-      {/* 2. Official Zeffy Embed Mount Target */}
+  // 3. Render lightweight placeholder until approached
+  if (!isVisible) {
+    return (
       <div
-        data-zeffy-embed={isMounted ? true : undefined}
-        data-form-url={formPath}
-        suppressHydrationWarning
-        style={{
-          ...(minHeightStyle ? { minHeight: minHeightStyle } : {}),
-          ...embedStyle,
-        }}
-        className={cn(
-          'w-full transition-all duration-300',
-          embedClassName,
-          hasScriptError && 'hidden',
-        )}
-      />
+        ref={containerRef}
+        className={cn('w-full', className)}
+        style={{ minHeight: minHeightStyle }}
+        aria-busy="true"
+      >
+        <div
+          className={cn(
+            'flex w-full items-center justify-center rounded-xl transition-colors',
+            embedClassName,
+          )}
+          style={{ minHeight: fallbackMinHeight, ...embedStyle }}
+        >
+          <span className="sr-only">Loading form...</span>
+        </div>
+      </div>
+    );
+  }
 
-      {/* 3. Official Fallback Iframe Container (rendered when script fails or is blocked) */}
+  return (
+    <div ref={containerRef} className={cn('w-full', className)} suppressHydrationWarning>
+      {/* 1. Official Zeffy Embed Mount Target: unmounted if fallback has taken over */}
+      {!hasScriptError && (
+        <div
+          data-zeffy-embed={isMounted ? true : undefined}
+          data-form-url={formPath}
+          suppressHydrationWarning
+          style={{
+            ...(minHeightStyle ? { minHeight: minHeightStyle } : {}),
+            ...embedStyle,
+          }}
+          className={cn(
+            'w-full transition-all duration-300',
+            embedClassName,
+          )}
+        />
+      )}
+
+      {/* 2. Official Fallback Iframe Container (rendered only when script fails or watchdog triggers) */}
       {hasScriptError && (
         <div
           data-zeffy-embed-fallback

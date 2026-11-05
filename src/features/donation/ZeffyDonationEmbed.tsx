@@ -1,9 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useSyncExternalStore } from 'react';
-import Script from 'next/script';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import { ExternalLink, Lock, ShieldCheck, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import {
+  loadZeffyScript,
+  initZeffyEmbeds,
+  type ZeffyGlobal,
+} from '@/features/forms/zeffyScriptLoader';
 
 export interface ZeffyDonationEmbedProps {
   /** Relative form URL for the embed script (e.g. '/embed/donation-form/donate-to-change-lives-27650') */
@@ -12,6 +16,10 @@ export interface ZeffyDonationEmbedProps {
   fallbackUrl?: string;
   /** Modal fallback URL */
   modalUrl?: string;
+  /** Whether to lazy load the embed using IntersectionObserver. Default: true */
+  lazy?: boolean;
+  /** Root margin for IntersectionObserver viewport detection. Default: '250px 0px' */
+  rootMargin?: string;
   /** Custom class name */
   className?: string;
 }
@@ -21,14 +29,6 @@ const DEFAULT_FALLBACK_URL =
   'https://www.zeffy.com/embed/donation-form/donate-to-change-lives-27650';
 const DEFAULT_MODAL_URL =
   'https://www.zeffy.com/embed/donation-form/donate-to-change-lives-27650?modal=true';
-const ZEFFY_EMBED_SCRIPT_URL = 'https://www.zeffy.com/embed/v2/zeffy-embed.js';
-
-interface ZeffyGlobal {
-  embed?: {
-    version?: string;
-    init: () => void;
-  };
-}
 
 const emptySubscribe = () => () => {};
 function useIsMounted() {
@@ -40,83 +40,131 @@ function useIsMounted() {
 }
 
 /**
- * Official Zeffy embedded donation checkout integration for Next.js App Router.
+ * Official Zeffy embedded donation checkout integration with lazy loading and on-demand script lifecycle.
  *
- * Implements:
- * 1. Single script load of https://www.zeffy.com/embed/v2/zeffy-embed.js using Next.js Script.
- * 2. Client-side re-initialization hook on route changes.
- * 3. Official fallback mechanism if script is blocked or fails to load.
- * 4. Modal checkout fallback link (`?modal=true`) opened in a secure new tab.
- * 5. Dynamic height adaptation without cutting off form fields.
+ * Optimizations:
+ * 1. IntersectionObserver lazy-loading: delays iframe instantiation until user scrolls towards the donation section.
+ * 2. Shared on-demand script loader: deduplicates script injection and concurrent loading.
+ * 3. Complete memory reclamation on unmount (e.g. when switching tabs in Ways to Help).
+ * 4. Fallback modal link and secure payment badges.
  */
 export function ZeffyDonationEmbed({
   formUrl = DEFAULT_FORM_URL,
   fallbackUrl = DEFAULT_FALLBACK_URL,
   modalUrl = DEFAULT_MODAL_URL,
+  lazy = true,
+  rootMargin = '250px 0px',
   className,
 }: ZeffyDonationEmbedProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(!lazy);
   const [hasScriptError, setHasScriptError] = useState(false);
+  const fallbackActiveRef = useRef(false);
   const isMounted = useIsMounted();
 
+  // 1. IntersectionObserver for viewport lazy-loading
   useEffect(() => {
-    // If Zeffy script is already loaded on window (e.g. client-side navigation back to Home),
-    // trigger init() to scan and bind the newly mounted data-zeffy-embed element.
-    if (typeof window !== 'undefined') {
-      const zeffy = (window as unknown as { Zeffy?: ZeffyGlobal }).Zeffy;
-      if (zeffy?.embed?.init) {
-        try {
-          zeffy.embed.init();
-        } catch (err) {
-          console.warn('[ZeffyEmbed] Error initializing Zeffy embed:', err);
-        }
-      }
+    if (!lazy || isVisible) return;
+
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return;
     }
-  }, []);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [lazy, isVisible, rootMargin]);
+
+  // 2. Once visible, trigger on-demand script loading and initialization
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let isSubscribed = true;
+    let watchdogTimer: NodeJS.Timeout | null = null;
+
+    loadZeffyScript()
+      .then(() => {
+        if (!isSubscribed || fallbackActiveRef.current) return;
+        if (watchdogTimer) {
+          clearTimeout(watchdogTimer);
+          watchdogTimer = null;
+        }
+        requestAnimationFrame(() => {
+          if (!isSubscribed || fallbackActiveRef.current) return;
+          initZeffyEmbeds();
+        });
+      })
+      .catch((err) => {
+        if (!isSubscribed) return;
+        if (watchdogTimer) {
+          clearTimeout(watchdogTimer);
+          watchdogTimer = null;
+        }
+        console.warn('[ZeffyDonationEmbed] Failed to load official Zeffy embed script:', err);
+        fallbackActiveRef.current = true;
+        setHasScriptError(true);
+      });
+
+    // Fallback watchdog (7 seconds): if network stalls, ad-blocker silently swallows, or script hangs.
+    // 7s provides ample time on slow mobile connections before falling back, preventing premature triggers.
+    watchdogTimer = setTimeout(() => {
+      if (!isSubscribed || fallbackActiveRef.current) return;
+      const currentZeffy = (window as unknown as { Zeffy?: ZeffyGlobal }).Zeffy;
+      if (!currentZeffy?.embed?.init) {
+        fallbackActiveRef.current = true;
+        setHasScriptError(true);
+      }
+    }, 7000);
+
+    return () => {
+      isSubscribed = false;
+      if (watchdogTimer) {
+        clearTimeout(watchdogTimer);
+        watchdogTimer = null;
+      }
+    };
+  }, [isVisible, formUrl]);
+
+  // 3. Lightweight placeholder while out of viewport
+  if (!isVisible) {
+    return (
+      <div
+        ref={containerRef}
+        className={cn('flex min-h-[460px] w-full items-center justify-center rounded-xl', className)}
+        aria-busy="true"
+      >
+        <span className="sr-only">Loading donation form...</span>
+      </div>
+    );
+  }
 
   return (
-    <div className={cn('w-full', className)} suppressHydrationWarning>
-      {/* 1. Official Zeffy Embed Script via Next.js Script */}
-      <Script
-        id="zeffy-embed-v2"
-        src={ZEFFY_EMBED_SCRIPT_URL}
-        strategy="afterInteractive"
-        onLoad={() => {
-          if (typeof window !== 'undefined') {
-            const zeffy = (window as unknown as { Zeffy?: ZeffyGlobal }).Zeffy;
-            if (zeffy?.embed?.init) {
-              try {
-                zeffy.embed.init();
-              } catch (err) {
-                console.warn('[ZeffyEmbed] Error in onLoad init:', err);
-              }
-            }
-          }
-        }}
-        onError={() => {
-          console.warn(
-            '[ZeffyEmbed] Failed to load official Zeffy embed script. Activating fallback iframe.',
-          );
-          setHasScriptError(true);
-        }}
-      />
-
-      {/* 2. Official Zeffy Embed Mount Target */}
-      <div
-        data-zeffy-embed={isMounted ? true : undefined}
-        data-form-url={formUrl}
-        suppressHydrationWarning
-        className={cn(
-          'min-h-[460px] w-full transition-all duration-300',
-          hasScriptError && 'hidden',
-        )}
-      />
-
-      {/* 3. Official Fallback Iframe Container (rendered when script fails or is blocked) */}
-      {hasScriptError && (
+    <div ref={containerRef} className={cn('w-full', className)} suppressHydrationWarning>
+      {/* 1. Official Zeffy Embed Mount Target: unmounted if fallback has taken over */}
+      {!hasScriptError && (
         <div
-          data-zeffy-embed-fallback
-          className="w-full space-y-4"
-        >
+          data-zeffy-embed={isMounted ? true : undefined}
+          data-form-url={formUrl}
+          suppressHydrationWarning
+          className="min-h-[460px] w-full transition-all duration-300"
+        />
+      )}
+
+      {/* 2. Official Fallback Iframe Container (rendered only when script fails or watchdog triggers) */}
+      {hasScriptError && (
+        <div data-zeffy-embed-fallback className="w-full space-y-4">
           <div className="border-border/40 bg-canvas/30 relative min-h-[480px] w-full overflow-hidden rounded-xl border">
             <iframe
               title="Donation form powered by Zeffy"
@@ -157,7 +205,7 @@ export function ZeffyDonationEmbed({
         </div>
       </noscript>
 
-      {/* 4. Trust Badges & Accessibility Pathways */}
+      {/* 3. Trust Badges & Accessibility Pathways */}
       <div className="border-border/40 text-navy/70 mt-4 flex flex-col items-center justify-center gap-1.5 border-t pt-3 text-center text-xs">
         <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-medium">
           <span className="inline-flex items-center gap-1">
