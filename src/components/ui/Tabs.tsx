@@ -209,6 +209,13 @@ export function TabsTrigger({
     }
   };
 
+  const handleFocus = (event: React.FocusEvent<HTMLButtonElement>) => {
+    props.onFocus?.(event);
+    if (activation === 'automatic' && !disabled) {
+      setValue(value);
+    }
+  };
+
   return (
     <button
       ref={buttonRef}
@@ -218,8 +225,9 @@ export function TabsTrigger({
       disabled={disabled}
       aria-selected={isSelected}
       aria-controls={panelId}
-      tabIndex={isSelected ? 0 : -1}
+      tabIndex={props.tabIndex !== undefined ? props.tabIndex : isSelected ? 0 : -1}
       onClick={() => setValue(value)}
+      onFocus={handleFocus}
       onKeyDown={handleKeyDown}
       className={cn(
         'group inline-flex items-center gap-2 pt-2 pb-3.5 text-base whitespace-nowrap transition-colors select-none',

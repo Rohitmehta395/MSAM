@@ -7,7 +7,7 @@ import {
   waysToHelpContactPathwaysContent,
   type WaysToHelpContactPathwaysContent,
 } from '@/content/ways-to-help';
-import { WaysToHelpInquiryForm } from '@/features/forms/WaysToHelpInquiryForm';
+import { WaysToHelpZeffyTabs } from '@/features/forms';
 
 export interface WaysToHelpContactPathwaysProps {
   /** Optional content override */
@@ -17,7 +17,7 @@ export interface WaysToHelpContactPathwaysProps {
 }
 
 /**
- * Ways to Help / Donate Page — Contact Pathways Section: Tabs and Inquiry Form.
+ * Ways to Help / Donate Page — Contact Pathways Section: Tabs and Zeffy Embeds.
  * Grounded in Figma frame: `design-reference/Donations Page/3-Contact pathways.png` (1440x1116).
  *
  * Layout:
@@ -29,7 +29,10 @@ export interface WaysToHelpContactPathwaysProps {
  *   - Right-aligned contact helper linking to telephone line: "Questions about giving or serving? Call (954) 406-7580."
  * - Central Elevated Card:
  *   - White surface, `rounded-card` (32px), border `border-border/60`, `shadow-card`.
- *   - Houses interactive `WaysToHelpInquiryForm` with 3 accessible tabs, complete form controls, and anti-spam protection.
+ *   - Houses interactive `WaysToHelpZeffyTabs` with 3 accessible tabs, mapped to official Zeffy forms:
+ *     1. Give Food: `food-provider-inquiry`
+ *     2. Serve: `volunteer-interest-form-11`
+ *     3. Give Funds: Home donation campaign checkout
  */
 export function WaysToHelpContactPathways({
   content: contentOverride,
@@ -73,7 +76,7 @@ export function WaysToHelpContactPathways({
 
         {/* Central Elevated White Card */}
         <div className="rounded-card border-border/60 shadow-card mt-8 border bg-white p-6 sm:mt-10 sm:p-10 lg:mt-12 lg:p-12">
-          <WaysToHelpInquiryForm content={content} />
+          <WaysToHelpZeffyTabs content={content} />
         </div>
       </Container>
     </Section>

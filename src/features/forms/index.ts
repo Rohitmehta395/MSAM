@@ -7,3 +7,4 @@ export * from './FoodProviderInquiryForm';
 export * from './VolunteerInterestForm';
 export * from './PartnerInquiryForm';
 export * from './ZeffyFormEmbed';
+export * from './WaysToHelpZeffyTabs';
