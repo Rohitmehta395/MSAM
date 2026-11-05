@@ -25,6 +25,20 @@ export interface HeaderCtaProps {
 }
 
 /**
+ * Smoothly scrolls to the Donation Section on the Home page, respecting reduced-motion preferences.
+ */
+export function scrollToDonationSection() {
+  if (typeof window === 'undefined') return;
+  const el = document.getElementById('donate');
+  if (!el) return;
+  if (window.location.hash !== '#donate') {
+    window.history.pushState(null, '', '/#donate');
+  }
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+}
+
+/**
  * Client CTA button wrapper that activates route-specific states (e.g. lavender-deep fill on /get-help).
  */
 export function HeaderCta({
@@ -40,12 +54,22 @@ export function HeaderCta({
   const isGetHelpActive =
     item.href === '/get-help' && (pathname === '/get-help' || pathname?.startsWith('/get-help/'));
 
+  const isDonateCta = item.href === '/#donate';
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isDonateCta && pathname === '/') {
+      e.preventDefault();
+      scrollToDonationSection();
+    }
+  };
+
   return (
     <Button
       href={item.href}
       variant={variant}
       size={size}
       icon={icon}
+      onClick={handleClick}
       className={cn(
         isGetHelpActive &&
           'bg-lavender-deep hover:bg-lavender-deep/90 active:bg-lavender-deep/80 focus-visible:outline-navy border-transparent text-white',
@@ -69,7 +93,8 @@ export interface HeaderCtasProps {
  */
 export function HeaderCtas({ className, size = 'md' }: HeaderCtasProps) {
   const getHelpCta = headerCtas.find((c) => c.href === '/get-help') ?? headerCtas[0];
-  const donateCta = headerCtas.find((c) => c.href === '/donate') ?? headerCtas[1];
+  const donateCta =
+    headerCtas.find((c) => c.href === '/#donate' || c.label === 'Donate Now') ?? headerCtas[1];
 
   return (
     <div className={cn('flex items-center gap-2.5 xl:gap-3', className)}>

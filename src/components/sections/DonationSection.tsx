@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/cn';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
@@ -25,8 +27,7 @@ export interface DonationSectionProps {
  * - Left: "GIVE WITH STAYING POWER" gold eyebrow, headline ("Your generosity keeps hope on the table."),
  *   lead description, 3 benefit points with circular checkmarks, short gold divider, and
  *   mission quotation with attribution link.
- * - Right: DonationSelector card with frequency toggle, 5 preset amount tiles ($5–$150),
- *   impact note, primary CTA, and official 501(c)(3) EIN badge.
+ * - Right: DonationSelector card hosting the official Zeffy embed.
  */
 export function DonationSection({ content, className }: DonationSectionProps) {
   const { eyebrow, headline, lead, checklist, quote, selector } = {
@@ -34,12 +35,34 @@ export function DonationSection({ content, className }: DonationSectionProps) {
     ...content,
   };
 
+  useEffect(() => {
+    const handleHash = () => {
+      if (typeof window !== 'undefined' && window.location.hash === '#donate') {
+        const el = document.getElementById('donate');
+        if (el) {
+          const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          requestAnimationFrame(() => {
+            el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+          });
+        }
+      }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
   return (
     <Section
+      id="donate"
       bleed
       tone="navy"
       spacing="none"
-      className={cn('border-b border-white/10 py-16 text-white sm:py-20 lg:py-24', className)}
+      className={cn(
+        'scroll-mt-24 sm:scroll-mt-28 md:scroll-mt-32 border-b border-white/10 py-16 text-white sm:py-20 lg:py-24',
+        className,
+      )}
     >
       <Container className="max-w-[1440px]">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">

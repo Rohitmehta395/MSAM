@@ -63,7 +63,7 @@ export const primaryNav: readonly NavItem[] = [
  */
 export const headerCtas: readonly NavItem[] = [
   { label: 'Get Food Support', href: '/get-help' },
-  { label: 'Donate Now', href: '/donate' },
+  { label: 'Donate Now', href: '/#donate' },
 ] as const;
 
 /**
@@ -76,7 +76,7 @@ export const urgentMessage: UrgentMessageData = {
   phoneHref: siteConfig.phoneHref,
   action: {
     label: 'Give monthly',
-    href: '/donate',
+    href: '/#donate',
   },
 } as const;
 

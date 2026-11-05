@@ -1,8 +1,12 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { urgentMessage } from '@/content/navigation';
+import { scrollToDonationSection } from '@/components/layout/HeaderCta';
 import { cn } from '@/lib/cn';
 
 export interface UrgentMessageProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -12,9 +16,18 @@ export interface UrgentMessageProps extends React.HTMLAttributes<HTMLDivElement>
 
 /**
  * Top notification bar displaying urgent prayer assistance phone link and recurring donation CTA.
- * Server Component rendered above the main site header.
+ * Client Component rendered above the main site header.
  */
 export function UrgentMessage({ className, ...props }: UrgentMessageProps) {
+  const pathname = usePathname();
+
+  const handleGiveMonthlyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (urgentMessage.action.href === '/#donate' && pathname === '/') {
+      e.preventDefault();
+      scrollToDonationSection();
+    }
+  };
+
   return (
     <div
       role="region"
@@ -38,6 +51,7 @@ export function UrgentMessage({ className, ...props }: UrgentMessageProps) {
         {/* Recurring contribution pathway */}
         <Link
           href={urgentMessage.action.href}
+          onClick={handleGiveMonthlyClick}
           className="group text-gold hover:text-gold/90 inline-flex shrink-0 items-center gap-1 rounded-sm py-1 font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
           <span>{urgentMessage.action.label}</span>

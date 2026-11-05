@@ -7,6 +7,7 @@ import { Menu, X, Phone } from 'lucide-react';
 import { primaryNav, headerCtas, urgentMessage } from '@/content/navigation';
 import { Logo } from '@/components/media/Logo';
 import { Button } from '@/components/ui/Button';
+import { scrollToDonationSection } from '@/components/layout/HeaderCta';
 import { cn } from '@/lib/cn';
 
 export interface MobileMenuProps {
@@ -113,7 +114,8 @@ export function MobileMenu({ className }: MobileMenuProps) {
   }, []);
 
   const getHelpCta = headerCtas.find((c) => c.href === '/get-help') ?? headerCtas[0];
-  const donateCta = headerCtas.find((c) => c.href === '/donate') ?? headerCtas[1];
+  const donateCta =
+    headerCtas.find((c) => c.href === '/#donate' || c.label === 'Donate Now') ?? headerCtas[1];
   const isGetHelpActive =
     pathname === '/get-help' || (pathname ? pathname.startsWith('/get-help/') : false);
 
@@ -303,7 +305,15 @@ export function MobileMenu({ className }: MobileMenuProps) {
                   size="lg"
                   icon="heart"
                   fullWidth
-                  onClick={() => closeMenu(false)}
+                  onClick={(e) => {
+                    closeMenu(false);
+                    if (donateCta.href === '/#donate' && pathname === '/') {
+                      e.preventDefault();
+                      requestAnimationFrame(() => {
+                        scrollToDonationSection();
+                      });
+                    }
+                  }}
                 >
                   {donateCta.label}
                 </Button>
