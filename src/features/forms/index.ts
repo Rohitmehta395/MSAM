@@ -6,3 +6,4 @@ export * from './WaysToHelpInquiryForm';
 export * from './FoodProviderInquiryForm';
 export * from './VolunteerInterestForm';
 export * from './PartnerInquiryForm';
+export * from './ZeffyFormEmbed';

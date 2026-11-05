@@ -5,7 +5,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Heading } from '@/components/ui/Heading';
 import { MediaImage } from '@/components/media/MediaImage';
 import { volunteerFormContent, type VolunteerFormContent } from '@/content/community';
-import { VolunteerInterestForm } from '@/features/forms';
+import { ZeffyFormEmbed } from '@/features/forms';
 import { cn } from '@/lib/cn';
 
 export interface VolunteerFormSectionProps {
@@ -78,9 +78,22 @@ export function VolunteerFormSection({
             />
           </div>
 
-          {/* Right Column: Volunteer Interest Form Card */}
+          {/* Right Column: Volunteer Interest Form Card with Zeffy Embed */}
           <div className="lg:col-span-7">
-            <VolunteerInterestForm content={content} />
+            <div className="rounded-card shadow-card border-border relative w-full border bg-white p-6 sm:p-8 md:p-10">
+              <div className="mb-6">
+                <h3 className="text-navy font-serif text-2xl font-bold tracking-tight sm:text-3xl">
+                  {content.cardTitle}
+                </h3>
+                <div className="bg-gold mt-4 h-1 w-full rounded-full" aria-hidden="true" />
+              </div>
+              <ZeffyFormEmbed
+                formPath="/en-US/embed/newsletter-form/volunteer-interest-form-11"
+                fallbackUrl="https://www.zeffy.com/en-US/embed/newsletter-form/volunteer-interest-form-11"
+                title="Signup form powered by Zeffy"
+                minHeight="500px"
+              />
+            </div>
           </div>
         </div>
       </Container>

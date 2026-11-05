@@ -4,7 +4,7 @@ import { Container } from '@/components/ui/Container';
 import { Logo } from '@/components/media/Logo';
 import { siteConfig } from '@/config/site';
 import { footerColumns, legalLinks } from '@/content/navigation';
-import { NewsletterForm } from '@/features/forms/NewsletterForm';
+import { ZeffyFormEmbed } from '@/features/forms/ZeffyFormEmbed';
 import { cn } from '@/lib/cn';
 
 const CURRENT_YEAR = 2026;
@@ -179,15 +179,26 @@ export function Footer({ className, ...props }: FooterProps) {
             </div>
           )}
 
-          {/* Column 4: Newsletter (spans full width on mobile, 1 col on desktop) */}
+          {/* Column 4: Newsletter Form (aligned directly with footer columns) */}
           <div className="col-span-2 min-w-0 space-y-4 sm:col-span-2 lg:col-span-1">
-            <h3 className="text-label text-gold font-bold">Newsletter</h3>
-
-            <p className="text-sm text-white/75">
-              Monthly stories, volunteer opportunities, and practical ways to help.
-            </p>
-
-            <NewsletterForm />
+            <ZeffyFormEmbed
+              formPath="/en-US/embed/newsletter-form/sign-up-for-our-newsletter-4712"
+              fallbackUrl="https://www.zeffy.com/en-US/embed/newsletter-form/sign-up-for-our-newsletter-4712"
+              title="Signup form powered by Zeffy"
+              minHeight="265px"
+              className="w-full max-w-[340px] -mt-2 sm:-mt-3"
+              embedClassName="!bg-transparent !outline-none !border-none !shadow-none"
+              embedStyle={{
+                minHeight: '265px',
+                height: '265px',
+                maxWidth: '100%',
+                margin: '0',
+                background: 'transparent',
+                outline: 'none',
+                border: 'none',
+                boxShadow: 'none',
+              }}
+            />
 
             <div className="space-y-1 pt-1 text-sm text-white/70">
               <p>

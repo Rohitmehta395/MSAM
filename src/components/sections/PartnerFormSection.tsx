@@ -5,7 +5,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Heading } from '@/components/ui/Heading';
 import { MediaImage } from '@/components/media/MediaImage';
 import { partnerFormContent, type PartnerFormContent } from '@/content/community';
-import { PartnerInquiryForm } from '@/features/forms';
+import { ZeffyFormEmbed } from '@/features/forms';
 import { cn } from '@/lib/cn';
 
 export interface PartnerFormSectionProps {
@@ -56,9 +56,28 @@ export function PartnerFormSection({
     >
       <Container>
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
-          {/* Left Column: Form Card */}
+          {/* Left Column: Form Card with Zeffy Embed */}
           <div className="lg:col-span-7">
-            <PartnerInquiryForm content={content} />
+            <div className="rounded-card shadow-card border-border relative w-full border bg-white p-6 sm:p-8 md:p-10">
+              <div className="mb-6">
+                <p className="text-label text-navy/70 tracking-wider uppercase">
+                  {content.cardLabel}
+                </p>
+                <h3 className="text-navy mt-1 font-serif text-2xl font-bold tracking-tight sm:text-3xl">
+                  {content.cardTitle}
+                </h3>
+                <p className="text-navy/75 mt-2 text-sm leading-relaxed sm:text-base">
+                  {content.cardDescription}
+                </p>
+                <div className="bg-gold mt-4 h-1 w-full rounded-full" aria-hidden="true" />
+              </div>
+              <ZeffyFormEmbed
+                formPath="/en-US/embed/newsletter-form/explore-community-partnership"
+                fallbackUrl="https://www.zeffy.com/en-US/embed/newsletter-form/explore-community-partnership"
+                title="Signup form powered by Zeffy"
+                minHeight="500px"
+              />
+            </div>
           </div>
 
           {/* Right Column: Heading, Copy & Warehouse Logistics Photo */}

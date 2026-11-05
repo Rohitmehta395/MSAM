@@ -141,6 +141,24 @@
   }
 }
 
+/* Zeffy footer newsletter embed styling: seamless dark footer integration */
+footer [data-zeffy-embed] {
+  background: transparent !important;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+footer [data-zeffy-embed] iframe {
+  border: none !important;
+  outline: none !important;
+  overflow: hidden !important;
+}
+
+footer [data-zeffy-embed] .zeffy-embed-loader {
+  background-color: transparent !important;
+}
+
 /* Base styles and accessibility */
 @layer base {
   html {

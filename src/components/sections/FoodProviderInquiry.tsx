@@ -5,7 +5,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Heading } from '@/components/ui/Heading';
 import { MediaImage } from '@/components/media/MediaImage';
 import { foodProviderInquiryContent, type FoodProviderInquiryContent } from '@/content/community';
-import { FoodProviderInquiryForm } from '@/features/forms';
+import { ZeffyFormEmbed } from '@/features/forms';
 import { cn } from '@/lib/cn';
 
 export interface FoodProviderInquiryProps {
@@ -79,9 +79,25 @@ export function FoodProviderInquiry({
             />
           </div>
 
-          {/* Right Column: Inquiry Form Card */}
+          {/* Right Column: Inquiry Form Card with Zeffy Embed */}
           <div className="lg:col-span-7">
-            <FoodProviderInquiryForm content={content} />
+            <div className="rounded-card shadow-card border-border relative w-full border bg-white p-6 sm:p-8 md:p-10">
+              <div className="mb-6">
+                <h3 className="text-navy font-serif text-2xl font-bold tracking-tight sm:text-3xl">
+                  {content.cardTitle}
+                </h3>
+                <p className="text-navy/75 mt-2 text-sm leading-relaxed sm:text-base">
+                  {content.cardPrompt}
+                </p>
+                <div className="bg-gold mt-4 h-1 w-full rounded-full" aria-hidden="true" />
+              </div>
+              <ZeffyFormEmbed
+                formPath="/en-US/embed/newsletter-form/food-provider-inquiry"
+                fallbackUrl="https://www.zeffy.com/en-US/embed/newsletter-form/food-provider-inquiry"
+                title="Signup form powered by Zeffy"
+                minHeight="500px"
+              />
+            </div>
           </div>
         </div>
       </Container>
