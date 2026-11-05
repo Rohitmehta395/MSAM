@@ -113,7 +113,9 @@ export function MobileMenu({ className }: MobileMenuProps) {
     };
   }, []);
 
-  const getHelpCta = headerCtas.find((c) => c.href === '/get-help') ?? headerCtas[0];
+  const getHelpCta =
+    headerCtas.find((c) => c.href.includes('intake') || c.href === '/get-help' || c.label === 'Get Food Support') ??
+    headerCtas[0];
   const donateCta =
     headerCtas.find((c) => c.href === '/#donate' || c.label === 'Donate Now') ?? headerCtas[1];
   const isGetHelpActive =
@@ -284,6 +286,8 @@ export function MobileMenu({ className }: MobileMenuProps) {
               {getHelpCta && (
                 <Button
                   href={getHelpCta.href}
+                  target={getHelpCta.href.startsWith('http') ? '_blank' : undefined}
+                  rel={getHelpCta.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   variant="secondary"
                   size="lg"
                   icon="arrow"

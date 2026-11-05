@@ -157,7 +157,7 @@ export const homeHeroContent: HomeHeroContent = {
   lead: 'For more than 35 years, Manna Share A Meal has served neighbors facing food insecurity with compassion, dignity, and the love of Christ.',
   primaryAction: {
     label: 'Get Food Support',
-    href: '/get-help',
+    href: 'https://mannacrm.mannafromhim.workers.dev/intake',
     variant: 'primary',
     icon: 'arrow',
   },
@@ -391,7 +391,7 @@ export const homeWaysToHelpContent: HomeWaysToHelpContent = {
       ],
       action: {
         label: 'Request Food Assistance',
-        href: '/get-help',
+        href: 'https://mannacrm.mannafromhim.workers.dev/intake',
       },
     },
     {

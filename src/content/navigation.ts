@@ -62,7 +62,7 @@ export const primaryNav: readonly NavItem[] = [
  * Top header call-to-action buttons.
  */
 export const headerCtas: readonly NavItem[] = [
-  { label: 'Get Food Support', href: '/get-help' },
+  { label: 'Get Food Support', href: 'https://mannacrm.mannafromhim.workers.dev/intake' },
   { label: 'Donate Now', href: '/#donate' },
 ] as const;
 
@@ -87,7 +87,7 @@ export const footerColumns: readonly FooterColumn[] = [
   {
     title: 'Ways to help',
     links: [
-      { label: 'Request groceries and support', href: '/get-help' },
+      { label: 'Request groceries and support', href: 'https://mannacrm.mannafromhim.workers.dev/intake' },
       { label: 'Donate food', href: '/community/food-providers' },
       { label: 'Host a distribution', href: '/community/partners' },
       { label: 'Volunteer', href: '/community/volunteers' },

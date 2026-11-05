@@ -77,6 +77,8 @@ export function HowItWorksHero({ content, className }: HowItWorksHeroProps) {
             <div className="mt-8 flex w-full flex-col gap-3.5 sm:w-auto sm:flex-row sm:items-center">
               <Button
                 href={primaryAction.href}
+                target={primaryAction.href.startsWith('http') ? '_blank' : undefined}
+                rel={primaryAction.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 variant="primary"
                 size="md"
                 icon="arrow"
@@ -87,6 +89,8 @@ export function HowItWorksHero({ content, className }: HowItWorksHeroProps) {
 
               <Button
                 href={secondaryAction.href}
+                target={secondaryAction.href.startsWith('http') ? '_blank' : undefined}
+                rel={secondaryAction.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 variant="secondary"
                 size="md"
                 icon="arrow"

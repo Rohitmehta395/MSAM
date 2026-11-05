@@ -91,7 +91,7 @@ export const howItWorksHeroContent: HowItWorksHeroContent = {
   lead: 'Call (954) 406-7580 for a Saturday appointment, or start a brief registration below. Food is handed out between 9:00 AM and 10:30 AM, as service is first-come, first-served.',
   primaryAction: {
     label: 'Register for Food Service',
-    href: 'tel:9544067580',
+    href: 'https://mannacrm.mannafromhim.workers.dev/intake',
     variant: 'primary',
   },
   secondaryAction: {

@@ -148,6 +148,8 @@ export function Footer({ className, ...props }: FooterProps) {
                     <li key={link.href} className="min-w-0">
                       <Link
                         href={link.href}
+                        target={link.href.startsWith('http') ? '_blank' : undefined}
+                        rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                         className="inline-flex min-h-[44px] w-full min-w-0 items-center rounded-sm text-sm leading-snug text-white/80 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-[36px] lg:min-h-[32px]"
                       >
                         {link.label}
@@ -169,6 +171,8 @@ export function Footer({ className, ...props }: FooterProps) {
                     <li key={link.href} className="min-w-0">
                       <Link
                         href={link.href}
+                        target={link.href.startsWith('http') ? '_blank' : undefined}
+                        rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                         className="inline-flex min-h-[44px] w-full min-w-0 items-center rounded-sm text-sm leading-snug text-white/80 transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-[36px] lg:min-h-[32px]"
                       >
                         {link.label}

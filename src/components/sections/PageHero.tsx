@@ -117,6 +117,8 @@ export function PageHero({
               {primaryAction && (
                 <Button
                   href={primaryAction.href}
+                  target={primaryAction.href.startsWith('http') ? '_blank' : undefined}
+                  rel={primaryAction.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   variant={primaryAction.variant ?? 'primary'}
                   size="md"
                   icon={primaryAction.icon ?? 'arrow'}
@@ -128,6 +130,8 @@ export function PageHero({
               {secondaryAction && (
                 <Button
                   href={secondaryAction.href}
+                  target={secondaryAction.href.startsWith('http') ? '_blank' : undefined}
+                  rel={secondaryAction.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   variant={secondaryAction.variant ?? 'secondary'}
                   size="md"
                   icon={secondaryAction.icon ?? 'none'}

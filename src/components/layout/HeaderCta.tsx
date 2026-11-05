@@ -55,6 +55,7 @@ export function HeaderCta({
     item.href === '/get-help' && (pathname === '/get-help' || pathname?.startsWith('/get-help/'));
 
   const isDonateCta = item.href === '/#donate';
+  const isExternal = item.href.startsWith('http');
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isDonateCta && pathname === '/') {
@@ -66,6 +67,8 @@ export function HeaderCta({
   return (
     <Button
       href={item.href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
       variant={variant}
       size={size}
       icon={icon}
@@ -92,7 +95,9 @@ export interface HeaderCtasProps {
  * Group of desktop header CTA buttons using centralized navigation configuration.
  */
 export function HeaderCtas({ className, size = 'md' }: HeaderCtasProps) {
-  const getHelpCta = headerCtas.find((c) => c.href === '/get-help') ?? headerCtas[0];
+  const getHelpCta =
+    headerCtas.find((c) => c.href.includes('intake') || c.href === '/get-help' || c.label === 'Get Food Support') ??
+    headerCtas[0];
   const donateCta =
     headerCtas.find((c) => c.href === '/#donate' || c.label === 'Donate Now') ?? headerCtas[1];
 

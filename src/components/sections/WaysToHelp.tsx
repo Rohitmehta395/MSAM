@@ -119,6 +119,8 @@ export function WaysToHelp({ content, className }: WaysToHelpProps) {
                 {/* Primary Action Button */}
                 <Button
                   href={card.action.href}
+                  target={card.action.href.startsWith('http') ? '_blank' : undefined}
+                  rel={card.action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   variant="dark"
                   icon="arrow"
                   fullWidth
