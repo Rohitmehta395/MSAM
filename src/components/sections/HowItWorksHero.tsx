@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { cn } from '@/lib/cn';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
@@ -6,6 +8,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { MediaImage } from '@/components/media/MediaImage';
 import { howItWorksHeroContent, type HowItWorksHeroContent } from '@/content/how-it-works';
+import { PrayerModal } from '@/components/modals';
 
 export interface HowItWorksHeroProps {
   /** Optional content override */
@@ -36,6 +39,8 @@ export interface HowItWorksHeroProps {
  *     - Generous panel rounding (`rounded-[28px] sm:rounded-[32px]`).
  */
 export function HowItWorksHero({ content, className }: HowItWorksHeroProps) {
+  const [isPrayerModalOpen, setIsPrayerModalOpen] = useState(false);
+
   const {
     eyebrow,
     headline,
@@ -88,13 +93,15 @@ export function HowItWorksHero({ content, className }: HowItWorksHeroProps) {
               </Button>
 
               <Button
-                href={secondaryAction.href}
-                target={secondaryAction.href.startsWith('http') ? '_blank' : undefined}
-                rel={secondaryAction.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                id="need-prayer-hero-button"
+                type="button"
+                onClick={() => setIsPrayerModalOpen(true)}
                 variant="secondary"
                 size="md"
                 icon="arrow"
                 className="w-full justify-center sm:w-auto"
+                aria-haspopup="dialog"
+                aria-expanded={isPrayerModalOpen}
               >
                 {secondaryAction.label}
               </Button>
@@ -164,6 +171,13 @@ export function HowItWorksHero({ content, className }: HowItWorksHeroProps) {
           </div>
         </div>
       </Container>
+
+      {/* Accessible Random Bible Verse Prayer Modal */}
+      <PrayerModal
+        isOpen={isPrayerModalOpen}
+        onClose={() => setIsPrayerModalOpen(false)}
+        restoreFocusId="need-prayer-hero-button"
+      />
     </Section>
   );
 }
