@@ -26,8 +26,7 @@ export const siteConfig: SiteConfig = {
   missionStatement:
     'Our mission is to glorify God by providing nourishment, spiritual encouragement, emotional support, and practical assistance.',
   socials: {
-    // TODO: Replace with official Instagram profile URL
-    instagram: '#',
+    instagram: 'https://www.instagram.com/manna_officialdavie?xtok=MXhjMGNjOXZtd3R5Mw==',
     // TODO: Replace with official Facebook page URL
     facebook: '#',
     // TODO: Replace with official LinkedIn company profile URL
